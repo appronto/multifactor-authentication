@@ -53,7 +53,7 @@ Or from Github: [https://github.com/appronto/multifactor-authentication](https:/
 After startup configuration:
 1. Add ASU\_MFA Microflow in your After Startup.
 
-2. Change SUB\_MFA\_UserDisabledCheck to call your logic to determine if the logged in user needs to be multi-factor authenticated. Add the new attributes **HasMFAenabled(Boolean)**and **LastLogin2FA (datetime)** to the Account entity.
+2. Change SUB\_MFA\_UserDisabledCheck to call your logic to determine if the logged in user needs to be multi-factor authenticated. Add the new attributes **HasMFAenabled(Boolean)** and **LastLogin2FA (datetime)** to the Account entity.
 
 3. Add your method(s) of multifactor authentication in SUB\_ValidateMFAforUser:
 
