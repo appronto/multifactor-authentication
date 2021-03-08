@@ -133,8 +133,8 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 		}
 		else if (oldSession != null && mfamodule.proxies.constants.Constants.getEnabledMFA() 
 				&& mfamodule.proxies.microflows.Microflows.sUB_MFA_Validate(oldSession.createContext(), userMfaObj, this.userName)) {
-			_logNode.debug("MFA enabled and Mendix session available so Validate will redirect for "+ this.userName);
-			return super.execute();
+			_logNode.debug("MFA enabled and Mendix session available so validate microflow will redirect for "+ this.userName);
+			return oldSession;
 		}
 		else if( mfamodule.proxies.constants.Constants.getEnabledMFA() 
 				&& !mfamodule.proxies.microflows.Microflows.sUB_MFA_UserDisabledCheck(sysContext, this.userName) ) {
