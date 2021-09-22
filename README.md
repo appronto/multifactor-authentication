@@ -55,7 +55,7 @@ After startup configuration:
 
 2. Change SUB\_MFA\_UserDisabledCheck to call your logic to determine if the logged in user needs to be multi-factor authenticated. Add the new attributes **HasMFAenabled(Boolean)** and **LastLogin2FA (datetime)** to the Account entity.
 
-3. Add your method(s) of multifactor authentication in SUB\_ValidateMFAforUser:
+3. Add your method(s) of multifactor authentication in SUB\_MFA\_ValidateCode:
 
 3 samples available:
 
