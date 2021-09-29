@@ -19,6 +19,11 @@ public class Microflows
 		Map<java.lang.String, Object> params = new HashMap<>();
 		Core.microflowCall("MyFirstModule.ACT_GenerateNumberRandom").withParams(params).execute(context);
 	}
+	public static boolean aSU(IContext context)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		return (java.lang.Boolean) Core.microflowCall("MyFirstModule.ASU").withParams(params).execute(context);
+	}
 	public static java.lang.String getTest(IContext context, system.proxies.HttpRequest _httpRequest, system.proxies.HttpResponse _httpResponse)
 	{
 		Map<java.lang.String, Object> params = new HashMap<>();
