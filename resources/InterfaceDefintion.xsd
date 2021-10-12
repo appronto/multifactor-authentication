@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.com/">
+
+        <xsd:element name="InterfaceDefinition">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="InterfaceName">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="200" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="ImportDirectory" nillable="true">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="200" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="MappedEntity">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="200" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="FileExtension" nillable="true">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="200" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="SkipFirstRow" type="xsd:boolean" />
+              <xsd:element name="FileType">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="FixedLenght" />
+                    <xsd:enumeration value="Delimited" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="Delimiter" nillable="true">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="200" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="IsActive" type="xsd:boolean" />
+              <xsd:element name="IntervalType">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="Minute" />
+                    <xsd:enumeration value="Hour" />
+                    <xsd:enumeration value="Day" />
+                    <xsd:enumeration value="Week" />
+                    <xsd:enumeration value="Month" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="Interval" type="xsd:long" nillable="true"/>
+              <xsd:element name="LastRunTime" type="xsd:dateTime" nillable="true"/>
+              <xsd:element name="StartScheduleTime" type="xsd:dateTime" nillable="true"/>
+              <xsd:element name="NextRunTime" type="xsd:dateTime" nillable="true"/>
+              <xsd:element name="TriggerEventsOnCommit" type="xsd:boolean" nillable="true"/>
+              <xsd:element name="TextQualifierSelection" nillable="true">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="None" />
+                    <xsd:enumeration value="Single_Quote___" />
+                    <xsd:enumeration value="Double_Quote___" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="LogLevel">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="Info" />
+                    <xsd:enumeration value="Error" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="UseQueue" type="xsd:boolean" />
+              <xsd:element name="QueueNumber" type="xsd:long" nillable="true" />
+              <xsd:element name="FileEncoding">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="UTF8" />
+                    <xsd:enumeration value="Cp1252" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+
+                    <xsd:element name="ColumnDefinition" minOccurs="0" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="ColumnNumber" type="xsd:long" />
+                          <xsd:element name="StartPosition" type="xsd:long" />
+                          <xsd:element name="EndPosition" type="xsd:long" />
+                          <xsd:element name="MappedAttribute">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="200" />
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                          <xsd:element name="MappedType">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="AutoNumber" />
+                                <xsd:enumeration value="BooleanType" />
+                                <xsd:enumeration value="Currency" />
+                                <xsd:enumeration value="DateTime" />
+                                <xsd:enumeration value="EnumType" />
+                                <xsd:enumeration value="FloatType" />
+                                <xsd:enumeration value="HashString" />
+                                <xsd:enumeration value="IntegerType" />
+                                <xsd:enumeration value="LongType" />
+                                <xsd:enumeration value="StringType" />
+                                <xsd:enumeration value="ObjectType" />
+                                <xsd:enumeration value="ObjectList" />
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                          <xsd:element name="DateTimeFormat" nillable="true">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="200" />
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                          <xsd:element name="FixedLength" type="xsd:boolean" />
+                          <xsd:element name="Entity">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:maxLength value="200" />
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                          <xsd:element name="SkipColumn" type="xsd:boolean" />
+                          <xsd:element name="Length" type="xsd:long" />
+                        </xsd:sequence>
+                      </xsd:complexType>
+
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+
+</xsd:schema>

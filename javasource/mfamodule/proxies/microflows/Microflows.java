@@ -60,10 +60,4 @@ public class Microflows
 		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
 		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_ValidateCode").withParams(params).execute(context);
 	}
-	public static boolean sUB_Username_CheckMFANeeded(IContext context, java.lang.String _username)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("Username", _username);
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_Username_CheckMFANeeded").withParams(params).execute(context);
-	}
 }

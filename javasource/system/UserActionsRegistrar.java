@@ -9,6 +9,7 @@ public class UserActionsRegistrar
     registrator.bundleComponentLoaded();
     registrator.registerUserAction(googleauthenticator.actions.CreateCredentials.class);
     registrator.registerUserAction(googleauthenticator.actions.IsCodeValid.class);
+    registrator.registerUserAction(mfamodule.actions.JA_GetAdminUserName.class);
     registrator.registerUserAction(mfamodule.actions.OverwriteDefaultLoginAction.class);
     registrator.registerUserAction(mfamodule.actions.ThrowException.class);
     registrator.registerUserAction(myfirstmodule.actions.HasMFAatribute.class);

@@ -28,7 +28,7 @@ The MFA code is validated first and only then the module creates a user session 
 ## How did we prove that this module is secure?
 At the point in time after login in the first step:
 
-mx.data.get({ xpath:&quot;//System.User&quot;, callback:function(data){console.log(data);} })
+`mx.data.get({ xpath:'//System.User', callback:function(data){console.log(data);} })`
 
 still returns the anonymous User object:
 
@@ -49,40 +49,43 @@ Scenarios to cover:
 
 Or from Github: [https://github.com/appronto/multifactor-authentication](https://github.com/appronto/multifactor-authentication)
 
-2. Download the NanoflowCommons from the Mendix Marketplace
+2. Download the Nanoflow Commons from the Mendix Marketplace
 
 **There are a few things to configure:**
 
 After startup configuration:
-1. Add ASU\_MFA Microflow in your After Startup.
+1. Add `ASU_MFA` Microflow in your After Startup.
 
-2. Change SUB\_MFA\_UserDisabledCheck to call your logic to determine if the logged in user needs to be multi-factor authenticated. Add the new attributes **HasMFAenabled(Boolean)** and **LastLogin2FA (datetime)** to the Account entity.
+2. Change `SUB_MFA_UserDisabledCheck` to call your logic to determine if the logged in user needs to be multi-factor authenticated.
 
-3. Add your method(s) of multifactor authentication in SUB\_MFA\_ValidateCode:
+	*Example* is available in `SUB_Username_CheckMFANeeded` (copy this to your own module). If you use this example please Add the new attributes **`HasMFAenabled`(Boolean)** and **`LastLogin2FA` (datetime)** to the Account entity.
 
-3. Samples available:
+3. Add your method(s) of multifactor authentication in SUB\_MFA\_ValidateCode.
 
-- Google authenticator connector
-  - Module download: [https://marketplace.mendix.com/link/component/2948](https://marketplace.mendix.com/link/component/2948)
-  - Google Play Store: [https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en)
-  - Apple App store: [https://apps.apple.com/us/app/google-authenticator/id388497605](https://apps.apple.com/us/app/google-authenticator/id388497605)
-- SMS
-  - Change SUB\_CreateCode to send the SMS
-  - Send a SMS with for example Twilio:
-  - Try Twilio here: [http://appron.to/try-twilio](http://appron.to/try-twilio) and create an API key on [https://www.twilio.com/console/project/settings](https://www.twilio.com/console/project/settings)
-- Email verification with code to verify
-  - Change SUB\_CreateCode to send the e-mail
-  - Use default Emailtemplate module or Sendgrid API for example to compose this e-mail to your user.
+	*Examples* are available:
 
-4. Add snippet SN\_MFA\_LoginPage / SN\_Login\_Native to your login page
+	- Google authenticator connector
+	  - Module download: [https://marketplace.mendix.com/link/component/2948](https://marketplace.mendix.com/link/component/2948)
+	  - Google Play Store: [https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en)
+	  - Apple App store: [https://apps.apple.com/us/app/google-authenticator/id388497605](https://apps.apple.com/us/app/google-authenticator/id388497605)
+	- SMS
+	  - Change `SUB_MFA_CreateCode` to send the SMS
+	  - Send a SMS with for example Twilio:
+	  - Try Twilio here: [http://appron.to/try-twilio](http://appron.to/try-twilio) and create an API key on [https://www.twilio.com/console/project/settings](https://www.twilio.com/console/project/settings)
+	- Email verification with code to verify
+	  - Change `SUB_MFA_CreateCode` to send the e-mail
+	  - Use default Emailtemplate module or Sendgrid API for example to compose this e-mail to your user.
 
-5. If applicable move thelogin-with-mfa.html and js/login-mfa.js from the resources directory to your theme directory to support login actions with MFA from these pages.
 
-6. Set the constant EnabledMFA to true to get started!
+4. Add snippet `SN_MFA_LoginPage` / `SN_Login_Native` to your login page
+
+5. If applicable move the `login-with-mfa.html` and `js/login-mfa.js` from the resources directory to your theme directory to support login actions with MFA from these pages.
+
+6. Set the constant `EnabledMFA` to true to get started!
 
 **Keep in mind when upgrading the module from the Appstore in the future:**
 
-It will break the login mechanism, but you will be notified because by default an exception will be raised when the module with your MFA logic hasn&#39;t been configured correcty. Like this &quot;An error has occurred while handling the request: java.lang.Exception: Create code not yet implemented&quot;.
+It will break the login mechanism, but you will be notified because by default an exception will be raised and warnings will be shown when the module with your MFA logic hasn&#39;t been configured correcty. Like this &quot;An error has occurred while handling the request: java.lang.Exception: `SUB_MFA_UserDisabledCheck microflow not yet implemented. Did you upgrade?` &quot;.
 
 ## What we learned
 
