@@ -61,7 +61,7 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 				//check if there is mfa for the user from the first call
 				userMfaObj = mfamodule.proxies.microflows.Microflows.dS_MFA_GET(oldSession.createContext());
 			
-				if(userMfaObj != null && userMfaObj.getUsername() !=null) {
+				if(userMfaObj != null && userMfaObj.getMendixObject().getMember(oldSession.createContext(),"Username").hasReadAccess(oldSession.createContext()) &&userMfaObj.getUsername() !=null) {
 					if ( mfamodule.proxies.microflows.Microflows.sUB_MFA_Validate(oldSession.createContext(), userMfaObj, userMfaObj.getUsername()) ) {
 						IUser user = Core.getUser(sysContext, userMfaObj.getUsername());
 						return Core.initializeSession(user, this.currentSessionId);

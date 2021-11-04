@@ -58,9 +58,9 @@ After startup configuration:
 
 2. Change `SUB_MFA_UserDisabledCheck` to call your logic to determine if the logged in user needs to be multi-factor authenticated.
 
-	*Example* is available in `SUB_Username_CheckMFANeeded` (copy this to your own module). If you use this example please Add the new attributes **`HasMFAenabled`(Boolean)** and **`LastLogin2FA` (datetime)** to the Account entity.
+	*Example* is available in `SUB_MFA_UserDisabledCheck` (copy this to your own module). If you use this example please Add the new attributes **`HasMFAenabled`(Boolean)** and **`LastLogin2FA` (datetime)** to the Account entity.
 
-3. Add your method(s) of multifactor authentication in SUB\_MFA\_ValidateCode.
+3. Add your method(s) of multifactor authentication in `SUB_MFA_ValidateCode`.
 
 	*Examples* are available:
 
