@@ -6,8 +6,8 @@ package mfamodule.proxies;
 
 public enum Enum_MessageType
 {
-	Info(new java.lang.String[][] { new java.lang.String[] { "en_US", "Info" } }),
-	Error(new java.lang.String[][] { new java.lang.String[] { "en_US", "Error" } });
+	Info(new java.lang.String[][] { new java.lang.String[] { "en_US", "Info" }, new java.lang.String[] { "nl_NL", "Info" } }),
+	Error(new java.lang.String[][] { new java.lang.String[] { "en_US", "Error" }, new java.lang.String[] { "nl_NL", "Error" } });
 
 	private java.util.Map<java.lang.String, java.lang.String> captions;
 

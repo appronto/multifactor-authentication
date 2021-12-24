@@ -66,6 +66,21 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 						IUser user = Core.getUser(sysContext, userMfaObj.getUsername());
 						return Core.initializeSession(user, this.currentSessionId);
 					} 
+					else if (userMfaObj.getUsername() != null && userMfaObj.getUsername() != "") {
+						IUser user = Core.getUser(sysContext, userMfaObj.getUsername());
+						if(user != null) {
+							Object obj = (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins")+1;
+							user.getMendixObject().setValue(sysContext,"FailedLogins",obj);
+							if ( (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins") >= 3) {
+								user.getMendixObject().setValue(sysContext,"Blocked",true);
+								Core.commit(sysContext, user.getMendixObject());
+								_logNode.debug( "Custom MFA to much attempts FAILED: user '" + userMfaObj.getUsername() + "' blocked" );
+								throw new UserBlockedException("Custom MFA check: User '"+ userMfaObj.getUsername() + "' blocked");
+							}
+							Core.commit(sysContext, user.getMendixObject());
+						}
+						return oldSession;
+					}
 					else {
 						return oldSession;
 					}
@@ -127,7 +142,16 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 				return super.execute();
 			}
 			else {
-				_logNode.debug( "Custom Login FAILED: validation for user '" + this.userName + "' with code '"+mfaCode+"'." );
+				_logNode.debug( "Custom MFA code validation FAILED: mfa check for user '" + this.userName + "' with code '"+mfaCode+"'." );
+				Object obj = (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins")+1;
+				user.getMendixObject().setValue(sysContext,"FailedLogins",obj);
+				if ( (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins") >= 3) {
+					user.getMendixObject().setValue(sysContext,"Blocked",true);
+					Core.commit(sysContext, user.getMendixObject());
+					_logNode.debug( "Custom MFA to much attempts FAILED: user '" + this.userName + "' blocked" );
+					throw new UserBlockedException("Custom MFA check: User '"+ this.userName + "' blocked");
+				}
+				Core.commit(sysContext, user.getMendixObject());
 				throw new AuthenticationRuntimeException(" Custom Login FAILED for user '" + this.userName + "'.");
 			}
 		}
