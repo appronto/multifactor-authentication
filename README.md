@@ -25,6 +25,8 @@ The MFA code is validated first and only then the module creates a user session 
 
 [https://swimlanes.io/u/4o7jaAOjY](https://swimlanes.io/u/4o7jaAOjY)
 
+We depricated the login.html compatibility in commbination of MFA. This will make the code more simple and safer. 
+
 ## How did we prove that this module is secure?
 At the point in time after login in the first step:
 
@@ -39,7 +41,6 @@ Scenarios to cover:
 - Default login via login.html for accounts with MFA disabled.
 - Default login via widgets for accounts with MFA disabled.
 - Default login for webservice and REST accounts.
-- Login by a customized login.html with MFA enabled (login-with-mfa.html + login-mfa.js + Authenticator app code only. Not compatible code sent by SMS or E-mail).
 - Login by default widgets but extended with ability to enter MFA code with MFA enabled.
 - Native mobile login 
 
@@ -79,9 +80,7 @@ After startup configuration:
 
 4. Add snippet `SN_MFA_LoginPage` / `SN_Login_Native` to your login page
 
-5. If applicable move the `login-with-mfa.html` and `js/login-mfa.js` from the resources directory to your theme directory to support login actions with MFA from these pages.
-
-6. Set the constant `EnabledMFA` to true to get started!
+5. Set the constant `EnabledMFA` to true to get started!
 
 **Keep in mind when upgrading the module from the Appstore in the future:**
 
@@ -98,20 +97,6 @@ For native mobile we needed to change the sign in nanoflow activity to save the 
 **Advanced java challenges:**
 
 When extending the LoginAction class and trying to set parameters from this class in our extended class, we found out this was not possible in combination with the super.execute() method. We decided to use createSession. We have already validated the username and password in the first step and the MFA object can&#39;t be modified/created by the anonymous user (and is also checked twice).
-
-We also wanted the module to be compatible via a login.html variant and the custom login-with-mfa.html. Therefore, it is necessary to send the MFA code together with your username and password. We need to pass this MFA code through the header because the payload is stripped by the Core LoginAction functionality.
-
-Login-with-mfa.html:
-
-![alt text](https://github.com/appronto/multifactor-authentication/blob/main/Output/Signin.png?raw=true)
-
-Login-mfa.js:
-
-![alt text](https://github.com/appronto/multifactor-authentication/blob/main/Output/Signin2.png?raw=true)
-
-MultiFactorAuthLoginAction.java:
-
-![alt text](https://github.com/appronto/multifactor-authentication/blob/main/Output/Signin3.png?raw=true)
 
 ## Please report issues
 

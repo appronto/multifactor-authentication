@@ -19,4 +19,14 @@ public class Constants
 	{
 		return (java.lang.String)Core.getConfiguration().getConstantValue("MFAmodule.Lognode");
 	}
+
+	public static java.lang.Long getMaxAttemptsMFA()
+	{
+		return (java.lang.Long)Core.getConfiguration().getConstantValue("MFAmodule.MaxAttemptsMFA");
+	}
+
+	public static java.lang.Long getMaxLoginAttempts()
+	{
+		return (java.lang.Long)Core.getConfiguration().getConstantValue("MFAmodule.MaxLoginAttempts");
+	}
 }

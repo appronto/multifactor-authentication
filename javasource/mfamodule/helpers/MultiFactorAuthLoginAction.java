@@ -26,13 +26,8 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 	private String currentSessionId;
 	public final static String USER_NAME_PARAM = "userName";
 	public final static String PASSWORD_PARAM = "password";
-	public final static String MFACODE_PARAM = "mfaCode";
 	private Map<String, ? extends Object> params;
 	
-	
-	private mfamodule.proxies.MFA newMfaObject;
-
-	private String mfaCode;
 
 	public MultiFactorAuthLoginAction(Map<String, ? extends Object> params) {
 		super(Core.createSystemContext(), params);
@@ -40,9 +35,7 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 		this.userName = (String) params.get(USER_NAME_PARAM);
 		this.password = (String) params.get(PASSWORD_PARAM);
 		this.currentSessionId = (String)params.get("currentSessionId");
-	    this.request = (IMxRuntimeRequest)params.get("request");
-	    this.mfaCode =  request.getHeader(MFACODE_PARAM);
-	    
+	    this.request = (IMxRuntimeRequest)params.get("request");   
 	}
 
 	@Override
@@ -61,26 +54,11 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 				//check if there is mfa for the user from the first call
 				userMfaObj = mfamodule.proxies.microflows.Microflows.dS_MFA_GET(oldSession.createContext());
 			
-				if(userMfaObj != null && userMfaObj.getMendixObject().getMember(oldSession.createContext(),"Username").hasReadAccess(oldSession.createContext()) &&userMfaObj.getUsername() !=null) {
+				if(userMfaObj != null && userMfaObj.getMendixObject().getMember(oldSession.createContext(),"Username").hasReadAccess(oldSession.createContext()) && userMfaObj.getUsername() != null ) {
 					if ( mfamodule.proxies.microflows.Microflows.sUB_MFA_Validate(oldSession.createContext(), userMfaObj, userMfaObj.getUsername()) ) {
 						IUser user = Core.getUser(sysContext, userMfaObj.getUsername());
 						return Core.initializeSession(user, this.currentSessionId);
 					} 
-					else if (userMfaObj.getUsername() != null && userMfaObj.getUsername() != "") {
-						IUser user = Core.getUser(sysContext, userMfaObj.getUsername());
-						if(user != null) {
-							Object obj = (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins")+1;
-							user.getMendixObject().setValue(sysContext,"FailedLogins",obj);
-							if ( (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins") >= 3) {
-								user.getMendixObject().setValue(sysContext,"Blocked",true);
-								Core.commit(sysContext, user.getMendixObject());
-								_logNode.debug( "Custom MFA to much attempts FAILED: user '" + userMfaObj.getUsername() + "' blocked" );
-								throw new UserBlockedException("Custom MFA check: User '"+ userMfaObj.getUsername() + "' blocked");
-							}
-							Core.commit(sysContext, user.getMendixObject());
-						}
-						return oldSession;
-					}
 					else {
 						return oldSession;
 					}
@@ -117,54 +95,31 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 		else if( !Core.authenticate(sysContext, user, this.password)) {	
 			Object obj = (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins")+1;
 			user.getMendixObject().setValue(sysContext,"FailedLogins",obj);
-			if ( (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins") >= 3) {
+			if ( (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins") >= mfamodule.proxies.constants.Constants.getMaxLoginAttempts()) {
 				user.getMendixObject().setValue(sysContext,"Blocked",true);
 				Core.commit(sysContext, user.getMendixObject());
 				_logNode.debug( "Custom Login FAILED:  user '" + this.userName + "' blocked" );
+				Core.getLogger("Core").info( "User blocked: '" + this.userName + "'" );
+				if (oldSession != null) { Core.logout(oldSession); }
 				throw new UserBlockedException("Custom login: User '"+ this.userName + "' blocked");
 			}
 			Core.commit(sysContext, user.getMendixObject());
 			_logNode.debug( "Custom Login FAILED: invalid password for user '" + this.userName + "'." );
 			throw new AuthenticationRuntimeException(" Custom Login FAILED for user '" + this.userName + "'.");
 		}
-		
+
 		// from this point user+pass is validated:
-		if( mfamodule.proxies.constants.Constants.getEnabledMFA() && mfaCode != null && mfaCode != "" ) {
-			_logNode.debug("MFA enabled and code provided for  "+ this.userName);
-			IMendixObject newObj = Core.instantiate(sysContext, MFA.entityName);
-			newMfaObject = MFA.initialize(sysContext, newObj );
-			newMfaObject.setCode(mfaCode); 
-			newMfaObject.setUsername(this.userName); 
-			Core.commit(sysContext, newMfaObject.getMendixObject());
+		if ( oldSession != null && mfamodule.proxies.constants.Constants.getEnabledMFA() 
+				&& mfamodule.proxies.microflows.Microflows.sUB_MFA_Validate(oldSession.createContext(), userMfaObj, this.userName) ) {
 			
-			if ( mfamodule.proxies.microflows.Microflows.sUB_MFA_Validate(sysContext, newMfaObject,  this.userName) ) {
-				_logNode.debug("Validated code for "+ this.userName);
-				return super.execute();
-			}
-			else {
-				_logNode.debug( "Custom MFA code validation FAILED: mfa check for user '" + this.userName + "' with code '"+mfaCode+"'." );
-				Object obj = (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins")+1;
-				user.getMendixObject().setValue(sysContext,"FailedLogins",obj);
-				if ( (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins") >= 3) {
-					user.getMendixObject().setValue(sysContext,"Blocked",true);
-					Core.commit(sysContext, user.getMendixObject());
-					_logNode.debug( "Custom MFA to much attempts FAILED: user '" + this.userName + "' blocked" );
-					throw new UserBlockedException("Custom MFA check: User '"+ this.userName + "' blocked");
+				if( !mfamodule.proxies.microflows.Microflows.sUB_MFA_UserDisabledCheck(sysContext, this.userName) ) {
+					_logNode.debug("MFA enabled and Mendix session available ready for "+ this.userName);
+					return oldSession;
 				}
-				Core.commit(sysContext, user.getMendixObject());
-				throw new AuthenticationRuntimeException(" Custom Login FAILED for user '" + this.userName + "'.");
-			}
-		}
-		else if (oldSession != null && mfamodule.proxies.constants.Constants.getEnabledMFA() 
-				&& mfamodule.proxies.microflows.Microflows.sUB_MFA_Validate(oldSession.createContext(), userMfaObj, this.userName)) {
-			if( !mfamodule.proxies.microflows.Microflows.sUB_MFA_UserDisabledCheck(sysContext, this.userName) ) {
-				_logNode.debug("MFA enabled and Mendix session available ready voor MFA for "+ this.userName);
-				return oldSession;
-			}
-			else {
-				_logNode.debug("MFA enabled and Mendix session available redirect for "+ this.userName);
-				return super.execute();
-			}
+				else {
+					_logNode.debug("MFA enabled and Mendix session available redirect for "+ this.userName);
+					return super.execute();
+				}
 		}
 		else if( mfamodule.proxies.constants.Constants.getEnabledMFA() 
 				&& !mfamodule.proxies.microflows.Microflows.sUB_MFA_UserDisabledCheck(sysContext, this.userName) ) {
