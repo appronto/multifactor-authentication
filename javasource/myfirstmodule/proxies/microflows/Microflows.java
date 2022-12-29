@@ -49,43 +49,9 @@ public class Microflows
 		params.put("httpResponse", _httpResponse == null ? null : _httpResponse.getMendixObject());
 		return (java.lang.String) Core.microflowCall("MyFirstModule.GetTest").withParams(params).execute(context);
 	}
-	public static boolean mFA_CreateCode_Log_Test(IContext context, mfamodule.proxies.MFA _mFA)
+	public static void getVErsion(IContext context)
 	{
 		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MyFirstModule.MFA_CreateCode_Log_Test").withParams(params).execute(context);
-	}
-	public static boolean mFA_UserDisabledCheck_Test(IContext context, java.lang.String _username)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("Username", _username);
-		return (java.lang.Boolean) Core.microflowCall("MyFirstModule.MFA_UserDisabledCheck_Test").withParams(params).execute(context);
-	}
-	public static boolean mFA_ValidateCode_LocallyGenerated_Test(IContext context, mfamodule.proxies.MFA _mFA)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MyFirstModule.MFA_ValidateCode_LocallyGenerated_Test").withParams(params).execute(context);
-	}
-	public static boolean sUB_MFA_CreateCode(IContext context, mfamodule.proxies.MFA _mFA)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MyFirstModule.SUB_MFA_CreateCode").withParams(params).execute(context);
-	}
-	/**
-	 * Called from JAVA Action
-	 */
-	public static boolean sUB_MFA_UserDisabledCheck(IContext context, java.lang.String _username)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("Username", _username);
-		return (java.lang.Boolean) Core.microflowCall("MyFirstModule.SUB_MFA_UserDisabledCheck").withParams(params).execute(context);
-	}
-	public static boolean sUB_MFA_ValidateCode(IContext context, mfamodule.proxies.MFA _mFA)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MyFirstModule.SUB_MFA_ValidateCode").withParams(params).execute(context);
+		Core.microflowCall("MyFirstModule.GetVErsion").withParams(params).execute(context);
 	}
 }

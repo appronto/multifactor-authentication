@@ -20,13 +20,35 @@ public class Constants
 		return (java.lang.String)Core.getConfiguration().getConstantValue("MFAmodule.Lognode");
 	}
 
+	/**
+	* Maximum of attempts after first user+pass is correct and MFA is validated
+	*/
 	public static java.lang.Long getMaxAttemptsMFA()
 	{
 		return (java.lang.Long)Core.getConfiguration().getConstantValue("MFAmodule.MaxAttemptsMFA");
 	}
 
+	/**
+	* Maximum attempts for user+password
+	*/
 	public static java.lang.Long getMaxLoginAttempts()
 	{
 		return (java.lang.Long)Core.getConfiguration().getConstantValue("MFAmodule.MaxLoginAttempts");
+	}
+
+	/**
+	* Default Mendix platform is 5 minutes to unblock an user. Must be greater then 5 minutes
+	*/
+	public static java.lang.Long getUnblockLoginMinutes()
+	{
+		return (java.lang.Long)Core.getConfiguration().getConstantValue("MFAmodule.UnblockLoginMinutes");
+	}
+
+	/**
+	* Default Mendix platform is 5 minutes to unblock an user
+	*/
+	public static java.lang.Long getUnblockMFAMinutes()
+	{
+		return (java.lang.Long)Core.getConfiguration().getConstantValue("MFAmodule.UnblockMFAMinutes");
 	}
 }

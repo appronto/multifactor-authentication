@@ -29,11 +29,66 @@ public class Microflows
 		IMendixObject result = (IMendixObject)Core.microflowCall("MFAmodule.DS_MFA_GET").withParams(params).execute(context);
 		return result == null ? null : mfamodule.proxies.MFA.initialize(context, result);
 	}
+	public static boolean sUB_CheckMaxLogin(IContext context, mfamodule.proxies.UserHelper _userHelper)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("UserHelper", _userHelper == null ? null : _userHelper.getMendixObject());
+		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_CheckMaxLogin").withParams(params).execute(context);
+	}
+	public static boolean sUB_CheckMaxMFA(IContext context, mfamodule.proxies.UserHelper _userHelper)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("UserHelper", _userHelper == null ? null : _userHelper.getMendixObject());
+		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_CheckMaxMFA").withParams(params).execute(context);
+	}
+	public static void sUB_MFA_Create_Native(IContext context)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		Core.microflowCall("MFAmodule.SUB_MFA_Create_Native").withParams(params).execute(context);
+	}
 	public static boolean sUB_MFA_CreateCode(IContext context, mfamodule.proxies.MFA _mFA)
 	{
 		Map<java.lang.String, Object> params = new HashMap<>();
 		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
 		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode").withParams(params).execute(context);
+	}
+	public static boolean sUB_MFA_CreateCode_Email(IContext context, mfamodule.proxies.MFA _mFA)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
+		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode_Email").withParams(params).execute(context);
+	}
+	public static boolean sUB_MFA_CreateCode_Empty(IContext context, mfamodule.proxies.MFA _mFA)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
+		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode_Empty").withParams(params).execute(context);
+	}
+	public static boolean sUB_MFA_CreateCode_Fallback(IContext context, mfamodule.proxies.MFA _mFA)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
+		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode_Fallback").withParams(params).execute(context);
+	}
+	public static boolean sUB_MFA_CreateCode_GoogleAuthenticator(IContext context, mfamodule.proxies.MFA _mFA)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
+		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode_GoogleAuthenticator").withParams(params).execute(context);
+	}
+	public static boolean sUB_MFA_CreateCode_Log_Test(IContext context, mfamodule.proxies.MFA _mFA)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
+		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode_Log_Test").withParams(params).execute(context);
+	}
+	public static mfamodule.proxies.UserHelper sUB_MFA_GetUserHelper(IContext context, mfamodule.proxies.MFA _mFA, java.lang.String _mFAUsername)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
+		params.put("MFAUsername", _mFAUsername);
+		IMendixObject result = (IMendixObject)Core.microflowCall("MFAmodule.SUB_MFA_GetUserHelper").withParams(params).execute(context);
+		return result == null ? null : mfamodule.proxies.UserHelper.initialize(context, result);
 	}
 	/**
 	 * Called from JAVA Action
@@ -59,5 +114,23 @@ public class Microflows
 		Map<java.lang.String, Object> params = new HashMap<>();
 		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
 		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_ValidateCode").withParams(params).execute(context);
+	}
+	public static boolean sUB_MFA_ValidateCode_Fallback(IContext context, mfamodule.proxies.MFA _mFA)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
+		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_ValidateCode_Fallback").withParams(params).execute(context);
+	}
+	public static boolean sUB_MFA_ValidateCode_GoogleAuthenticator(IContext context, mfamodule.proxies.MFA _mFA)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
+		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_ValidateCode_GoogleAuthenticator").withParams(params).execute(context);
+	}
+	public static boolean sUB_MFA_ValidateCode_LocallyGenerated(IContext context, mfamodule.proxies.MFA _mFA)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
+		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_ValidateCode_LocallyGenerated").withParams(params).execute(context);
 	}
 }

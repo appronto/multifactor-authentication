@@ -26,6 +26,7 @@ public class MFA
 		Username("Username"),
 		Message("Message"),
 		MessageType("MessageType"),
+		IsNativeLogin("IsNativeLogin"),
 		MFA_Session("MFAmodule.MFA_Session");
 
 		private java.lang.String metaName;
@@ -343,6 +344,42 @@ public class MFA
 			getMendixObject().setValue(context, MemberNames.MessageType.toString(), messagetype.toString());
 		else
 			getMendixObject().setValue(context, MemberNames.MessageType.toString(), null);
+	}
+
+	/**
+	 * @return value of IsNativeLogin
+	 */
+	public final java.lang.Boolean getIsNativeLogin()
+	{
+		return getIsNativeLogin(getContext());
+	}
+
+	/**
+	 * @param context
+	 * @return value of IsNativeLogin
+	 */
+	public final java.lang.Boolean getIsNativeLogin(com.mendix.systemwideinterfaces.core.IContext context)
+	{
+		return (java.lang.Boolean) getMendixObject().getValue(context, MemberNames.IsNativeLogin.toString());
+	}
+
+	/**
+	 * Set value of IsNativeLogin
+	 * @param isnativelogin
+	 */
+	public final void setIsNativeLogin(java.lang.Boolean isnativelogin)
+	{
+		setIsNativeLogin(getContext(), isnativelogin);
+	}
+
+	/**
+	 * Set value of IsNativeLogin
+	 * @param context
+	 * @param isnativelogin
+	 */
+	public final void setIsNativeLogin(com.mendix.systemwideinterfaces.core.IContext context, java.lang.Boolean isnativelogin)
+	{
+		getMendixObject().setValue(context, MemberNames.IsNativeLogin.toString(), isnativelogin);
 	}
 
 	/**

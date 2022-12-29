@@ -38,7 +38,6 @@ still returns the anonymous User object:
 
 Scenarios to cover:
 
-- Default login via login.html for accounts with MFA disabled.
 - Default login via widgets for accounts with MFA disabled.
 - Default login for webservice and REST accounts.
 - Login by default widgets but extended with ability to enter MFA code with MFA enabled.

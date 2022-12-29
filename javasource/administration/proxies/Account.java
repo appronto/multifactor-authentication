@@ -21,6 +21,7 @@ public class Account extends system.proxies.User
 		IsLocalUser("IsLocalUser"),
 		LastLogin2FA("LastLogin2FA"),
 		HasMFAenabled("HasMFAenabled"),
+		MFAmethod("MFAmethod"),
 		Name("Name"),
 		Password("Password"),
 		LastLogin("LastLogin"),
@@ -269,6 +270,50 @@ public class Account extends system.proxies.User
 	public final void setHasMFAenabled(com.mendix.systemwideinterfaces.core.IContext context, java.lang.Boolean hasmfaenabled)
 	{
 		getMendixObject().setValue(context, MemberNames.HasMFAenabled.toString(), hasmfaenabled);
+	}
+
+	/**
+	 * Set value of MFAmethod
+	 * @param mfamethod
+	 */
+	public final mfamodule.proxies.MFA_Method getMFAmethod()
+	{
+		return getMFAmethod(getContext());
+	}
+
+	/**
+	 * @param context
+	 * @return value of MFAmethod
+	 */
+	public final mfamodule.proxies.MFA_Method getMFAmethod(com.mendix.systemwideinterfaces.core.IContext context)
+	{
+		Object obj = getMendixObject().getValue(context, MemberNames.MFAmethod.toString());
+		if (obj == null)
+			return null;
+
+		return mfamodule.proxies.MFA_Method.valueOf((java.lang.String) obj);
+	}
+
+	/**
+	 * Set value of MFAmethod
+	 * @param mfamethod
+	 */
+	public final void setMFAmethod(mfamodule.proxies.MFA_Method mfamethod)
+	{
+		setMFAmethod(getContext(), mfamethod);
+	}
+
+	/**
+	 * Set value of MFAmethod
+	 * @param context
+	 * @param mfamethod
+	 */
+	public final void setMFAmethod(com.mendix.systemwideinterfaces.core.IContext context, mfamodule.proxies.MFA_Method mfamethod)
+	{
+		if (mfamethod != null)
+			getMendixObject().setValue(context, MemberNames.MFAmethod.toString(), mfamethod.toString());
+		else
+			getMendixObject().setValue(context, MemberNames.MFAmethod.toString(), null);
 	}
 
 	@java.lang.Override

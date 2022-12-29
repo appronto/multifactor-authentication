@@ -5,16 +5,19 @@ import java.util.UUID;
 
 import com.mendix.core.Core;
 import com.mendix.core.action.user.LoginAction;
+import com.mendix.core.conf.Configuration;
 import com.mendix.logging.ILogNode;
 import com.mendix.m2ee.api.IMxRuntimeRequest;
 import com.mendix.systemwideinterfaces.core.AuthenticationRuntimeException;
 import com.mendix.systemwideinterfaces.core.UserBlockedException;
 import com.mendix.systemwideinterfaces.core.IContext;
-import com.mendix.systemwideinterfaces.core.IMendixObject;
 import com.mendix.systemwideinterfaces.core.ISession;
 import com.mendix.systemwideinterfaces.core.IUser;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import mfamodule.proxies.MFA;
+import mfamodule.proxies.UserHelper;
 
 
 public class MultiFactorAuthLoginAction extends LoginAction{
@@ -86,26 +89,46 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 		}
 		else if (user.isBlocked() == true) {
 			_logNode.debug( "Custom Login FAILED: user '" + this.userName + "' is blocked." );
-			throw new UserBlockedException(" Custom Login FAILED for user '" + this.userName + "'.");
+			throw new UserBlockedException("Custom Login FAILED for user '" + this.userName + "'.");
 		}
 		else if (user.getUserRoleNames().isEmpty()) {
 			_logNode.debug( "Custom Login FAILED: user '" + this.userName + "' does not have any user roles." );
 			throw new AuthenticationRuntimeException(" Custom Login FAILED for user '" + this.userName + "'.");
 		}
 		else if( !Core.authenticate(sysContext, user, this.password)) {	
-			Object obj = (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins")+1;
-			user.getMendixObject().setValue(sysContext,"FailedLogins",obj);
-			if ( (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins") >= mfamodule.proxies.constants.Constants.getMaxLoginAttempts()) {
-				user.getMendixObject().setValue(sysContext,"Blocked",true);
+			//NO MFA for user:
+			if( mfamodule.proxies.microflows.Microflows.sUB_MFA_UserDisabledCheck(sysContext, this.userName) ) {
+				Object obj = (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins")+1;
+				user.getMendixObject().setValue(sysContext,"FailedLogins",obj);
+				if ( (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins") >= mfamodule.proxies.constants.Constants.getMaxLoginAttempts()) {
+					user.getMendixObject().setValue(sysContext,"Blocked",true);			
+					if(!Configuration.RUNTIME_VERSION.toString().startsWith("8")) {
+						user.getMendixObject().setValue(sysContext,"BlockedSince", LocalDateTime.now(ZoneOffset.UTC));
+					}
+					Core.commit(sysContext, user.getMendixObject());
+					
+					_logNode.debug( "Custom Login FAILED:  user '" + this.userName + "' blocked" );
+					Core.getLogger("Core").info( "Custom Login FAILED:  user '" + this.userName + "' blocked" );
+					if (oldSession != null) { Core.logout(oldSession); }
+					throw new UserBlockedException("Custom Login FAILED:  user '" + this.userName + "' blocked");
+				}
 				Core.commit(sysContext, user.getMendixObject());
-				_logNode.debug( "Custom Login FAILED:  user '" + this.userName + "' blocked" );
-				Core.getLogger("Core").info( "User blocked: '" + this.userName + "'" );
-				if (oldSession != null) { Core.logout(oldSession); }
-				throw new UserBlockedException("Custom login: User '"+ this.userName + "' blocked");
+				
 			}
-			Core.commit(sysContext, user.getMendixObject());
+			//MFA for user, use own block check
+			else {
+				UserHelper userHelper = mfamodule.proxies.microflows.Microflows.sUB_MFA_GetUserHelper(getContext(), userMfaObj, this.userName);
+				if( !mfamodule.proxies.microflows.Microflows.sUB_CheckMaxLogin(getContext(), userHelper)) {
+					_logNode.debug( "Custom Login FAILED:  user '" + this.userName + "' blocked" );
+					Core.getLogger("Core").info( "Custom Login FAILED:  user '" + this.userName + "' blocked" );
+					throw new UserBlockedException("Custom Login FAILED:  user '" + this.userName + "' blocked");
+				}
+			}
+			
 			_logNode.debug( "Custom Login FAILED: invalid password for user '" + this.userName + "'." );
 			throw new AuthenticationRuntimeException(" Custom Login FAILED for user '" + this.userName + "'.");
+			
+			
 		}
 
 		// from this point user+pass is validated:
