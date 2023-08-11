@@ -42,7 +42,7 @@ Scenarios to cover:
 - Default login for webservice and REST accounts.
 - Login by default widgets but extended with ability to enter MFA code with MFA enabled.
 - Native mobile login
-- Datadog CloudSIEM support (see constant)
+- Datadog CloudSIEM support (see constant and [https://docs.datadoghq.com/logs/guide/best-practices-for-log-management/](https://docs.datadoghq.com/logs/guide/best-practices-for-log-management/))
 
 ## Configuration
 
