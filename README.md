@@ -41,7 +41,8 @@ Scenarios to cover:
 - Default login via widgets for accounts with MFA disabled.
 - Default login for webservice and REST accounts.
 - Login by default widgets but extended with ability to enter MFA code with MFA enabled.
-- Native mobile login 
+- Native mobile login
+- Datadog CloudSIEM support (see constant)
 
 ## Configuration
 
