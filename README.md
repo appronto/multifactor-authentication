@@ -100,4 +100,4 @@ When extending the LoginAction class and trying to set parameters from this clas
 
 ## Please report issues
 
-Have you found an issue or a vulnerability in this module, please reach out to [pim@appronto.nl](mailto:pim@appronto.nl). I will reward you with a nice goodie bag and will publish the new version to the Marketplace.
+Have you found an issue or a vulnerability in this module, please reach out to [pim.van.der.noll@emixa.com](mailto:pim.van.der.noll@emixa.com]. I will reward you with a nice goodie bag and will publish the new version to the Marketplace.
