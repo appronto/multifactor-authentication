@@ -24,7 +24,7 @@ public class ValueType
 		TypeEnum("TypeEnum"),
 		ValueType_MxObjectType("MxModelReflection.ValueType_MxObjectType");
 
-		private java.lang.String metaName;
+		private final java.lang.String metaName;
 
 		MemberNames(java.lang.String s)
 		{
@@ -40,15 +40,17 @@ public class ValueType
 
 	public ValueType(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		this(context, com.mendix.core.Core.instantiate(context, "MxModelReflection.ValueType"));
+		this(context, com.mendix.core.Core.instantiate(context, entityName));
 	}
 
 	protected ValueType(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject valueTypeMendixObject)
 	{
-		if (valueTypeMendixObject == null)
+		if (valueTypeMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
-		if (!com.mendix.core.Core.isSubClassOf("MxModelReflection.ValueType", valueTypeMendixObject.getType()))
-			throw new java.lang.IllegalArgumentException("The given object is not a MxModelReflection.ValueType");
+		}
+		if (!com.mendix.core.Core.isSubClassOf(entityName, valueTypeMendixObject.getType())) {
+			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
+		}	
 
 		this.valueTypeMendixObject = valueTypeMendixObject;
 		this.context = context;
@@ -66,6 +68,9 @@ public class ValueType
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
 	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
+	 * @param context The context to be used
+	 * @param mendixObject The Mendix object for the new instance
+	 * @return a new instance of this proxy class
 	 */
 	public static mxmodelreflection.proxies.ValueType initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -80,14 +85,16 @@ public class ValueType
 
 	public static java.util.List<mxmodelreflection.proxies.ValueType> load(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String xpathConstraint) throws com.mendix.core.CoreException
 	{
-		java.util.List<mxmodelreflection.proxies.ValueType> result = new java.util.ArrayList<mxmodelreflection.proxies.ValueType>();
-		for (com.mendix.systemwideinterfaces.core.IMendixObject obj : com.mendix.core.Core.retrieveXPathQuery(context, "//MxModelReflection.ValueType" + xpathConstraint))
-			result.add(mxmodelreflection.proxies.ValueType.initialize(context, obj));
-		return result;
+		return com.mendix.core.Core.createXPathQuery(String.format("//%1$s%2$s", entityName, xpathConstraint))
+			.execute(context)
+			.stream()
+			.map(obj -> mxmodelreflection.proxies.ValueType.initialize(context, obj))
+			.collect(java.util.stream.Collectors.toList());
 	}
 
 	/**
 	 * Commit the changes made on this proxy object.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit() throws com.mendix.core.CoreException
 	{
@@ -96,6 +103,7 @@ public class ValueType
 
 	/**
 	 * Commit the changes made on this proxy object using the specified context.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
@@ -169,9 +177,9 @@ public class ValueType
 	public final mxmodelreflection.proxies.PrimitiveTypes getTypeEnum(com.mendix.systemwideinterfaces.core.IContext context)
 	{
 		Object obj = getMendixObject().getValue(context, MemberNames.TypeEnum.toString());
-		if (obj == null)
+		if (obj == null) {
 			return null;
-
+		}
 		return mxmodelreflection.proxies.PrimitiveTypes.valueOf((java.lang.String) obj);
 	}
 
@@ -191,13 +199,15 @@ public class ValueType
 	 */
 	public final void setTypeEnum(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.PrimitiveTypes typeenum)
 	{
-		if (typeenum != null)
+		if (typeenum != null) {
 			getMendixObject().setValue(context, MemberNames.TypeEnum.toString(), typeenum.toString());
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.TypeEnum.toString(), null);
+		}
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of ValueType_MxObjectType
 	 */
 	public final mxmodelreflection.proxies.MxObjectType getValueType_MxObjectType() throws com.mendix.core.CoreException
@@ -208,13 +218,15 @@ public class ValueType
 	/**
 	 * @param context
 	 * @return value of ValueType_MxObjectType
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final mxmodelreflection.proxies.MxObjectType getValueType_MxObjectType(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
 		mxmodelreflection.proxies.MxObjectType result = null;
 		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.ValueType_MxObjectType.toString());
-		if (identifier != null)
+		if (identifier != null) {
 			result = mxmodelreflection.proxies.MxObjectType.load(context, identifier);
+		}
 		return result;
 	}
 
@@ -234,10 +246,11 @@ public class ValueType
 	 */
 	public final void setValueType_MxObjectType(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.MxObjectType valuetype_mxobjecttype)
 	{
-		if (valuetype_mxobjecttype == null)
+		if (valuetype_mxobjecttype == null) {
 			getMendixObject().setValue(context, MemberNames.ValueType_MxObjectType.toString(), null);
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.ValueType_MxObjectType.toString(), valuetype_mxobjecttype.getMendixObject().getId());
+		}
 	}
 
 	/**
@@ -259,9 +272,9 @@ public class ValueType
 	@java.lang.Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
+		if (obj == this) {
 			return true;
-
+		}
 		if (obj != null && getClass().equals(obj.getClass()))
 		{
 			final mxmodelreflection.proxies.ValueType that = (mxmodelreflection.proxies.ValueType) obj;
@@ -281,7 +294,7 @@ public class ValueType
 	 */
 	public static java.lang.String getType()
 	{
-		return "MxModelReflection.ValueType";
+		return entityName;
 	}
 
 	/**

@@ -17,6 +17,9 @@ import com.mendix.webui.CustomJavaAction;
 import mfamodule.helpers.*;
 import system.proxies.User;
 
+/**
+ * Overwrites default login so we can prevent all different sign-in actions.
+ */
 public class OverwriteDefaultLoginAction extends CustomJavaAction<java.lang.Boolean>
 {
 	public OverwriteDefaultLoginAction(IContext context)
@@ -41,6 +44,7 @@ public class OverwriteDefaultLoginAction extends CustomJavaAction<java.lang.Bool
 
 	/**
 	 * Returns a string representation of this action
+	 * @return a string representation of this action
 	 */
 	@java.lang.Override
 	public java.lang.String toString()

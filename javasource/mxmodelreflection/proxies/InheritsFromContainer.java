@@ -22,7 +22,7 @@ public class InheritsFromContainer
 	{
 		Summary("Summary");
 
-		private java.lang.String metaName;
+		private final java.lang.String metaName;
 
 		MemberNames(java.lang.String s)
 		{
@@ -38,15 +38,17 @@ public class InheritsFromContainer
 
 	public InheritsFromContainer(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		this(context, com.mendix.core.Core.instantiate(context, "MxModelReflection.InheritsFromContainer"));
+		this(context, com.mendix.core.Core.instantiate(context, entityName));
 	}
 
 	protected InheritsFromContainer(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject inheritsFromContainerMendixObject)
 	{
-		if (inheritsFromContainerMendixObject == null)
+		if (inheritsFromContainerMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
-		if (!com.mendix.core.Core.isSubClassOf("MxModelReflection.InheritsFromContainer", inheritsFromContainerMendixObject.getType()))
-			throw new java.lang.IllegalArgumentException("The given object is not a MxModelReflection.InheritsFromContainer");
+		}
+		if (!com.mendix.core.Core.isSubClassOf(entityName, inheritsFromContainerMendixObject.getType())) {
+			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
+		}	
 
 		this.inheritsFromContainerMendixObject = inheritsFromContainerMendixObject;
 		this.context = context;
@@ -64,6 +66,9 @@ public class InheritsFromContainer
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
 	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
+	 * @param context The context to be used
+	 * @param mendixObject The Mendix object for the new instance
+	 * @return a new instance of this proxy class
 	 */
 	public static mxmodelreflection.proxies.InheritsFromContainer initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -78,6 +83,7 @@ public class InheritsFromContainer
 
 	/**
 	 * Commit the changes made on this proxy object.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit() throws com.mendix.core.CoreException
 	{
@@ -86,6 +92,7 @@ public class InheritsFromContainer
 
 	/**
 	 * Commit the changes made on this proxy object using the specified context.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
@@ -162,9 +169,9 @@ public class InheritsFromContainer
 	@java.lang.Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
+		if (obj == this) {
 			return true;
-
+		}
 		if (obj != null && getClass().equals(obj.getClass()))
 		{
 			final mxmodelreflection.proxies.InheritsFromContainer that = (mxmodelreflection.proxies.InheritsFromContainer) obj;
@@ -184,7 +191,7 @@ public class InheritsFromContainer
 	 */
 	public static java.lang.String getType()
 	{
-		return "MxModelReflection.InheritsFromContainer";
+		return entityName;
 	}
 
 	/**

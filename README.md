@@ -38,11 +38,11 @@ still returns the anonymous User object:
 
 Scenarios to cover:
 
+- Default login via login.html for accounts with MFA disabled.
 - Default login via widgets for accounts with MFA disabled.
 - Default login for webservice and REST accounts.
 - Login by default widgets but extended with ability to enter MFA code with MFA enabled.
-- Native mobile login
-- Datadog CloudSIEM support (see constant and [https://docs.datadoghq.com/logs/guide/best-practices-for-log-management/](https://docs.datadoghq.com/logs/guide/best-practices-for-log-management/))
+- Native mobile login 
 
 ## Configuration
 
@@ -100,4 +100,4 @@ When extending the LoginAction class and trying to set parameters from this clas
 
 ## Please report issues
 
-Have you found an issue or a vulnerability in this module, please reach out to [pim.van.der.noll@emixa.com](mailto:pim.van.der.noll@emixa.com]. I will reward you with a nice goodie bag and will publish the new version to the Marketplace.
+Have you found an issue or a vulnerability in this module, please reach out to [pim@appronto.nl](mailto:pim@appronto.nl). I will reward you with a nice goodie bag and will publish the new version to the Marketplace.

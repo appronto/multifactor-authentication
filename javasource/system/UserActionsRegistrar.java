@@ -7,6 +7,8 @@ public class UserActionsRegistrar
   public void registerActions(IActionRegistrator registrator)
   {
     registrator.bundleComponentLoaded();
+    registrator.registerUserAction(approntocommon.actions.AssertAttributesAndValues.class);
+    registrator.registerUserAction(approntocommon.actions.CreateICS.class);
     registrator.registerUserAction(approntocommon.actions.CreatePasswordDigest.class);
     registrator.registerUserAction(approntocommon.actions.CropImage.class);
     registrator.registerUserAction(approntocommon.actions.EndSavePointForTransaction.class);
@@ -16,6 +18,8 @@ public class UserActionsRegistrar
     registrator.registerUserAction(approntocommon.actions.FileFromResourceToFileDocument.class);
     registrator.registerUserAction(approntocommon.actions.GetCurrentMicroflow.class);
     registrator.registerUserAction(approntocommon.actions.GetCurrentSessionID.class);
+    registrator.registerUserAction(approntocommon.actions.GetEntityFromGUID.class);
+    registrator.registerUserAction(approntocommon.actions.GetFileType.class);
     registrator.registerUserAction(approntocommon.actions.GetObjectWithId.class);
     registrator.registerUserAction(approntocommon.actions.GetStringFromRegex.class);
     registrator.registerUserAction(approntocommon.actions.HaversineCheck.class);
@@ -25,6 +29,8 @@ public class UserActionsRegistrar
     registrator.registerUserAction(approntocommon.actions.ParseStringToEnum.class);
     registrator.registerUserAction(approntocommon.actions.RefreshByEntity.class);
     registrator.registerUserAction(approntocommon.actions.SHA1Encrypt.class);
+    registrator.registerUserAction(approntocommon.actions.StringSearchReplaceWithoutRegex.class);
+    registrator.registerUserAction(approntocommon.actions.WebsocketListener.class);
     registrator.registerUserAction(approntocommon.actions.WorkdaysBetween.class);
     registrator.registerUserAction(communitycommons.actions.Base64Decode.class);
     registrator.registerUserAction(communitycommons.actions.Base64DecodeToFile.class);
@@ -89,6 +95,7 @@ public class UserActionsRegistrar
     registrator.registerUserAction(communitycommons.actions.RandomHash.class);
     registrator.registerUserAction(communitycommons.actions.RandomString.class);
     registrator.registerUserAction(communitycommons.actions.RandomStrongPassword.class);
+    registrator.registerUserAction(communitycommons.actions.RandomStrongPasswordWithLowercase.class);
     registrator.registerUserAction(communitycommons.actions.recommitInBatches.class);
     registrator.registerUserAction(communitycommons.actions.refreshClass.class);
     registrator.registerUserAction(communitycommons.actions.refreshClassByObject.class);
@@ -118,20 +125,43 @@ public class UserActionsRegistrar
     registrator.registerUserAction(communitycommons.actions.TimeMeasureStart.class);
     registrator.registerUserAction(communitycommons.actions.XSSSanitize.class);
     registrator.registerUserAction(communitycommons.actions.YearsBetween.class);
-    registrator.registerUserAction(googleauthenticator.actions.CreateCredentials.class);
-    registrator.registerUserAction(googleauthenticator.actions.IsCodeValid.class);
+    registrator.registerUserAction(mfamodule.actions.CreateDatadogLog.class);
     registrator.registerUserAction(mfamodule.actions.JA_GetAdminUserName.class);
     registrator.registerUserAction(mfamodule.actions.OverwriteDefaultLoginAction.class);
     registrator.registerUserAction(mfamodule.actions.ThrowException.class);
+    registrator.registerUserAction(mfatestmodule.actions.GetRuntimeVersion.class);
+    registrator.registerUserAction(mfatestmodule.actions.HasMFAatribute.class);
     registrator.registerUserAction(mxmodelreflection.actions.ReplaceToken.class);
     registrator.registerUserAction(mxmodelreflection.actions.SyncObjects.class);
     registrator.registerUserAction(mxmodelreflection.actions.TestThePattern.class);
     registrator.registerUserAction(mxmodelreflection.actions.ValidateTokensInMessage.class);
-    registrator.registerUserAction(myfirstmodule.actions.GetRuntimeVersion.class);
-    registrator.registerUserAction(myfirstmodule.actions.HasMFAatribute.class);
+    registrator.registerUserAction(objecthandling.actions.clone.class);
+    registrator.registerUserAction(objecthandling.actions.commitInSeparateDatabaseTransaction.class);
+    registrator.registerUserAction(objecthandling.actions.copyAttributes.class);
+    registrator.registerUserAction(objecthandling.actions.createObjectListFromObject.class);
+    registrator.registerUserAction(objecthandling.actions.deepClone.class);
+    registrator.registerUserAction(objecthandling.actions.deleteAll.class);
+    registrator.registerUserAction(objecthandling.actions.deleteInSeparateTransaction.class);
+    registrator.registerUserAction(objecthandling.actions.deleteWithoutEvents.class);
+    registrator.registerUserAction(objecthandling.actions.EndTransaction.class);
+    registrator.registerUserAction(objecthandling.actions.getCreatedByUser.class);
+    registrator.registerUserAction(objecthandling.actions.getGUID.class);
+    registrator.registerUserAction(objecthandling.actions.getLastChangedByUser.class);
+    registrator.registerUserAction(objecthandling.actions.getMemberValueByMemberName.class);
+    registrator.registerUserAction(objecthandling.actions.getOriginalValueAsString.class);
+    registrator.registerUserAction(objecthandling.actions.getTypeAsString.class);
+    registrator.registerUserAction(objecthandling.actions.memberHasChanged.class);
+    registrator.registerUserAction(objecthandling.actions.objectHasChanged.class);
+    registrator.registerUserAction(objecthandling.actions.refreshClassByObject.class);
+    registrator.registerUserAction(objecthandling.actions.setMemberValueByMemberName.class);
+    registrator.registerUserAction(objecthandling.actions.StartTransaction.class);
     registrator.registerUserAction(system.actions.VerifyPassword.class);
-    registrator.registerUserAction(twilioconnector.actions.DecryptString.class);
-    registrator.registerUserAction(twilioconnector.actions.EncryptString.class);
-    registrator.registerUserAction(twilioconnector.actions.SendSMS_JA.class);
+    registrator.registerUserAction(unittesting.actions.FindAllUnitTests.class);
+    registrator.registerUserAction(unittesting.actions.ReportStepJava.class);
+    registrator.registerUserAction(unittesting.actions.RunAllUnitTestsWrapper.class);
+    registrator.registerUserAction(unittesting.actions.RunUnitTest.class);
+    registrator.registerUserAction(unittesting.actions.StartRemoteApiServlet.class);
+    registrator.registerUserAction(unittesting.actions.StartRunAllSuites.class);
+    registrator.registerUserAction(unittesting.actions.ThrowAssertionFailed.class);
   }
 }

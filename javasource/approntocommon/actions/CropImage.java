@@ -15,7 +15,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 import com.mendix.core.Core;
-import com.mendix.systemwideinterfaces.core.UserAction;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
@@ -38,7 +37,7 @@ public class CropImage extends CustomJavaAction<java.lang.Boolean>
 	@java.lang.Override
 	public java.lang.Boolean executeAction() throws Exception
 	{
-		this.cropImgObj = __cropImgObj == null ? null : system.proxies.Image.initialize(getContext(), __cropImgObj);
+		this.cropImgObj = this.__cropImgObj == null ? null : system.proxies.Image.initialize(getContext(), __cropImgObj);
 
 		// BEGIN USER CODE
 		InputStream is = Core.getImage(getContext(), cropImgObj.getMendixObject(), false);
@@ -97,6 +96,7 @@ public class CropImage extends CustomJavaAction<java.lang.Boolean>
 
 	/**
 	 * Returns a string representation of this action
+	 * @return a string representation of this action
 	 */
 	@java.lang.Override
 	public java.lang.String toString()

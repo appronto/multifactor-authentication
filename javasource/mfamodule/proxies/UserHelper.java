@@ -26,7 +26,7 @@ public class UserHelper
 		BlockedSinceForMaxMFA("BlockedSinceForMaxMFA"),
 		UserHelper_User("MFAmodule.UserHelper_User");
 
-		private java.lang.String metaName;
+		private final java.lang.String metaName;
 
 		MemberNames(java.lang.String s)
 		{
@@ -42,15 +42,17 @@ public class UserHelper
 
 	public UserHelper(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		this(context, com.mendix.core.Core.instantiate(context, "MFAmodule.UserHelper"));
+		this(context, com.mendix.core.Core.instantiate(context, entityName));
 	}
 
 	protected UserHelper(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject userHelperMendixObject)
 	{
-		if (userHelperMendixObject == null)
+		if (userHelperMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
-		if (!com.mendix.core.Core.isSubClassOf("MFAmodule.UserHelper", userHelperMendixObject.getType()))
-			throw new java.lang.IllegalArgumentException("The given object is not a MFAmodule.UserHelper");
+		}
+		if (!com.mendix.core.Core.isSubClassOf(entityName, userHelperMendixObject.getType())) {
+			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
+		}	
 
 		this.userHelperMendixObject = userHelperMendixObject;
 		this.context = context;
@@ -68,6 +70,9 @@ public class UserHelper
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
 	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
+	 * @param context The context to be used
+	 * @param mendixObject The Mendix object for the new instance
+	 * @return a new instance of this proxy class
 	 */
 	public static mfamodule.proxies.UserHelper initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -82,14 +87,16 @@ public class UserHelper
 
 	public static java.util.List<mfamodule.proxies.UserHelper> load(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String xpathConstraint) throws com.mendix.core.CoreException
 	{
-		java.util.List<mfamodule.proxies.UserHelper> result = new java.util.ArrayList<mfamodule.proxies.UserHelper>();
-		for (com.mendix.systemwideinterfaces.core.IMendixObject obj : com.mendix.core.Core.retrieveXPathQuery(context, "//MFAmodule.UserHelper" + xpathConstraint))
-			result.add(mfamodule.proxies.UserHelper.initialize(context, obj));
-		return result;
+		return com.mendix.core.Core.createXPathQuery(String.format("//%1$s%2$s", entityName, xpathConstraint))
+			.execute(context)
+			.stream()
+			.map(obj -> mfamodule.proxies.UserHelper.initialize(context, obj))
+			.collect(java.util.stream.Collectors.toList());
 	}
 
 	/**
 	 * Commit the changes made on this proxy object.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit() throws com.mendix.core.CoreException
 	{
@@ -98,6 +105,7 @@ public class UserHelper
 
 	/**
 	 * Commit the changes made on this proxy object using the specified context.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
@@ -264,6 +272,7 @@ public class UserHelper
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of UserHelper_User
 	 */
 	public final system.proxies.User getUserHelper_User() throws com.mendix.core.CoreException
@@ -274,13 +283,15 @@ public class UserHelper
 	/**
 	 * @param context
 	 * @return value of UserHelper_User
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final system.proxies.User getUserHelper_User(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
 		system.proxies.User result = null;
 		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.UserHelper_User.toString());
-		if (identifier != null)
+		if (identifier != null) {
 			result = system.proxies.User.load(context, identifier);
+		}
 		return result;
 	}
 
@@ -300,10 +311,11 @@ public class UserHelper
 	 */
 	public final void setUserHelper_User(com.mendix.systemwideinterfaces.core.IContext context, system.proxies.User userhelper_user)
 	{
-		if (userhelper_user == null)
+		if (userhelper_user == null) {
 			getMendixObject().setValue(context, MemberNames.UserHelper_User.toString(), null);
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.UserHelper_User.toString(), userhelper_user.getMendixObject().getId());
+		}
 	}
 
 	/**
@@ -325,9 +337,9 @@ public class UserHelper
 	@java.lang.Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
+		if (obj == this) {
 			return true;
-
+		}
 		if (obj != null && getClass().equals(obj.getClass()))
 		{
 			final mfamodule.proxies.UserHelper that = (mfamodule.proxies.UserHelper) obj;
@@ -347,7 +359,7 @@ public class UserHelper
 	 */
 	public static java.lang.String getType()
 	{
-		return "MFAmodule.UserHelper";
+		return entityName;
 	}
 
 	/**

@@ -27,7 +27,7 @@ public class MxObjectEnum extends mxmodelreflection.proxies.MxObjectMember
 		MxObjectMember_MxObjectType("MxModelReflection.MxObjectMember_MxObjectType"),
 		MxObjectMember_Type("MxModelReflection.MxObjectMember_Type");
 
-		private java.lang.String metaName;
+		private final java.lang.String metaName;
 
 		MemberNames(java.lang.String s)
 		{
@@ -43,14 +43,15 @@ public class MxObjectEnum extends mxmodelreflection.proxies.MxObjectMember
 
 	public MxObjectEnum(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		this(context, com.mendix.core.Core.instantiate(context, "MxModelReflection.MxObjectEnum"));
+		this(context, com.mendix.core.Core.instantiate(context, entityName));
 	}
 
 	protected MxObjectEnum(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mxObjectEnumMendixObject)
 	{
 		super(context, mxObjectEnumMendixObject);
-		if (!com.mendix.core.Core.isSubClassOf("MxModelReflection.MxObjectEnum", mxObjectEnumMendixObject.getType()))
-			throw new java.lang.IllegalArgumentException("The given object is not a MxModelReflection.MxObjectEnum");
+		if (!com.mendix.core.Core.isSubClassOf(entityName, mxObjectEnumMendixObject.getType())) {
+			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
+		}	
 	}
 
 	/**
@@ -65,6 +66,9 @@ public class MxObjectEnum extends mxmodelreflection.proxies.MxObjectMember
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
 	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
+	 * @param context The context to be used
+	 * @param mendixObject The Mendix object for the new instance
+	 * @return a new instance of this proxy class
 	 */
 	public static mxmodelreflection.proxies.MxObjectEnum initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -79,13 +83,15 @@ public class MxObjectEnum extends mxmodelreflection.proxies.MxObjectMember
 
 	public static java.util.List<mxmodelreflection.proxies.MxObjectEnum> load(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String xpathConstraint) throws com.mendix.core.CoreException
 	{
-		java.util.List<mxmodelreflection.proxies.MxObjectEnum> result = new java.util.ArrayList<mxmodelreflection.proxies.MxObjectEnum>();
-		for (com.mendix.systemwideinterfaces.core.IMendixObject obj : com.mendix.core.Core.retrieveXPathQuery(context, "//MxModelReflection.MxObjectEnum" + xpathConstraint))
-			result.add(mxmodelreflection.proxies.MxObjectEnum.initialize(context, obj));
-		return result;
+		return com.mendix.core.Core.createXPathQuery(String.format("//%1$s%2$s", entityName, xpathConstraint))
+			.execute(context)
+			.stream()
+			.map(obj -> mxmodelreflection.proxies.MxObjectEnum.initialize(context, obj))
+			.collect(java.util.stream.Collectors.toList());
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of Values
 	 */
 	public final java.util.List<mxmodelreflection.proxies.MxObjectEnumValue> getValues() throws com.mendix.core.CoreException
@@ -96,16 +102,19 @@ public class MxObjectEnum extends mxmodelreflection.proxies.MxObjectMember
 	/**
 	 * @param context
 	 * @return value of Values
+	 * @throws com.mendix.core.CoreException
 	 */
 	@SuppressWarnings("unchecked")
 	public final java.util.List<mxmodelreflection.proxies.MxObjectEnumValue> getValues(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
-		java.util.List<mxmodelreflection.proxies.MxObjectEnumValue> result = new java.util.ArrayList<mxmodelreflection.proxies.MxObjectEnumValue>();
+		java.util.List<mxmodelreflection.proxies.MxObjectEnumValue> result = new java.util.ArrayList<>();
 		Object valueObject = getMendixObject().getValue(context, MemberNames.Values.toString());
-		if (valueObject == null)
+		if (valueObject == null) {
 			return result;
-		for (com.mendix.systemwideinterfaces.core.IMendixObject mendixObject : com.mendix.core.Core.retrieveIdList(context, (java.util.List<com.mendix.systemwideinterfaces.core.IMendixIdentifier>) valueObject))
+		}
+		for (com.mendix.systemwideinterfaces.core.IMendixObject mendixObject : com.mendix.core.Core.retrieveIdList(context, (java.util.List<com.mendix.systemwideinterfaces.core.IMendixIdentifier>) valueObject)) {
 			result.add(mxmodelreflection.proxies.MxObjectEnumValue.initialize(context, mendixObject));
+		}
 		return result;
 	}
 
@@ -125,18 +134,20 @@ public class MxObjectEnum extends mxmodelreflection.proxies.MxObjectMember
 	 */
 	public final void setValues(com.mendix.systemwideinterfaces.core.IContext context, java.util.List<mxmodelreflection.proxies.MxObjectEnumValue> values)
 	{
-		java.util.List<com.mendix.systemwideinterfaces.core.IMendixIdentifier> identifiers = new java.util.ArrayList<com.mendix.systemwideinterfaces.core.IMendixIdentifier>();
-		for (mxmodelreflection.proxies.MxObjectEnumValue proxyObject : values)
-			identifiers.add(proxyObject.getMendixObject().getId());
+		var identifiers = values
+			.stream()
+			.map(proxyObject -> proxyObject.getMendixObject().getId())
+			.collect(java.util.stream.Collectors.toList());
+		
 		getMendixObject().setValue(context, MemberNames.Values.toString(), identifiers);
 	}
 
 	@java.lang.Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
+		if (obj == this) {
 			return true;
-
+		}
 		if (obj != null && getClass().equals(obj.getClass()))
 		{
 			final mxmodelreflection.proxies.MxObjectEnum that = (mxmodelreflection.proxies.MxObjectEnum) obj;
@@ -156,7 +167,7 @@ public class MxObjectEnum extends mxmodelreflection.proxies.MxObjectMember
 	 */
 	public static java.lang.String getType()
 	{
-		return "MxModelReflection.MxObjectEnum";
+		return entityName;
 	}
 
 	/**

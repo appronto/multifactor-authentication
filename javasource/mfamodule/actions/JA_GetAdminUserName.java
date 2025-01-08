@@ -13,6 +13,9 @@ import com.mendix.core.Core;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
 
+/**
+ * Will return the UserName of the Administrator.
+ */
 public class JA_GetAdminUserName extends CustomJavaAction<java.lang.String>
 {
 	public JA_GetAdminUserName(IContext context)
@@ -30,6 +33,7 @@ public class JA_GetAdminUserName extends CustomJavaAction<java.lang.String>
 
 	/**
 	 * Returns a string representation of this action
+	 * @return a string representation of this action
 	 */
 	@java.lang.Override
 	public java.lang.String toString()

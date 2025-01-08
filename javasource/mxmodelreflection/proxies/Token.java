@@ -40,7 +40,7 @@ public class Token
 		Token_MxObjectType_Referenced("MxModelReflection.Token_MxObjectType_Referenced"),
 		Token_MxObjectReference("MxModelReflection.Token_MxObjectReference");
 
-		private java.lang.String metaName;
+		private final java.lang.String metaName;
 
 		MemberNames(java.lang.String s)
 		{
@@ -56,15 +56,17 @@ public class Token
 
 	public Token(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		this(context, com.mendix.core.Core.instantiate(context, "MxModelReflection.Token"));
+		this(context, com.mendix.core.Core.instantiate(context, entityName));
 	}
 
 	protected Token(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject tokenMendixObject)
 	{
-		if (tokenMendixObject == null)
+		if (tokenMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
-		if (!com.mendix.core.Core.isSubClassOf("MxModelReflection.Token", tokenMendixObject.getType()))
-			throw new java.lang.IllegalArgumentException("The given object is not a MxModelReflection.Token");
+		}
+		if (!com.mendix.core.Core.isSubClassOf(entityName, tokenMendixObject.getType())) {
+			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
+		}	
 
 		this.tokenMendixObject = tokenMendixObject;
 		this.context = context;
@@ -82,6 +84,9 @@ public class Token
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
 	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
+	 * @param context The context to be used
+	 * @param mendixObject The Mendix object for the new instance
+	 * @return a new instance of this proxy class
 	 */
 	public static mxmodelreflection.proxies.Token initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -96,14 +101,16 @@ public class Token
 
 	public static java.util.List<mxmodelreflection.proxies.Token> load(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String xpathConstraint) throws com.mendix.core.CoreException
 	{
-		java.util.List<mxmodelreflection.proxies.Token> result = new java.util.ArrayList<mxmodelreflection.proxies.Token>();
-		for (com.mendix.systemwideinterfaces.core.IMendixObject obj : com.mendix.core.Core.retrieveXPathQuery(context, "//MxModelReflection.Token" + xpathConstraint))
-			result.add(mxmodelreflection.proxies.Token.initialize(context, obj));
-		return result;
+		return com.mendix.core.Core.createXPathQuery(String.format("//%1$s%2$s", entityName, xpathConstraint))
+			.execute(context)
+			.stream()
+			.map(obj -> mxmodelreflection.proxies.Token.initialize(context, obj))
+			.collect(java.util.stream.Collectors.toList());
 	}
 
 	/**
 	 * Commit the changes made on this proxy object.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit() throws com.mendix.core.CoreException
 	{
@@ -112,6 +119,7 @@ public class Token
 
 	/**
 	 * Commit the changes made on this proxy object using the specified context.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
@@ -365,9 +373,9 @@ public class Token
 	public final mxmodelreflection.proxies.TokenType getTokenType(com.mendix.systemwideinterfaces.core.IContext context)
 	{
 		Object obj = getMendixObject().getValue(context, MemberNames.TokenType.toString());
-		if (obj == null)
+		if (obj == null) {
 			return null;
-
+		}
 		return mxmodelreflection.proxies.TokenType.valueOf((java.lang.String) obj);
 	}
 
@@ -387,10 +395,11 @@ public class Token
 	 */
 	public final void setTokenType(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.TokenType tokentype)
 	{
-		if (tokentype != null)
+		if (tokentype != null) {
 			getMendixObject().setValue(context, MemberNames.TokenType.toString(), tokentype.toString());
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.TokenType.toString(), null);
+		}
 	}
 
 	/**
@@ -409,9 +418,9 @@ public class Token
 	public final mxmodelreflection.proxies.Status getStatus(com.mendix.systemwideinterfaces.core.IContext context)
 	{
 		Object obj = getMendixObject().getValue(context, MemberNames.Status.toString());
-		if (obj == null)
+		if (obj == null) {
 			return null;
-
+		}
 		return mxmodelreflection.proxies.Status.valueOf((java.lang.String) obj);
 	}
 
@@ -431,10 +440,11 @@ public class Token
 	 */
 	public final void setStatus(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.Status status)
 	{
-		if (status != null)
+		if (status != null) {
 			getMendixObject().setValue(context, MemberNames.Status.toString(), status.toString());
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.Status.toString(), null);
+		}
 	}
 
 	/**
@@ -690,6 +700,7 @@ public class Token
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of Token_MxObjectMember
 	 */
 	public final mxmodelreflection.proxies.MxObjectMember getToken_MxObjectMember() throws com.mendix.core.CoreException
@@ -700,13 +711,15 @@ public class Token
 	/**
 	 * @param context
 	 * @return value of Token_MxObjectMember
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final mxmodelreflection.proxies.MxObjectMember getToken_MxObjectMember(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
 		mxmodelreflection.proxies.MxObjectMember result = null;
 		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.Token_MxObjectMember.toString());
-		if (identifier != null)
+		if (identifier != null) {
 			result = mxmodelreflection.proxies.MxObjectMember.load(context, identifier);
+		}
 		return result;
 	}
 
@@ -726,13 +739,15 @@ public class Token
 	 */
 	public final void setToken_MxObjectMember(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.MxObjectMember token_mxobjectmember)
 	{
-		if (token_mxobjectmember == null)
+		if (token_mxobjectmember == null) {
 			getMendixObject().setValue(context, MemberNames.Token_MxObjectMember.toString(), null);
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.Token_MxObjectMember.toString(), token_mxobjectmember.getMendixObject().getId());
+		}
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of Token_MxObjectType_Start
 	 */
 	public final mxmodelreflection.proxies.MxObjectType getToken_MxObjectType_Start() throws com.mendix.core.CoreException
@@ -743,13 +758,15 @@ public class Token
 	/**
 	 * @param context
 	 * @return value of Token_MxObjectType_Start
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final mxmodelreflection.proxies.MxObjectType getToken_MxObjectType_Start(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
 		mxmodelreflection.proxies.MxObjectType result = null;
 		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.Token_MxObjectType_Start.toString());
-		if (identifier != null)
+		if (identifier != null) {
 			result = mxmodelreflection.proxies.MxObjectType.load(context, identifier);
+		}
 		return result;
 	}
 
@@ -769,13 +786,15 @@ public class Token
 	 */
 	public final void setToken_MxObjectType_Start(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.MxObjectType token_mxobjecttype_start)
 	{
-		if (token_mxobjecttype_start == null)
+		if (token_mxobjecttype_start == null) {
 			getMendixObject().setValue(context, MemberNames.Token_MxObjectType_Start.toString(), null);
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.Token_MxObjectType_Start.toString(), token_mxobjecttype_start.getMendixObject().getId());
+		}
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of Token_MxObjectType_Referenced
 	 */
 	public final mxmodelreflection.proxies.MxObjectType getToken_MxObjectType_Referenced() throws com.mendix.core.CoreException
@@ -786,13 +805,15 @@ public class Token
 	/**
 	 * @param context
 	 * @return value of Token_MxObjectType_Referenced
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final mxmodelreflection.proxies.MxObjectType getToken_MxObjectType_Referenced(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
 		mxmodelreflection.proxies.MxObjectType result = null;
 		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.Token_MxObjectType_Referenced.toString());
-		if (identifier != null)
+		if (identifier != null) {
 			result = mxmodelreflection.proxies.MxObjectType.load(context, identifier);
+		}
 		return result;
 	}
 
@@ -812,13 +833,15 @@ public class Token
 	 */
 	public final void setToken_MxObjectType_Referenced(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.MxObjectType token_mxobjecttype_referenced)
 	{
-		if (token_mxobjecttype_referenced == null)
+		if (token_mxobjecttype_referenced == null) {
 			getMendixObject().setValue(context, MemberNames.Token_MxObjectType_Referenced.toString(), null);
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.Token_MxObjectType_Referenced.toString(), token_mxobjecttype_referenced.getMendixObject().getId());
+		}
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of Token_MxObjectReference
 	 */
 	public final mxmodelreflection.proxies.MxObjectReference getToken_MxObjectReference() throws com.mendix.core.CoreException
@@ -829,13 +852,15 @@ public class Token
 	/**
 	 * @param context
 	 * @return value of Token_MxObjectReference
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final mxmodelreflection.proxies.MxObjectReference getToken_MxObjectReference(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
 		mxmodelreflection.proxies.MxObjectReference result = null;
 		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.Token_MxObjectReference.toString());
-		if (identifier != null)
+		if (identifier != null) {
 			result = mxmodelreflection.proxies.MxObjectReference.load(context, identifier);
+		}
 		return result;
 	}
 
@@ -855,10 +880,11 @@ public class Token
 	 */
 	public final void setToken_MxObjectReference(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.MxObjectReference token_mxobjectreference)
 	{
-		if (token_mxobjectreference == null)
+		if (token_mxobjectreference == null) {
 			getMendixObject().setValue(context, MemberNames.Token_MxObjectReference.toString(), null);
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.Token_MxObjectReference.toString(), token_mxobjectreference.getMendixObject().getId());
+		}
 	}
 
 	/**
@@ -880,9 +906,9 @@ public class Token
 	@java.lang.Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
+		if (obj == this) {
 			return true;
-
+		}
 		if (obj != null && getClass().equals(obj.getClass()))
 		{
 			final mxmodelreflection.proxies.Token that = (mxmodelreflection.proxies.Token) obj;
@@ -902,7 +928,7 @@ public class Token
 	 */
 	public static java.lang.String getType()
 	{
-		return "MxModelReflection.Token";
+		return entityName;
 	}
 
 	/**

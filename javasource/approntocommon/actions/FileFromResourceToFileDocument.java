@@ -32,7 +32,7 @@ public class FileFromResourceToFileDocument extends CustomJavaAction<java.lang.B
 	@java.lang.Override
 	public java.lang.Boolean executeAction() throws Exception
 	{
-		this.TargetFile = __TargetFile == null ? null : system.proxies.FileDocument.initialize(getContext(), __TargetFile);
+		this.TargetFile = this.__TargetFile == null ? null : system.proxies.FileDocument.initialize(getContext(), __TargetFile);
 
 		// BEGIN USER CODE
 		String filenamePath = Core.getConfiguration().getResourcesPath().getAbsolutePath() + File.separator + Filename;
@@ -48,6 +48,7 @@ public class FileFromResourceToFileDocument extends CustomJavaAction<java.lang.B
 
 	/**
 	 * Returns a string representation of this action
+	 * @return a string representation of this action
 	 */
 	@java.lang.Override
 	public java.lang.String toString()

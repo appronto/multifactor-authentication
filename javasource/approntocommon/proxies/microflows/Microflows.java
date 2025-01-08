@@ -7,14 +7,31 @@ package approntocommon.proxies.microflows;
 import java.util.HashMap;
 import java.util.Map;
 import com.mendix.core.Core;
-import com.mendix.core.CoreException;
-import com.mendix.systemwideinterfaces.MendixRuntimeException;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
 
 public class Microflows
 {
+	/**
+	 * @deprecated
+	 * The default constructor of the Microflows class should not be used.
+	 * Use the static microflow invocation methods instead.
+	 */
+	@java.lang.Deprecated(since = "9.12", forRemoval = true)
+	public Microflows() {}
+
 	// These are the microflows for the ApprontoCommon module
+	public static void aCT_ConversionTask_New(IContext context)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		Core.microflowCall("ApprontoCommon.ACT_ConversionTask_New").withParams(params).execute(context);
+	}
+	public static void aCT_ConversionTask_RunManually(IContext context, approntocommon.proxies.ConversionTask _conversionTask)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("ConversionTask", _conversionTask == null ? null : _conversionTask.getMendixObject());
+		Core.microflowCall("ApprontoCommon.ACT_ConversionTask_RunManually").withParams(params).execute(context);
+	}
 	public static administration.proxies.Account createAccountIfNotExists(IContext context, java.lang.String _username, java.lang.String _role, java.lang.String _password, boolean _webserviceUser)
 	{
 		Map<java.lang.String, Object> params = new HashMap<>();
@@ -24,5 +41,23 @@ public class Microflows
 		params.put("WebserviceUser", _webserviceUser);
 		IMendixObject result = (IMendixObject)Core.microflowCall("ApprontoCommon.CreateAccountIfNotExists").withParams(params).execute(context);
 		return result == null ? null : administration.proxies.Account.initialize(context, result);
+	}
+	public static boolean sUB_ConversationTask_ValidateMicroflow(IContext context, approntocommon.proxies.ConversionTask _conversionTask)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("ConversionTask", _conversionTask == null ? null : _conversionTask.getMendixObject());
+		return (java.lang.Boolean) Core.microflowCall("ApprontoCommon.SUB_ConversationTask_ValidateMicroflow").withParams(params).execute(context);
+	}
+	public static void sUB_ConversionTask_Run(IContext context, approntocommon.proxies.ConversionTask _conversionTask)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("ConversionTask", _conversionTask == null ? null : _conversionTask.getMendixObject());
+		Core.microflowCall("ApprontoCommon.SUB_ConversionTask_Run").withParams(params).execute(context);
+	}
+	public static boolean sUB_ValidateBSN_Mod11(IContext context, java.lang.String _bSN)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("BSN", _bSN);
+		return (java.lang.Boolean) Core.microflowCall("ApprontoCommon.SUB_ValidateBSN_Mod11").withParams(params).execute(context);
 	}
 }

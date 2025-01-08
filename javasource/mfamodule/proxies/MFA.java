@@ -27,9 +27,10 @@ public class MFA
 		Message("Message"),
 		MessageType("MessageType"),
 		IsNativeLogin("IsNativeLogin"),
+		IPaddress("IPaddress"),
 		MFA_Session("MFAmodule.MFA_Session");
 
-		private java.lang.String metaName;
+		private final java.lang.String metaName;
 
 		MemberNames(java.lang.String s)
 		{
@@ -45,15 +46,17 @@ public class MFA
 
 	public MFA(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		this(context, com.mendix.core.Core.instantiate(context, "MFAmodule.MFA"));
+		this(context, com.mendix.core.Core.instantiate(context, entityName));
 	}
 
 	protected MFA(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mFAMendixObject)
 	{
-		if (mFAMendixObject == null)
+		if (mFAMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
-		if (!com.mendix.core.Core.isSubClassOf("MFAmodule.MFA", mFAMendixObject.getType()))
-			throw new java.lang.IllegalArgumentException("The given object is not a MFAmodule.MFA");
+		}
+		if (!com.mendix.core.Core.isSubClassOf(entityName, mFAMendixObject.getType())) {
+			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
+		}	
 
 		this.mFAMendixObject = mFAMendixObject;
 		this.context = context;
@@ -71,6 +74,9 @@ public class MFA
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
 	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
+	 * @param context The context to be used
+	 * @param mendixObject The Mendix object for the new instance
+	 * @return a new instance of this proxy class
 	 */
 	public static mfamodule.proxies.MFA initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -85,14 +91,16 @@ public class MFA
 
 	public static java.util.List<mfamodule.proxies.MFA> load(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String xpathConstraint) throws com.mendix.core.CoreException
 	{
-		java.util.List<mfamodule.proxies.MFA> result = new java.util.ArrayList<mfamodule.proxies.MFA>();
-		for (com.mendix.systemwideinterfaces.core.IMendixObject obj : com.mendix.core.Core.retrieveXPathQuery(context, "//MFAmodule.MFA" + xpathConstraint))
-			result.add(mfamodule.proxies.MFA.initialize(context, obj));
-		return result;
+		return com.mendix.core.Core.createXPathQuery(String.format("//%1$s%2$s", entityName, xpathConstraint))
+			.execute(context)
+			.stream()
+			.map(obj -> mfamodule.proxies.MFA.initialize(context, obj))
+			.collect(java.util.stream.Collectors.toList());
 	}
 
 	/**
 	 * Commit the changes made on this proxy object.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit() throws com.mendix.core.CoreException
 	{
@@ -101,6 +109,7 @@ public class MFA
 
 	/**
 	 * Commit the changes made on this proxy object using the specified context.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
@@ -318,9 +327,9 @@ public class MFA
 	public final mfamodule.proxies.Enum_MessageType getMessageType(com.mendix.systemwideinterfaces.core.IContext context)
 	{
 		Object obj = getMendixObject().getValue(context, MemberNames.MessageType.toString());
-		if (obj == null)
+		if (obj == null) {
 			return null;
-
+		}
 		return mfamodule.proxies.Enum_MessageType.valueOf((java.lang.String) obj);
 	}
 
@@ -340,10 +349,11 @@ public class MFA
 	 */
 	public final void setMessageType(com.mendix.systemwideinterfaces.core.IContext context, mfamodule.proxies.Enum_MessageType messagetype)
 	{
-		if (messagetype != null)
+		if (messagetype != null) {
 			getMendixObject().setValue(context, MemberNames.MessageType.toString(), messagetype.toString());
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.MessageType.toString(), null);
+		}
 	}
 
 	/**
@@ -383,6 +393,43 @@ public class MFA
 	}
 
 	/**
+	 * @return value of IPaddress
+	 */
+	public final java.lang.String getIPaddress()
+	{
+		return getIPaddress(getContext());
+	}
+
+	/**
+	 * @param context
+	 * @return value of IPaddress
+	 */
+	public final java.lang.String getIPaddress(com.mendix.systemwideinterfaces.core.IContext context)
+	{
+		return (java.lang.String) getMendixObject().getValue(context, MemberNames.IPaddress.toString());
+	}
+
+	/**
+	 * Set value of IPaddress
+	 * @param ipaddress
+	 */
+	public final void setIPaddress(java.lang.String ipaddress)
+	{
+		setIPaddress(getContext(), ipaddress);
+	}
+
+	/**
+	 * Set value of IPaddress
+	 * @param context
+	 * @param ipaddress
+	 */
+	public final void setIPaddress(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String ipaddress)
+	{
+		getMendixObject().setValue(context, MemberNames.IPaddress.toString(), ipaddress);
+	}
+
+	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of MFA_Session
 	 */
 	public final system.proxies.Session getMFA_Session() throws com.mendix.core.CoreException
@@ -393,13 +440,15 @@ public class MFA
 	/**
 	 * @param context
 	 * @return value of MFA_Session
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final system.proxies.Session getMFA_Session(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
 		system.proxies.Session result = null;
 		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.MFA_Session.toString());
-		if (identifier != null)
+		if (identifier != null) {
 			result = system.proxies.Session.load(context, identifier);
+		}
 		return result;
 	}
 
@@ -419,10 +468,11 @@ public class MFA
 	 */
 	public final void setMFA_Session(com.mendix.systemwideinterfaces.core.IContext context, system.proxies.Session mfa_session)
 	{
-		if (mfa_session == null)
+		if (mfa_session == null) {
 			getMendixObject().setValue(context, MemberNames.MFA_Session.toString(), null);
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.MFA_Session.toString(), mfa_session.getMendixObject().getId());
+		}
 	}
 
 	/**
@@ -444,9 +494,9 @@ public class MFA
 	@java.lang.Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
+		if (obj == this) {
 			return true;
-
+		}
 		if (obj != null && getClass().equals(obj.getClass()))
 		{
 			final mfamodule.proxies.MFA that = (mfamodule.proxies.MFA) obj;
@@ -466,7 +516,7 @@ public class MFA
 	 */
 	public static java.lang.String getType()
 	{
-		return "MFAmodule.MFA";
+		return entityName;
 	}
 
 	/**

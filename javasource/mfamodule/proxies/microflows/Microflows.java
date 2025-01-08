@@ -7,13 +7,19 @@ package mfamodule.proxies.microflows;
 import java.util.HashMap;
 import java.util.Map;
 import com.mendix.core.Core;
-import com.mendix.core.CoreException;
-import com.mendix.systemwideinterfaces.MendixRuntimeException;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
 
 public class Microflows
 {
+	/**
+	 * @deprecated
+	 * The default constructor of the Microflows class should not be used.
+	 * Use the static microflow invocation methods instead.
+	 */
+	@java.lang.Deprecated(since = "9.12", forRemoval = true)
+	public Microflows() {}
+
 	// These are the microflows for the MFAmodule module
 	public static boolean aSU_MFA(IContext context)
 	{
@@ -41,6 +47,42 @@ public class Microflows
 		params.put("UserHelper", _userHelper == null ? null : _userHelper.getMendixObject());
 		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_CheckMaxMFA").withParams(params).execute(context);
 	}
+	public static mfamodule.proxies.DatadogLog sUB_DatadogLog_Create(IContext context)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		IMendixObject result = (IMendixObject)Core.microflowCall("MFAmodule.SUB_DatadogLog_Create").withParams(params).execute(context);
+		return result == null ? null : mfamodule.proxies.DatadogLog.initialize(context, result);
+	}
+	public static void sUB_DatadogLog_Default(IContext context, java.lang.String _eventName, mfamodule.proxies.DatadogOutcome_Enum _eventOutcome, java.lang.String _username, java.lang.String _userId, java.lang.String _eventCatagory, mfamodule.proxies.DatadogLog _datadogLog, java.lang.String _iP)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("EventName", _eventName);
+		params.put("EventOutcome", _eventOutcome == null ? null : _eventOutcome.name());
+		params.put("Username", _username);
+		params.put("UserId", _userId);
+		params.put("EventCatagory", _eventCatagory);
+		params.put("DatadogLog", _datadogLog == null ? null : _datadogLog.getMendixObject());
+		params.put("IP", _iP);
+		Core.microflowCall("MFAmodule.SUB_DatadogLog_Default").withParams(params).execute(context);
+	}
+	public static void sUB_DatadogLog_Default_API(IContext context, java.lang.String _eventName, mfamodule.proxies.DatadogOutcome_Enum _eventOutcome, java.lang.String _username, java.lang.String _userId, java.lang.String _uRL, java.lang.String _method, java.lang.String _statusCode)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("EventName", _eventName);
+		params.put("EventOutcome", _eventOutcome == null ? null : _eventOutcome.name());
+		params.put("Username", _username);
+		params.put("UserId", _userId);
+		params.put("URL", _uRL);
+		params.put("Method", _method);
+		params.put("StatusCode", _statusCode);
+		Core.microflowCall("MFAmodule.SUB_DatadogLog_Default_API").withParams(params).execute(context);
+	}
+	public static void sUB_DatadogLog_WriteLog(IContext context, mfamodule.proxies.DatadogLog _datadogLog)
+	{
+		Map<java.lang.String, Object> params = new HashMap<>();
+		params.put("DatadogLog", _datadogLog == null ? null : _datadogLog.getMendixObject());
+		Core.microflowCall("MFAmodule.SUB_DatadogLog_WriteLog").withParams(params).execute(context);
+	}
 	public static void sUB_MFA_Create_Native(IContext context)
 	{
 		Map<java.lang.String, Object> params = new HashMap<>();
@@ -51,36 +93,6 @@ public class Microflows
 		Map<java.lang.String, Object> params = new HashMap<>();
 		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
 		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode").withParams(params).execute(context);
-	}
-	public static boolean sUB_MFA_CreateCode_Email(IContext context, mfamodule.proxies.MFA _mFA)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode_Email").withParams(params).execute(context);
-	}
-	public static boolean sUB_MFA_CreateCode_Empty(IContext context, mfamodule.proxies.MFA _mFA)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode_Empty").withParams(params).execute(context);
-	}
-	public static boolean sUB_MFA_CreateCode_Fallback(IContext context, mfamodule.proxies.MFA _mFA)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode_Fallback").withParams(params).execute(context);
-	}
-	public static boolean sUB_MFA_CreateCode_GoogleAuthenticator(IContext context, mfamodule.proxies.MFA _mFA)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode_GoogleAuthenticator").withParams(params).execute(context);
-	}
-	public static boolean sUB_MFA_CreateCode_Log_Test(IContext context, mfamodule.proxies.MFA _mFA)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode_Log_Test").withParams(params).execute(context);
 	}
 	public static mfamodule.proxies.UserHelper sUB_MFA_GetUserHelper(IContext context, mfamodule.proxies.MFA _mFA, java.lang.String _mFAUsername)
 	{
@@ -114,23 +126,5 @@ public class Microflows
 		Map<java.lang.String, Object> params = new HashMap<>();
 		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
 		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_ValidateCode").withParams(params).execute(context);
-	}
-	public static boolean sUB_MFA_ValidateCode_Fallback(IContext context, mfamodule.proxies.MFA _mFA)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_ValidateCode_Fallback").withParams(params).execute(context);
-	}
-	public static boolean sUB_MFA_ValidateCode_GoogleAuthenticator(IContext context, mfamodule.proxies.MFA _mFA)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_ValidateCode_GoogleAuthenticator").withParams(params).execute(context);
-	}
-	public static boolean sUB_MFA_ValidateCode_LocallyGenerated(IContext context, mfamodule.proxies.MFA _mFA)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_ValidateCode_LocallyGenerated").withParams(params).execute(context);
 	}
 }

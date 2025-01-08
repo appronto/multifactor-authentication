@@ -33,10 +33,11 @@ public class ValidateTokensInMessage extends CustomJavaAction<java.util.List<IMe
 	@java.lang.Override
 	public java.util.List<IMendixObject> executeAction() throws Exception
 	{
-		this.TokenList = new java.util.ArrayList<mxmodelreflection.proxies.Token>();
-		if (__TokenList != null)
-			for (IMendixObject __TokenListElement : __TokenList)
-				this.TokenList.add(mxmodelreflection.proxies.Token.initialize(getContext(), __TokenListElement));
+		this.TokenList = java.util.Optional.ofNullable(this.__TokenList)
+			.orElse(java.util.Collections.emptyList())
+			.stream()
+			.map(__TokenListElement -> mxmodelreflection.proxies.Token.initialize(getContext(), __TokenListElement))
+			.collect(java.util.stream.Collectors.toList());
 
 		// BEGIN USER CODE
 		
@@ -46,6 +47,7 @@ public class ValidateTokensInMessage extends CustomJavaAction<java.util.List<IMe
 
 	/**
 	 * Returns a string representation of this action
+	 * @return a string representation of this action
 	 */
 	@java.lang.Override
 	public java.lang.String toString()

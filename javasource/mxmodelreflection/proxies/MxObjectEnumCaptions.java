@@ -24,7 +24,7 @@ public class MxObjectEnumCaptions
 		LanguageCode("LanguageCode"),
 		LanguageName("LanguageName");
 
-		private java.lang.String metaName;
+		private final java.lang.String metaName;
 
 		MemberNames(java.lang.String s)
 		{
@@ -40,15 +40,17 @@ public class MxObjectEnumCaptions
 
 	public MxObjectEnumCaptions(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		this(context, com.mendix.core.Core.instantiate(context, "MxModelReflection.MxObjectEnumCaptions"));
+		this(context, com.mendix.core.Core.instantiate(context, entityName));
 	}
 
 	protected MxObjectEnumCaptions(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mxObjectEnumCaptionsMendixObject)
 	{
-		if (mxObjectEnumCaptionsMendixObject == null)
+		if (mxObjectEnumCaptionsMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
-		if (!com.mendix.core.Core.isSubClassOf("MxModelReflection.MxObjectEnumCaptions", mxObjectEnumCaptionsMendixObject.getType()))
-			throw new java.lang.IllegalArgumentException("The given object is not a MxModelReflection.MxObjectEnumCaptions");
+		}
+		if (!com.mendix.core.Core.isSubClassOf(entityName, mxObjectEnumCaptionsMendixObject.getType())) {
+			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
+		}	
 
 		this.mxObjectEnumCaptionsMendixObject = mxObjectEnumCaptionsMendixObject;
 		this.context = context;
@@ -66,6 +68,9 @@ public class MxObjectEnumCaptions
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
 	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
+	 * @param context The context to be used
+	 * @param mendixObject The Mendix object for the new instance
+	 * @return a new instance of this proxy class
 	 */
 	public static mxmodelreflection.proxies.MxObjectEnumCaptions initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -80,14 +85,16 @@ public class MxObjectEnumCaptions
 
 	public static java.util.List<mxmodelreflection.proxies.MxObjectEnumCaptions> load(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String xpathConstraint) throws com.mendix.core.CoreException
 	{
-		java.util.List<mxmodelreflection.proxies.MxObjectEnumCaptions> result = new java.util.ArrayList<mxmodelreflection.proxies.MxObjectEnumCaptions>();
-		for (com.mendix.systemwideinterfaces.core.IMendixObject obj : com.mendix.core.Core.retrieveXPathQuery(context, "//MxModelReflection.MxObjectEnumCaptions" + xpathConstraint))
-			result.add(mxmodelreflection.proxies.MxObjectEnumCaptions.initialize(context, obj));
-		return result;
+		return com.mendix.core.Core.createXPathQuery(String.format("//%1$s%2$s", entityName, xpathConstraint))
+			.execute(context)
+			.stream()
+			.map(obj -> mxmodelreflection.proxies.MxObjectEnumCaptions.initialize(context, obj))
+			.collect(java.util.stream.Collectors.toList());
 	}
 
 	/**
 	 * Commit the changes made on this proxy object.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit() throws com.mendix.core.CoreException
 	{
@@ -96,6 +103,7 @@ public class MxObjectEnumCaptions
 
 	/**
 	 * Commit the changes made on this proxy object using the specified context.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
@@ -244,9 +252,9 @@ public class MxObjectEnumCaptions
 	@java.lang.Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
+		if (obj == this) {
 			return true;
-
+		}
 		if (obj != null && getClass().equals(obj.getClass()))
 		{
 			final mxmodelreflection.proxies.MxObjectEnumCaptions that = (mxmodelreflection.proxies.MxObjectEnumCaptions) obj;
@@ -266,7 +274,7 @@ public class MxObjectEnumCaptions
 	 */
 	public static java.lang.String getType()
 	{
-		return "MxModelReflection.MxObjectEnumCaptions";
+		return entityName;
 	}
 
 	/**

@@ -33,7 +33,7 @@ public class TestThePattern extends CustomJavaAction<java.lang.Boolean>
 	@java.lang.Override
 	public java.lang.Boolean executeAction() throws Exception
 	{
-		this.TestPatternObj = __TestPatternObj == null ? null : mxmodelreflection.proxies.TestPattern.initialize(getContext(), __TestPatternObj);
+		this.TestPatternObj = this.__TestPatternObj == null ? null : mxmodelreflection.proxies.TestPattern.initialize(getContext(), __TestPatternObj);
 
 		// BEGIN USER CODE
 
@@ -85,6 +85,7 @@ public class TestThePattern extends CustomJavaAction<java.lang.Boolean>
 
 	/**
 	 * Returns a string representation of this action
+	 * @return a string representation of this action
 	 */
 	@java.lang.Override
 	public java.lang.String toString()

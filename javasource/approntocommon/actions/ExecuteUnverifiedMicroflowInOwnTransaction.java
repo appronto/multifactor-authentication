@@ -55,10 +55,6 @@ public class ExecuteUnverifiedMicroflowInOwnTransaction extends CustomJavaAction
 			.withParam(this.ParamName, this.Param)
 			.execute(newContext);
 		}
-		
-
-		//Core.execute(newContext, this.MicroflowToExecute, params);
-		
 		newContext.endTransaction();
 		return true;
 		// END USER CODE
@@ -66,6 +62,7 @@ public class ExecuteUnverifiedMicroflowInOwnTransaction extends CustomJavaAction
 
 	/**
 	 * Returns a string representation of this action
+	 * @return a string representation of this action
 	 */
 	@java.lang.Override
 	public java.lang.String toString()

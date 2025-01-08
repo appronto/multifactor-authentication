@@ -32,7 +32,7 @@ public class MxObjectReference
 		MxObjectReference_MxObjectType_Parent("MxModelReflection.MxObjectReference_MxObjectType_Parent"),
 		MxObjectReference_Module("MxModelReflection.MxObjectReference_Module");
 
-		private java.lang.String metaName;
+		private final java.lang.String metaName;
 
 		MemberNames(java.lang.String s)
 		{
@@ -48,15 +48,17 @@ public class MxObjectReference
 
 	public MxObjectReference(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		this(context, com.mendix.core.Core.instantiate(context, "MxModelReflection.MxObjectReference"));
+		this(context, com.mendix.core.Core.instantiate(context, entityName));
 	}
 
 	protected MxObjectReference(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mxObjectReferenceMendixObject)
 	{
-		if (mxObjectReferenceMendixObject == null)
+		if (mxObjectReferenceMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
-		if (!com.mendix.core.Core.isSubClassOf("MxModelReflection.MxObjectReference", mxObjectReferenceMendixObject.getType()))
-			throw new java.lang.IllegalArgumentException("The given object is not a MxModelReflection.MxObjectReference");
+		}
+		if (!com.mendix.core.Core.isSubClassOf(entityName, mxObjectReferenceMendixObject.getType())) {
+			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
+		}	
 
 		this.mxObjectReferenceMendixObject = mxObjectReferenceMendixObject;
 		this.context = context;
@@ -74,6 +76,9 @@ public class MxObjectReference
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
 	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
+	 * @param context The context to be used
+	 * @param mendixObject The Mendix object for the new instance
+	 * @return a new instance of this proxy class
 	 */
 	public static mxmodelreflection.proxies.MxObjectReference initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -88,14 +93,16 @@ public class MxObjectReference
 
 	public static java.util.List<mxmodelreflection.proxies.MxObjectReference> load(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String xpathConstraint) throws com.mendix.core.CoreException
 	{
-		java.util.List<mxmodelreflection.proxies.MxObjectReference> result = new java.util.ArrayList<mxmodelreflection.proxies.MxObjectReference>();
-		for (com.mendix.systemwideinterfaces.core.IMendixObject obj : com.mendix.core.Core.retrieveXPathQuery(context, "//MxModelReflection.MxObjectReference" + xpathConstraint))
-			result.add(mxmodelreflection.proxies.MxObjectReference.initialize(context, obj));
-		return result;
+		return com.mendix.core.Core.createXPathQuery(String.format("//%1$s%2$s", entityName, xpathConstraint))
+			.execute(context)
+			.stream()
+			.map(obj -> mxmodelreflection.proxies.MxObjectReference.initialize(context, obj))
+			.collect(java.util.stream.Collectors.toList());
 	}
 
 	/**
 	 * Commit the changes made on this proxy object.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit() throws com.mendix.core.CoreException
 	{
@@ -104,6 +111,7 @@ public class MxObjectReference
 
 	/**
 	 * Commit the changes made on this proxy object using the specified context.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
@@ -285,9 +293,9 @@ public class MxObjectReference
 	public final mxmodelreflection.proxies.ReferenceType getReferenceType(com.mendix.systemwideinterfaces.core.IContext context)
 	{
 		Object obj = getMendixObject().getValue(context, MemberNames.ReferenceType.toString());
-		if (obj == null)
+		if (obj == null) {
 			return null;
-
+		}
 		return mxmodelreflection.proxies.ReferenceType.valueOf((java.lang.String) obj);
 	}
 
@@ -307,10 +315,11 @@ public class MxObjectReference
 	 */
 	public final void setReferenceType(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.ReferenceType referencetype)
 	{
-		if (referencetype != null)
+		if (referencetype != null) {
 			getMendixObject().setValue(context, MemberNames.ReferenceType.toString(), referencetype.toString());
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.ReferenceType.toString(), null);
+		}
 	}
 
 	/**
@@ -329,9 +338,9 @@ public class MxObjectReference
 	public final mxmodelreflection.proxies.AssociationOwner getAssociationOwner(com.mendix.systemwideinterfaces.core.IContext context)
 	{
 		Object obj = getMendixObject().getValue(context, MemberNames.AssociationOwner.toString());
-		if (obj == null)
+		if (obj == null) {
 			return null;
-
+		}
 		return mxmodelreflection.proxies.AssociationOwner.valueOf((java.lang.String) obj);
 	}
 
@@ -351,10 +360,11 @@ public class MxObjectReference
 	 */
 	public final void setAssociationOwner(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.AssociationOwner associationowner)
 	{
-		if (associationowner != null)
+		if (associationowner != null) {
 			getMendixObject().setValue(context, MemberNames.AssociationOwner.toString(), associationowner.toString());
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.AssociationOwner.toString(), null);
+		}
 	}
 
 	/**
@@ -394,6 +404,7 @@ public class MxObjectReference
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of MxObjectReference_MxObjectType
 	 */
 	public final java.util.List<mxmodelreflection.proxies.MxObjectType> getMxObjectReference_MxObjectType() throws com.mendix.core.CoreException
@@ -404,16 +415,19 @@ public class MxObjectReference
 	/**
 	 * @param context
 	 * @return value of MxObjectReference_MxObjectType
+	 * @throws com.mendix.core.CoreException
 	 */
 	@SuppressWarnings("unchecked")
 	public final java.util.List<mxmodelreflection.proxies.MxObjectType> getMxObjectReference_MxObjectType(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
-		java.util.List<mxmodelreflection.proxies.MxObjectType> result = new java.util.ArrayList<mxmodelreflection.proxies.MxObjectType>();
+		java.util.List<mxmodelreflection.proxies.MxObjectType> result = new java.util.ArrayList<>();
 		Object valueObject = getMendixObject().getValue(context, MemberNames.MxObjectReference_MxObjectType.toString());
-		if (valueObject == null)
+		if (valueObject == null) {
 			return result;
-		for (com.mendix.systemwideinterfaces.core.IMendixObject mendixObject : com.mendix.core.Core.retrieveIdList(context, (java.util.List<com.mendix.systemwideinterfaces.core.IMendixIdentifier>) valueObject))
+		}
+		for (com.mendix.systemwideinterfaces.core.IMendixObject mendixObject : com.mendix.core.Core.retrieveIdList(context, (java.util.List<com.mendix.systemwideinterfaces.core.IMendixIdentifier>) valueObject)) {
 			result.add(mxmodelreflection.proxies.MxObjectType.initialize(context, mendixObject));
+		}
 		return result;
 	}
 
@@ -433,13 +447,16 @@ public class MxObjectReference
 	 */
 	public final void setMxObjectReference_MxObjectType(com.mendix.systemwideinterfaces.core.IContext context, java.util.List<mxmodelreflection.proxies.MxObjectType> mxobjectreference_mxobjecttype)
 	{
-		java.util.List<com.mendix.systemwideinterfaces.core.IMendixIdentifier> identifiers = new java.util.ArrayList<com.mendix.systemwideinterfaces.core.IMendixIdentifier>();
-		for (mxmodelreflection.proxies.MxObjectType proxyObject : mxobjectreference_mxobjecttype)
-			identifiers.add(proxyObject.getMendixObject().getId());
+		var identifiers = mxobjectreference_mxobjecttype
+			.stream()
+			.map(proxyObject -> proxyObject.getMendixObject().getId())
+			.collect(java.util.stream.Collectors.toList());
+		
 		getMendixObject().setValue(context, MemberNames.MxObjectReference_MxObjectType.toString(), identifiers);
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of MxObjectReference_MxObjectType_Child
 	 */
 	public final java.util.List<mxmodelreflection.proxies.MxObjectType> getMxObjectReference_MxObjectType_Child() throws com.mendix.core.CoreException
@@ -450,16 +467,19 @@ public class MxObjectReference
 	/**
 	 * @param context
 	 * @return value of MxObjectReference_MxObjectType_Child
+	 * @throws com.mendix.core.CoreException
 	 */
 	@SuppressWarnings("unchecked")
 	public final java.util.List<mxmodelreflection.proxies.MxObjectType> getMxObjectReference_MxObjectType_Child(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
-		java.util.List<mxmodelreflection.proxies.MxObjectType> result = new java.util.ArrayList<mxmodelreflection.proxies.MxObjectType>();
+		java.util.List<mxmodelreflection.proxies.MxObjectType> result = new java.util.ArrayList<>();
 		Object valueObject = getMendixObject().getValue(context, MemberNames.MxObjectReference_MxObjectType_Child.toString());
-		if (valueObject == null)
+		if (valueObject == null) {
 			return result;
-		for (com.mendix.systemwideinterfaces.core.IMendixObject mendixObject : com.mendix.core.Core.retrieveIdList(context, (java.util.List<com.mendix.systemwideinterfaces.core.IMendixIdentifier>) valueObject))
+		}
+		for (com.mendix.systemwideinterfaces.core.IMendixObject mendixObject : com.mendix.core.Core.retrieveIdList(context, (java.util.List<com.mendix.systemwideinterfaces.core.IMendixIdentifier>) valueObject)) {
 			result.add(mxmodelreflection.proxies.MxObjectType.initialize(context, mendixObject));
+		}
 		return result;
 	}
 
@@ -479,13 +499,16 @@ public class MxObjectReference
 	 */
 	public final void setMxObjectReference_MxObjectType_Child(com.mendix.systemwideinterfaces.core.IContext context, java.util.List<mxmodelreflection.proxies.MxObjectType> mxobjectreference_mxobjecttype_child)
 	{
-		java.util.List<com.mendix.systemwideinterfaces.core.IMendixIdentifier> identifiers = new java.util.ArrayList<com.mendix.systemwideinterfaces.core.IMendixIdentifier>();
-		for (mxmodelreflection.proxies.MxObjectType proxyObject : mxobjectreference_mxobjecttype_child)
-			identifiers.add(proxyObject.getMendixObject().getId());
+		var identifiers = mxobjectreference_mxobjecttype_child
+			.stream()
+			.map(proxyObject -> proxyObject.getMendixObject().getId())
+			.collect(java.util.stream.Collectors.toList());
+		
 		getMendixObject().setValue(context, MemberNames.MxObjectReference_MxObjectType_Child.toString(), identifiers);
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of MxObjectReference_MxObjectType_Parent
 	 */
 	public final java.util.List<mxmodelreflection.proxies.MxObjectType> getMxObjectReference_MxObjectType_Parent() throws com.mendix.core.CoreException
@@ -496,16 +519,19 @@ public class MxObjectReference
 	/**
 	 * @param context
 	 * @return value of MxObjectReference_MxObjectType_Parent
+	 * @throws com.mendix.core.CoreException
 	 */
 	@SuppressWarnings("unchecked")
 	public final java.util.List<mxmodelreflection.proxies.MxObjectType> getMxObjectReference_MxObjectType_Parent(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
-		java.util.List<mxmodelreflection.proxies.MxObjectType> result = new java.util.ArrayList<mxmodelreflection.proxies.MxObjectType>();
+		java.util.List<mxmodelreflection.proxies.MxObjectType> result = new java.util.ArrayList<>();
 		Object valueObject = getMendixObject().getValue(context, MemberNames.MxObjectReference_MxObjectType_Parent.toString());
-		if (valueObject == null)
+		if (valueObject == null) {
 			return result;
-		for (com.mendix.systemwideinterfaces.core.IMendixObject mendixObject : com.mendix.core.Core.retrieveIdList(context, (java.util.List<com.mendix.systemwideinterfaces.core.IMendixIdentifier>) valueObject))
+		}
+		for (com.mendix.systemwideinterfaces.core.IMendixObject mendixObject : com.mendix.core.Core.retrieveIdList(context, (java.util.List<com.mendix.systemwideinterfaces.core.IMendixIdentifier>) valueObject)) {
 			result.add(mxmodelreflection.proxies.MxObjectType.initialize(context, mendixObject));
+		}
 		return result;
 	}
 
@@ -525,13 +551,16 @@ public class MxObjectReference
 	 */
 	public final void setMxObjectReference_MxObjectType_Parent(com.mendix.systemwideinterfaces.core.IContext context, java.util.List<mxmodelreflection.proxies.MxObjectType> mxobjectreference_mxobjecttype_parent)
 	{
-		java.util.List<com.mendix.systemwideinterfaces.core.IMendixIdentifier> identifiers = new java.util.ArrayList<com.mendix.systemwideinterfaces.core.IMendixIdentifier>();
-		for (mxmodelreflection.proxies.MxObjectType proxyObject : mxobjectreference_mxobjecttype_parent)
-			identifiers.add(proxyObject.getMendixObject().getId());
+		var identifiers = mxobjectreference_mxobjecttype_parent
+			.stream()
+			.map(proxyObject -> proxyObject.getMendixObject().getId())
+			.collect(java.util.stream.Collectors.toList());
+		
 		getMendixObject().setValue(context, MemberNames.MxObjectReference_MxObjectType_Parent.toString(), identifiers);
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of MxObjectReference_Module
 	 */
 	public final mxmodelreflection.proxies.Module getMxObjectReference_Module() throws com.mendix.core.CoreException
@@ -542,13 +571,15 @@ public class MxObjectReference
 	/**
 	 * @param context
 	 * @return value of MxObjectReference_Module
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final mxmodelreflection.proxies.Module getMxObjectReference_Module(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
 		mxmodelreflection.proxies.Module result = null;
 		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.MxObjectReference_Module.toString());
-		if (identifier != null)
+		if (identifier != null) {
 			result = mxmodelreflection.proxies.Module.load(context, identifier);
+		}
 		return result;
 	}
 
@@ -568,10 +599,11 @@ public class MxObjectReference
 	 */
 	public final void setMxObjectReference_Module(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.Module mxobjectreference_module)
 	{
-		if (mxobjectreference_module == null)
+		if (mxobjectreference_module == null) {
 			getMendixObject().setValue(context, MemberNames.MxObjectReference_Module.toString(), null);
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.MxObjectReference_Module.toString(), mxobjectreference_module.getMendixObject().getId());
+		}
 	}
 
 	/**
@@ -593,9 +625,9 @@ public class MxObjectReference
 	@java.lang.Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
+		if (obj == this) {
 			return true;
-
+		}
 		if (obj != null && getClass().equals(obj.getClass()))
 		{
 			final mxmodelreflection.proxies.MxObjectReference that = (mxmodelreflection.proxies.MxObjectReference) obj;
@@ -615,7 +647,7 @@ public class MxObjectReference
 	 */
 	public static java.lang.String getType()
 	{
-		return "MxModelReflection.MxObjectReference";
+		return entityName;
 	}
 
 	/**

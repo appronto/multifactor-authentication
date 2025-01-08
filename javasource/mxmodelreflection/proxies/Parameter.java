@@ -24,7 +24,7 @@ public class Parameter
 		Parameter_ValueType("MxModelReflection.Parameter_ValueType"),
 		Parameter_MxObjectType("MxModelReflection.Parameter_MxObjectType");
 
-		private java.lang.String metaName;
+		private final java.lang.String metaName;
 
 		MemberNames(java.lang.String s)
 		{
@@ -40,15 +40,17 @@ public class Parameter
 
 	public Parameter(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		this(context, com.mendix.core.Core.instantiate(context, "MxModelReflection.Parameter"));
+		this(context, com.mendix.core.Core.instantiate(context, entityName));
 	}
 
 	protected Parameter(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject parameterMendixObject)
 	{
-		if (parameterMendixObject == null)
+		if (parameterMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
-		if (!com.mendix.core.Core.isSubClassOf("MxModelReflection.Parameter", parameterMendixObject.getType()))
-			throw new java.lang.IllegalArgumentException("The given object is not a MxModelReflection.Parameter");
+		}
+		if (!com.mendix.core.Core.isSubClassOf(entityName, parameterMendixObject.getType())) {
+			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
+		}	
 
 		this.parameterMendixObject = parameterMendixObject;
 		this.context = context;
@@ -66,6 +68,9 @@ public class Parameter
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
 	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
+	 * @param context The context to be used
+	 * @param mendixObject The Mendix object for the new instance
+	 * @return a new instance of this proxy class
 	 */
 	public static mxmodelreflection.proxies.Parameter initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -80,14 +85,16 @@ public class Parameter
 
 	public static java.util.List<mxmodelreflection.proxies.Parameter> load(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String xpathConstraint) throws com.mendix.core.CoreException
 	{
-		java.util.List<mxmodelreflection.proxies.Parameter> result = new java.util.ArrayList<mxmodelreflection.proxies.Parameter>();
-		for (com.mendix.systemwideinterfaces.core.IMendixObject obj : com.mendix.core.Core.retrieveXPathQuery(context, "//MxModelReflection.Parameter" + xpathConstraint))
-			result.add(mxmodelreflection.proxies.Parameter.initialize(context, obj));
-		return result;
+		return com.mendix.core.Core.createXPathQuery(String.format("//%1$s%2$s", entityName, xpathConstraint))
+			.execute(context)
+			.stream()
+			.map(obj -> mxmodelreflection.proxies.Parameter.initialize(context, obj))
+			.collect(java.util.stream.Collectors.toList());
 	}
 
 	/**
 	 * Commit the changes made on this proxy object.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit() throws com.mendix.core.CoreException
 	{
@@ -96,6 +103,7 @@ public class Parameter
 
 	/**
 	 * Commit the changes made on this proxy object using the specified context.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
@@ -154,6 +162,7 @@ public class Parameter
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of Parameter_ValueType
 	 */
 	public final mxmodelreflection.proxies.ValueType getParameter_ValueType() throws com.mendix.core.CoreException
@@ -164,13 +173,15 @@ public class Parameter
 	/**
 	 * @param context
 	 * @return value of Parameter_ValueType
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final mxmodelreflection.proxies.ValueType getParameter_ValueType(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
 		mxmodelreflection.proxies.ValueType result = null;
 		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.Parameter_ValueType.toString());
-		if (identifier != null)
+		if (identifier != null) {
 			result = mxmodelreflection.proxies.ValueType.load(context, identifier);
+		}
 		return result;
 	}
 
@@ -190,13 +201,15 @@ public class Parameter
 	 */
 	public final void setParameter_ValueType(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.ValueType parameter_valuetype)
 	{
-		if (parameter_valuetype == null)
+		if (parameter_valuetype == null) {
 			getMendixObject().setValue(context, MemberNames.Parameter_ValueType.toString(), null);
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.Parameter_ValueType.toString(), parameter_valuetype.getMendixObject().getId());
+		}
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of Parameter_MxObjectType
 	 */
 	public final mxmodelreflection.proxies.MxObjectType getParameter_MxObjectType() throws com.mendix.core.CoreException
@@ -207,13 +220,15 @@ public class Parameter
 	/**
 	 * @param context
 	 * @return value of Parameter_MxObjectType
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final mxmodelreflection.proxies.MxObjectType getParameter_MxObjectType(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
 		mxmodelreflection.proxies.MxObjectType result = null;
 		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.Parameter_MxObjectType.toString());
-		if (identifier != null)
+		if (identifier != null) {
 			result = mxmodelreflection.proxies.MxObjectType.load(context, identifier);
+		}
 		return result;
 	}
 
@@ -233,10 +248,11 @@ public class Parameter
 	 */
 	public final void setParameter_MxObjectType(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.MxObjectType parameter_mxobjecttype)
 	{
-		if (parameter_mxobjecttype == null)
+		if (parameter_mxobjecttype == null) {
 			getMendixObject().setValue(context, MemberNames.Parameter_MxObjectType.toString(), null);
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.Parameter_MxObjectType.toString(), parameter_mxobjecttype.getMendixObject().getId());
+		}
 	}
 
 	/**
@@ -258,9 +274,9 @@ public class Parameter
 	@java.lang.Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
+		if (obj == this) {
 			return true;
-
+		}
 		if (obj != null && getClass().equals(obj.getClass()))
 		{
 			final mxmodelreflection.proxies.Parameter that = (mxmodelreflection.proxies.Parameter) obj;
@@ -280,7 +296,7 @@ public class Parameter
 	 */
 	public static java.lang.String getType()
 	{
-		return "MxModelReflection.Parameter";
+		return entityName;
 	}
 
 	/**

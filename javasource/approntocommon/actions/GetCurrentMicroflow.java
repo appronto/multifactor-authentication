@@ -11,8 +11,8 @@ package approntocommon.actions;
 
 import java.util.Stack;
 import com.mendix.core.Core;
-import com.mendix.core.actionmanagement.CoreAction;
 import com.mendix.systemwideinterfaces.core.IContext;
+import com.mendix.systemwideinterfaces.core.ICoreAction;
 import com.mendix.webui.CustomJavaAction;
 
 public class GetCurrentMicroflow extends CustomJavaAction<java.lang.String>
@@ -31,8 +31,8 @@ public class GetCurrentMicroflow extends CustomJavaAction<java.lang.String>
 		// BEGIN USER CODE
 		int intLevel = level != null ? level.intValue() : 1;
 		IContext context = this.getContext();
-		Stack<CoreAction<?>> coreAction;
-		CoreAction<?> nthCoreAction;
+		Stack<ICoreAction<?>> coreAction;
+		ICoreAction<?> nthCoreAction;
 		String microflowName = "";
 		if (context!=null){
 			Core.getLogger(this.toString()).trace("Context exists");
@@ -61,6 +61,7 @@ public class GetCurrentMicroflow extends CustomJavaAction<java.lang.String>
 
 	/**
 	 * Returns a string representation of this action
+	 * @return a string representation of this action
 	 */
 	@java.lang.Override
 	public java.lang.String toString()

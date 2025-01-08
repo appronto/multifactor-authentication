@@ -29,7 +29,7 @@ public class MakeFileEmpty extends CustomJavaAction<java.lang.Void>
 	@java.lang.Override
 	public java.lang.Void executeAction() throws Exception
 	{
-		this.FileToEmpty = __FileToEmpty == null ? null : system.proxies.FileDocument.initialize(getContext(), __FileToEmpty);
+		this.FileToEmpty = this.__FileToEmpty == null ? null : system.proxies.FileDocument.initialize(getContext(), __FileToEmpty);
 
 		// BEGIN USER CODE
 		 Core.storeFileDocumentContent(getContext(), FileToEmpty.getMendixObject(), FileToEmpty.getName(),  new ByteArrayInputStream("".getBytes("UTF-8")));
@@ -39,6 +39,7 @@ public class MakeFileEmpty extends CustomJavaAction<java.lang.Void>
 
 	/**
 	 * Returns a string representation of this action
+	 * @return a string representation of this action
 	 */
 	@java.lang.Override
 	public java.lang.String toString()

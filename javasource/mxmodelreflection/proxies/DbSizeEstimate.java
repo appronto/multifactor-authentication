@@ -26,7 +26,7 @@ public class DbSizeEstimate
 		FindObjectType("FindObjectType"),
 		DbSizeEstimate_MxObjectType("MxModelReflection.DbSizeEstimate_MxObjectType");
 
-		private java.lang.String metaName;
+		private final java.lang.String metaName;
 
 		MemberNames(java.lang.String s)
 		{
@@ -42,15 +42,17 @@ public class DbSizeEstimate
 
 	public DbSizeEstimate(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		this(context, com.mendix.core.Core.instantiate(context, "MxModelReflection.DbSizeEstimate"));
+		this(context, com.mendix.core.Core.instantiate(context, entityName));
 	}
 
 	protected DbSizeEstimate(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject dbSizeEstimateMendixObject)
 	{
-		if (dbSizeEstimateMendixObject == null)
+		if (dbSizeEstimateMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
-		if (!com.mendix.core.Core.isSubClassOf("MxModelReflection.DbSizeEstimate", dbSizeEstimateMendixObject.getType()))
-			throw new java.lang.IllegalArgumentException("The given object is not a MxModelReflection.DbSizeEstimate");
+		}
+		if (!com.mendix.core.Core.isSubClassOf(entityName, dbSizeEstimateMendixObject.getType())) {
+			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
+		}	
 
 		this.dbSizeEstimateMendixObject = dbSizeEstimateMendixObject;
 		this.context = context;
@@ -68,6 +70,9 @@ public class DbSizeEstimate
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
 	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
+	 * @param context The context to be used
+	 * @param mendixObject The Mendix object for the new instance
+	 * @return a new instance of this proxy class
 	 */
 	public static mxmodelreflection.proxies.DbSizeEstimate initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -82,14 +87,16 @@ public class DbSizeEstimate
 
 	public static java.util.List<mxmodelreflection.proxies.DbSizeEstimate> load(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String xpathConstraint) throws com.mendix.core.CoreException
 	{
-		java.util.List<mxmodelreflection.proxies.DbSizeEstimate> result = new java.util.ArrayList<mxmodelreflection.proxies.DbSizeEstimate>();
-		for (com.mendix.systemwideinterfaces.core.IMendixObject obj : com.mendix.core.Core.retrieveXPathQuery(context, "//MxModelReflection.DbSizeEstimate" + xpathConstraint))
-			result.add(mxmodelreflection.proxies.DbSizeEstimate.initialize(context, obj));
-		return result;
+		return com.mendix.core.Core.createXPathQuery(String.format("//%1$s%2$s", entityName, xpathConstraint))
+			.execute(context)
+			.stream()
+			.map(obj -> mxmodelreflection.proxies.DbSizeEstimate.initialize(context, obj))
+			.collect(java.util.stream.Collectors.toList());
 	}
 
 	/**
 	 * Commit the changes made on this proxy object.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit() throws com.mendix.core.CoreException
 	{
@@ -98,6 +105,7 @@ public class DbSizeEstimate
 
 	/**
 	 * Commit the changes made on this proxy object using the specified context.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
@@ -264,6 +272,7 @@ public class DbSizeEstimate
 	}
 
 	/**
+	 * @throws com.mendix.core.CoreException
 	 * @return value of DbSizeEstimate_MxObjectType
 	 */
 	public final mxmodelreflection.proxies.MxObjectType getDbSizeEstimate_MxObjectType() throws com.mendix.core.CoreException
@@ -274,13 +283,15 @@ public class DbSizeEstimate
 	/**
 	 * @param context
 	 * @return value of DbSizeEstimate_MxObjectType
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final mxmodelreflection.proxies.MxObjectType getDbSizeEstimate_MxObjectType(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
 		mxmodelreflection.proxies.MxObjectType result = null;
 		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.DbSizeEstimate_MxObjectType.toString());
-		if (identifier != null)
+		if (identifier != null) {
 			result = mxmodelreflection.proxies.MxObjectType.load(context, identifier);
+		}
 		return result;
 	}
 
@@ -300,10 +311,11 @@ public class DbSizeEstimate
 	 */
 	public final void setDbSizeEstimate_MxObjectType(com.mendix.systemwideinterfaces.core.IContext context, mxmodelreflection.proxies.MxObjectType dbsizeestimate_mxobjecttype)
 	{
-		if (dbsizeestimate_mxobjecttype == null)
+		if (dbsizeestimate_mxobjecttype == null) {
 			getMendixObject().setValue(context, MemberNames.DbSizeEstimate_MxObjectType.toString(), null);
-		else
+		} else {
 			getMendixObject().setValue(context, MemberNames.DbSizeEstimate_MxObjectType.toString(), dbsizeestimate_mxobjecttype.getMendixObject().getId());
+		}
 	}
 
 	/**
@@ -325,9 +337,9 @@ public class DbSizeEstimate
 	@java.lang.Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
+		if (obj == this) {
 			return true;
-
+		}
 		if (obj != null && getClass().equals(obj.getClass()))
 		{
 			final mxmodelreflection.proxies.DbSizeEstimate that = (mxmodelreflection.proxies.DbSizeEstimate) obj;
@@ -347,7 +359,7 @@ public class DbSizeEstimate
 	 */
 	public static java.lang.String getType()
 	{
-		return "MxModelReflection.DbSizeEstimate";
+		return entityName;
 	}
 
 	/**

@@ -8,7 +8,23 @@ import com.mendix.core.Core;
 
 public class Constants
 {
+	/**
+	 * @deprecated
+	 * The default constructor of the Constants class should not be used.
+	 * Use the static get methods instead.
+	 */
+	@java.lang.Deprecated(since = "9.12", forRemoval = true)
+	public Constants() {}
+
 	// These are the constants for the MFAmodule module
+
+	/**
+	* Adds authentication data in the log as INFO.
+	*/
+	public static boolean getDatadogCloudSIEMLogging()
+	{
+		return (java.lang.Boolean)Core.getConfiguration().getConstantValue("MFAmodule.DatadogCloudSIEMLogging");
+	}
 
 	public static boolean getEnabledMFA()
 	{
@@ -21,7 +37,7 @@ public class Constants
 	}
 
 	/**
-	* Maximum of attempts after first user+pass is correct and MFA is validated
+	* Maximum of attempts after first user+pass is correct and MFA is validated.
 	*/
 	public static java.lang.Long getMaxAttemptsMFA()
 	{
@@ -29,7 +45,7 @@ public class Constants
 	}
 
 	/**
-	* Maximum attempts for user+password
+	* Maximum attempts for user+password.
 	*/
 	public static java.lang.Long getMaxLoginAttempts()
 	{
@@ -37,7 +53,7 @@ public class Constants
 	}
 
 	/**
-	* Default Mendix platform is 5 minutes to unblock an user. Must be greater then 5 minutes
+	* Default Mendix platform is 5 minutes to unblock a user. Must be greater then 5 minutes.
 	*/
 	public static java.lang.Long getUnblockLoginMinutes()
 	{
@@ -45,7 +61,7 @@ public class Constants
 	}
 
 	/**
-	* Default Mendix platform is 5 minutes to unblock an user
+	* Default Mendix platform is 5 minutes to unblock a user.
 	*/
 	public static java.lang.Long getUnblockMFAMinutes()
 	{

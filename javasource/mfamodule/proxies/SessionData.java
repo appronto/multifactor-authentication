@@ -25,7 +25,7 @@ public class SessionData
 		CookieHeader("CookieHeader"),
 		JSON("JSON");
 
-		private java.lang.String metaName;
+		private final java.lang.String metaName;
 
 		MemberNames(java.lang.String s)
 		{
@@ -41,15 +41,17 @@ public class SessionData
 
 	public SessionData(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		this(context, com.mendix.core.Core.instantiate(context, "MFAmodule.SessionData"));
+		this(context, com.mendix.core.Core.instantiate(context, entityName));
 	}
 
 	protected SessionData(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject sessionDataMendixObject)
 	{
-		if (sessionDataMendixObject == null)
+		if (sessionDataMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
-		if (!com.mendix.core.Core.isSubClassOf("MFAmodule.SessionData", sessionDataMendixObject.getType()))
-			throw new java.lang.IllegalArgumentException("The given object is not a MFAmodule.SessionData");
+		}
+		if (!com.mendix.core.Core.isSubClassOf(entityName, sessionDataMendixObject.getType())) {
+			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
+		}	
 
 		this.sessionDataMendixObject = sessionDataMendixObject;
 		this.context = context;
@@ -67,6 +69,9 @@ public class SessionData
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
 	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
+	 * @param context The context to be used
+	 * @param mendixObject The Mendix object for the new instance
+	 * @return a new instance of this proxy class
 	 */
 	public static mfamodule.proxies.SessionData initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -81,6 +86,7 @@ public class SessionData
 
 	/**
 	 * Commit the changes made on this proxy object.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit() throws com.mendix.core.CoreException
 	{
@@ -89,6 +95,7 @@ public class SessionData
 
 	/**
 	 * Commit the changes made on this proxy object using the specified context.
+	 * @throws com.mendix.core.CoreException
 	 */
 	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
 	{
@@ -273,9 +280,9 @@ public class SessionData
 	@java.lang.Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
+		if (obj == this) {
 			return true;
-
+		}
 		if (obj != null && getClass().equals(obj.getClass()))
 		{
 			final mfamodule.proxies.SessionData that = (mfamodule.proxies.SessionData) obj;
@@ -295,7 +302,7 @@ public class SessionData
 	 */
 	public static java.lang.String getType()
 	{
-		return "MFAmodule.SessionData";
+		return entityName;
 	}
 
 	/**

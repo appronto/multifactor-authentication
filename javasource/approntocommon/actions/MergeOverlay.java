@@ -45,9 +45,9 @@ public class MergeOverlay extends CustomJavaAction<java.lang.Boolean>
 	@java.lang.Override
 	public java.lang.Boolean executeAction() throws Exception
 	{
-		this.background = __background == null ? null : system.proxies.FileDocument.initialize(getContext(), __background);
+		this.background = this.__background == null ? null : system.proxies.FileDocument.initialize(getContext(), __background);
 
-		this.target = __target == null ? null : system.proxies.FileDocument.initialize(getContext(), __target);
+		this.target = this.__target == null ? null : system.proxies.FileDocument.initialize(getContext(), __target);
 
 		// BEGIN USER CODE
 		synchronized (this) {
@@ -102,6 +102,7 @@ public class MergeOverlay extends CustomJavaAction<java.lang.Boolean>
 
 	/**
 	 * Returns a string representation of this action
+	 * @return a string representation of this action
 	 */
 	@java.lang.Override
 	public java.lang.String toString()
