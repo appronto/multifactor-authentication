@@ -54,8 +54,6 @@ Or from Github: [https://github.com/Emixa-application-solutions/multifactor-auth
 
 **There are a few things to configure:**
 
-
-
 1. Copy the example flows to your own modules `SUB_MFA_UserDisabledCheck`, `SUB_MFA_CreateCode` and `SUB_MFA_ValidateCode`. Change the logic to determine if the logged in user needs to be multi-factor authenticated.
 
 	*Example* is available in `SUB_MFA_UserDisabledCheck` (copy this to your own module). If you use this example please Add the new attributes **`HasMFAenabled`(Boolean)** and **`LastLogin2FA` (datetime)** to the Account entity.
@@ -74,9 +72,10 @@ Or from Github: [https://github.com/Emixa-application-solutions/multifactor-auth
 	  - Use default Emailtemplate module or Sendgrid API for example to compose this e-mail to your user.
 
 After startup configuration:
+
 2. Add `ASU_SetMicroflows` Microflow in your After Startup and set the microflows from your own modules
    
-2. Add `ASU_MFA_v2` Microflow in your After Startup (after you called `ASU_SetMicroflows`).
+3. Add `ASU_MFA_v2` Microflow in your After Startup (after you called `ASU_SetMicroflows`).
 
 4. Add snippet `SN_MFA_LoginPage` / `SN_Login_Native` to your login page
 
