@@ -1,0 +1,5 @@
+{
+  "nativeDependencies": {
+    "@react-native-camera-roll/camera-roll": "7.10.2"
+  }
+}

@@ -4,60 +4,331 @@
 
 package mfatestmodule.proxies.microflows;
 
-import java.util.HashMap;
-import java.util.Map;
 import com.mendix.core.Core;
 import com.mendix.systemwideinterfaces.core.IContext;
+import com.mendix.systemwideinterfaces.core.IMendixObject;
 
-public class Microflows
+public final class Microflows
 {
 	/**
-	 * @deprecated
-	 * The default constructor of the Microflows class should not be used.
-	 * Use the static microflow invocation methods instead.
+	 * Private constructor to prevent instantiation of this class. 
 	 */
-	@java.lang.Deprecated(since = "9.12", forRemoval = true)
-	public Microflows() {}
+	private Microflows() {}
 
 	// These are the microflows for the MFATestModule module
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder aCT_IPaddressBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.ACT_IPaddress");
+		return builder;
+	}
+
+	public static void aCT_IPaddress(IContext context)
+	{
+		aCT_IPaddressBuilder().execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder aSUBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.ASU");
+		return builder;
+	}
+
 	public static boolean aSU(IContext context)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		return (java.lang.Boolean) Core.microflowCall("MFATestModule.ASU").withParams(params).execute(context);
+		Object result = aSUBuilder().execute(context);
+		return (boolean) result;
 	}
-	public static java.lang.String getTest(IContext context, system.proxies.HttpRequest _httpRequest, system.proxies.HttpResponse _httpResponse)
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder getTestBuilder(
+		system.proxies.HttpRequest _httpRequest,
+		system.proxies.HttpResponse _httpResponse
+	)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("httpRequest", _httpRequest == null ? null : _httpRequest.getMendixObject());
-		params.put("httpResponse", _httpResponse == null ? null : _httpResponse.getMendixObject());
-		return (java.lang.String) Core.microflowCall("MFATestModule.GetTest").withParams(params).execute(context);
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.GetTest");
+		builder = builder.withParam("httpRequest", _httpRequest);
+		builder = builder.withParam("httpResponse", _httpResponse);
+		return builder;
 	}
+
+	public static java.lang.String getTest(
+		IContext context,
+		system.proxies.HttpRequest _httpRequest,
+		system.proxies.HttpResponse _httpResponse
+	)
+	{
+		Object result = getTestBuilder(
+				_httpRequest,
+				_httpResponse
+			)
+			.execute(context);
+		return (java.lang.String) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder getVersionBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.GetVersion");
+		return builder;
+	}
+
 	public static void getVersion(IContext context)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		Core.microflowCall("MFATestModule.GetVersion").withParams(params).execute(context);
+		getVersionBuilder().execute(context);
 	}
-	public static boolean mFA_CreateCode_Log_Test(IContext context, mfamodule.proxies.MFA _mFA)
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder mFA_CreateCode_Log_TestBuilder(
+		mfamodule.proxies.MFA _mFA
+	)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFATestModule.MFA_CreateCode_Log_Test").withParams(params).execute(context);
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.MFA_CreateCode_Log_Test");
+		builder = builder.withParam("MFA", _mFA);
+		return builder;
 	}
-	public static boolean mFA_UserDisabledCheck_Test(IContext context, java.lang.String _username)
+
+	public static boolean mFA_CreateCode_Log_Test(
+		IContext context,
+		mfamodule.proxies.MFA _mFA
+	)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("Username", _username);
-		return (java.lang.Boolean) Core.microflowCall("MFATestModule.MFA_UserDisabledCheck_Test").withParams(params).execute(context);
+		Object result = mFA_CreateCode_Log_TestBuilder(
+				_mFA
+			)
+			.execute(context);
+		return (boolean) result;
 	}
-	public static boolean mFA_ValidateCode_LocallyGenerated_Test(IContext context, mfamodule.proxies.MFA _mFA)
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder mFA_UserDisabledCheck_TestBuilder(
+		java.lang.String _username
+	)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFATestModule.MFA_ValidateCode_LocallyGenerated_Test").withParams(params).execute(context);
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.MFA_UserDisabledCheck_Test");
+		builder = builder.withParam("Username", _username);
+		return builder;
 	}
+
+	public static boolean mFA_UserDisabledCheck_Test(
+		IContext context,
+		java.lang.String _username
+	)
+	{
+		Object result = mFA_UserDisabledCheck_TestBuilder(
+				_username
+			)
+			.execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder mFA_ValidateCode_LocallyGenerated_TestBuilder(
+		mfamodule.proxies.MFA _mFA
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.MFA_ValidateCode_LocallyGenerated_Test");
+		builder = builder.withParam("MFA", _mFA);
+		return builder;
+	}
+
+	public static boolean mFA_ValidateCode_LocallyGenerated_Test(
+		IContext context,
+		mfamodule.proxies.MFA _mFA
+	)
+	{
+		Object result = mFA_ValidateCode_LocallyGenerated_TestBuilder(
+				_mFA
+			)
+			.execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder setupBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.Setup");
+		return builder;
+	}
+
+	public static boolean setup(IContext context)
+	{
+		Object result = setupBuilder().execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_CookieList_GetCookieHeaderBuilder(
+		java.util.List<system.proxies.HttpHeader> _httpHeaderList
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.SUB_CookieList_GetCookieHeader");
+		builder = builder.withParam("HttpHeaderList", _httpHeaderList);
+		return builder;
+	}
+
+	public static java.lang.String sUB_CookieList_GetCookieHeader(
+		IContext context,
+		java.util.List<system.proxies.HttpHeader> _httpHeaderList
+	)
+	{
+		Object result = sUB_CookieList_GetCookieHeaderBuilder(
+				_httpHeaderList
+			)
+			.execute(context);
+		return (java.lang.String) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_MFA_ValidateCode_WebAuthnBuilder(
+		mfamodule.proxies.MFA _mFA
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.SUB_MFA_ValidateCode_WebAuthn");
+		builder = builder.withParam("MFA", _mFA);
+		return builder;
+	}
+
+	public static boolean sUB_MFA_ValidateCode_WebAuthn(
+		IContext context,
+		mfamodule.proxies.MFA _mFA
+	)
+	{
+		Object result = sUB_MFA_ValidateCode_WebAuthnBuilder(
+				_mFA
+			)
+			.execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_Session_DeleteAllBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.SUB_Session_DeleteAll");
+		return builder;
+	}
+
+	public static void sUB_Session_DeleteAll(IContext context)
+	{
+		sUB_Session_DeleteAllBuilder().execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_SetupOwnTransactionBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.SUB_SetupOwnTransaction");
+		return builder;
+	}
+
+	public static void sUB_SetupOwnTransaction(IContext context)
+	{
+		sUB_SetupOwnTransactionBuilder().execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_Site_RunCheckBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.SUB_Site_RunCheck");
+		return builder;
+	}
+
+	public static mfatestmodule.proxies.SessionData sUB_Site_RunCheck(IContext context)
+	{
+		Object result = sUB_Site_RunCheckBuilder().execute(context);
+		return result == null ? null : mfatestmodule.proxies.SessionData.initialize(context, (IMendixObject) result);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder tearDownBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.TearDown");
+		return builder;
+	}
+
+	public static void tearDown(IContext context)
+	{
+		tearDownBuilder().execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder test_1_CheckConstantsBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.Test_1_CheckConstants");
+		return builder;
+	}
+
+	public static boolean test_1_CheckConstants(IContext context)
+	{
+		Object result = test_1_CheckConstantsBuilder().execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder test_Account_Normal_LoginBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.Test_Account_Normal_Login");
+		return builder;
+	}
+
+	public static boolean test_Account_Normal_Login(IContext context)
+	{
+		Object result = test_Account_Normal_LoginBuilder().execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder test_Account_Normal_Login_3attemptsBlockBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.Test_Account_Normal_Login_3attemptsBlock");
+		return builder;
+	}
+
+	public static boolean test_Account_Normal_Login_3attemptsBlock(IContext context)
+	{
+		Object result = test_Account_Normal_Login_3attemptsBlockBuilder().execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder test_Account_Normal_Login_BlockedBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.Test_Account_Normal_Login_Blocked");
+		return builder;
+	}
+
+	public static boolean test_Account_Normal_Login_Blocked(IContext context)
+	{
+		Object result = test_Account_Normal_Login_BlockedBuilder().execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder test_Account_Normal_Login_Blocked_MFABuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.Test_Account_Normal_Login_Blocked_MFA");
+		return builder;
+	}
+
+	public static boolean test_Account_Normal_Login_Blocked_MFA(IContext context)
+	{
+		Object result = test_Account_Normal_Login_Blocked_MFABuilder().execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder test_Account_Normal_Login_MFABuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.Test_Account_Normal_Login_MFA");
+		return builder;
+	}
+
+	public static boolean test_Account_Normal_Login_MFA(IContext context)
+	{
+		Object result = test_Account_Normal_Login_MFABuilder().execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder test_Account_Normal_Login_MFA_3attemptsBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.Test_Account_Normal_Login_MFA_3attempts");
+		return builder;
+	}
+
+	public static boolean test_Account_Normal_Login_MFA_3attempts(IContext context)
+	{
+		Object result = test_Account_Normal_Login_MFA_3attemptsBuilder().execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder test_Account_Normal_Login_User_Logout_LoginMxAdminBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.Test_Account_Normal_Login_User_Logout_LoginMxAdmin");
+		return builder;
+	}
+
+	public static boolean test_Account_Normal_Login_User_Logout_LoginMxAdmin(IContext context)
+	{
+		Object result = test_Account_Normal_Login_User_Logout_LoginMxAdminBuilder().execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder testLogBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.TestLog");
+		return builder;
+	}
+
 	public static void testLog(IContext context)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		Core.microflowCall("MFATestModule.TestLog").withParams(params).execute(context);
+		testLogBuilder().execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder uT_DatadogLogBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFATestModule.UT_DatadogLog");
+		return builder;
+	}
+
+	public static void uT_DatadogLog(IContext context)
+	{
+		uT_DatadogLogBuilder().execute(context);
 	}
 }

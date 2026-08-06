@@ -1,0 +1,142 @@
+{
+  "name": "react-native-localize",
+  "version": "3.7.0",
+  "license": "MIT",
+  "description": "A toolbox for your React Native app localization.",
+  "author": "Mathieu Acthernoene <zoontek@gmail.com>",
+  "homepage": "https://github.com/zoontek/react-native-localize",
+  "main": "./dist/commonjs/index.js",
+  "module": "./dist/module/index.js",
+  "types": "./dist/typescript/commonjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/typescript/module/index.d.ts",
+        "default": "./dist/module/index.js"
+      },
+      "require": {
+        "types": "./dist/typescript/commonjs/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    },
+    "./expo": {
+      "import": {
+        "types": "./dist/typescript/module/extras/expo.d.ts",
+        "default": "./dist/module/extras/expo.js"
+      },
+      "require": {
+        "types": "./dist/typescript/commonjs/extras/expo.d.ts",
+        "default": "./dist/commonjs/extras/expo.js"
+      }
+    },
+    "./mock": {
+      "import": {
+        "types": "./dist/typescript/module/extras/mock/index.d.ts",
+        "default": "./dist/module/extras/mock/index.js"
+      },
+      "require": {
+        "types": "./dist/typescript/commonjs/extras/mock/index.d.ts",
+        "default": "./dist/commonjs/extras/mock/index.js"
+      }
+    },
+    "./mock/jest": {
+      "import": {
+        "types": "./dist/typescript/module/extras/mock/jest.d.ts",
+        "default": "./dist/module/extras/mock/jest.js"
+      },
+      "require": {
+        "types": "./dist/typescript/commonjs/extras/mock/jest.d.ts",
+        "default": "./dist/commonjs/extras/mock/jest.js"
+      }
+    },
+    "./package.json": "./package.json",
+    "./app.plugin.js": "./app.plugin.js"
+  },
+  "files": [
+    "/android",
+    "/dist",
+    "/ios",
+    "/src",
+    "RNLocalize.podspec",
+    "app.plugin.js",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zoontek/react-native-localize.git"
+  },
+  "keywords": [
+    "react-native-localize",
+    "react-native",
+    "react-native-macos",
+    "localize",
+    "localization",
+    "l20n"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "format": "prettier '**/*' -u -w",
+    "typecheck": "tsc --noEmit",
+    "build": "yarn clean && bob build",
+    "prepack": "prettier '**/*' -u -c && yarn typecheck && yarn build"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "dist",
+    "targets": [
+      "typescript",
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-organize-imports"
+    ]
+  },
+  "peerDependencies": {
+    "@expo/config-plugins": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-macos": "*"
+  },
+  "peerDependenciesMeta": {
+    "@expo/config-plugins": {
+      "optional": true
+    },
+    "react-native-macos": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@expo/config-plugins": "*",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.2.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "react": "19.2.3",
+    "react-native": "0.84.0",
+    "react-native-builder-bob": "^0.40.18",
+    "typescript": "^5.9.3"
+  },
+  "codegenConfig": {
+    "name": "RNLocalizeSpec",
+    "type": "modules",
+    "jsSrcsDir": "./src/specs",
+    "android": {
+      "javaPackageName": "com.zoontek.rnlocalize"
+    }
+  }
+}

@@ -11,20 +11,23 @@ package objecthandling.actions;
 
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
-import com.mendix.webui.CustomJavaAction;
 import objecthandling.ORM;
+import com.mendix.systemwideinterfaces.core.UserAction;
 
 /**
  * Returns true if at least one member (including owned associations) of this object has changed.
  */
-public class objectHasChanged extends CustomJavaAction<java.lang.Boolean>
+public class objectHasChanged extends UserAction<java.lang.Boolean>
 {
-	private IMendixObject item;
+	private final IMendixObject item;
 
-	public objectHasChanged(IContext context, IMendixObject item)
+	public objectHasChanged(
+		IContext context,
+		IMendixObject _item
+	)
 	{
 		super(context);
-		this.item = item;
+		this.item = _item;
 	}
 
 	@java.lang.Override

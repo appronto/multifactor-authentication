@@ -36,6 +36,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.parser.ParserDelegator;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.text.StringEscapeUtils;
 import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
@@ -64,6 +65,12 @@ public class StringUtils {
 
 	public static final String HASH_ALGORITHM = "SHA-256";
 
+	public static String hash(String value) throws NoSuchAlgorithmException, DigestException {
+		int LENGTH = 32;
+		return hash(value, LENGTH);
+	}
+
+	@Deprecated
 	public static String hash(String value, int length) throws NoSuchAlgorithmException, DigestException {
 		byte[] inBytes = value.getBytes(StandardCharsets.UTF_8);
 		byte[] outBytes = new byte[length];
@@ -216,8 +223,12 @@ public class StringUtils {
 			return null;
 		}
 		try (InputStream f = Core.getFileDocumentContent(context, source.getMendixObject())) {
-			return IOUtils.toString(f, charset);
+			return stringFromInputStream(f, charset);
 		}
+	}
+
+	public static String stringFromInputStream(InputStream inputStream, Charset charset) throws IOException {
+		return IOUtils.toString(BOMInputStream.builder().setInputStream(inputStream).get(), charset);
 	}
 
 	public static void stringToFile(IContext context, String value, FileDocument destination) throws IOException {
@@ -246,29 +257,19 @@ public class StringUtils {
 		HTMLEditorKit.ParserCallback callback = new HTMLEditorKit.ParserCallback() {
 			@Override
 			public void handleText(char[] data, int pos) {
-				result.append(data); //TODO: needds to be html entity decode?
-			}
-
-			@Override
-			public void handleComment(char[] data, int pos) {
-				//Do nothing
-			}
-
-			@Override
-			public void handleError(String errorMsg, int pos) {
-				//Do nothing
+				result.append(data); // TODO: needs to be html entity decode?
 			}
 
 			@Override
 			public void handleSimpleTag(HTML.Tag tag, MutableAttributeSet a, int pos) {
-				if (tag == HTML.Tag.BR) {
+				if (tag.breaksFlow()) {
 					result.append("\r\n");
 				}
 			}
 
 			@Override
 			public void handleEndTag(HTML.Tag tag, int pos) {
-				if (tag == HTML.Tag.P) {
+				if (tag.breaksFlow() && tag != HTML.Tag.HTML && tag != HTML.Tag.HEAD && tag != HTML.Tag.BODY) {
 					result.append("\r\n");
 				}
 			}
@@ -487,7 +488,12 @@ public class StringUtils {
 		PolicyFactory policyFactory = null;
 
 		for (SanitizerPolicy param : policyParams) {
-			policyFactory = (policyFactory == null) ? SANITIZER_POLICIES.get(param.name()) : policyFactory.and(SANITIZER_POLICIES.get(param.name()));
+			PolicyFactory policyFactoryForParam = SANITIZER_POLICIES.get(param.name());
+			policyFactory = (policyFactory == null) ? policyFactoryForParam : policyFactory.and(policyFactoryForParam);
+		}
+
+		if (policyFactory == null) {
+			throw new IllegalArgumentException("Sanitizer policy not found.");
 		}
 
 		return sanitizeHTML(html, policyFactory);

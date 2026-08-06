@@ -1,0 +1,6 @@
+{
+  "nativeDependencies": {
+    "react-native-blob-util": "0.24.7",
+    "react-native-file-viewer-turbo": "0.7.4"
+  }
+}

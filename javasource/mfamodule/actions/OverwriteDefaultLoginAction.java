@@ -12,15 +12,13 @@ package mfamodule.actions;
 import com.mendix.core.Core;
 import com.mendix.core.action.user.LoginAction;
 import com.mendix.systemwideinterfaces.core.IContext;
-import com.mendix.systemwideinterfaces.core.meta.IMetaObject;
-import com.mendix.webui.CustomJavaAction;
 import mfamodule.helpers.*;
-import system.proxies.User;
+import com.mendix.systemwideinterfaces.core.UserAction;
 
 /**
  * Overwrites default login so we can prevent all different sign-in actions.
  */
-public class OverwriteDefaultLoginAction extends CustomJavaAction<java.lang.Boolean>
+public class OverwriteDefaultLoginAction extends UserAction<java.lang.Boolean>
 {
 	public OverwriteDefaultLoginAction(IContext context)
 	{
@@ -34,10 +32,7 @@ public class OverwriteDefaultLoginAction extends CustomJavaAction<java.lang.Bool
 		LoginActionListener loginActionListener = new LoginActionListener(LoginAction.class);
 		loginActionListener.addReplaceEvent(MultiFactorAuthLoginAction.class.getName());
 		Core.addUserAction(MultiFactorAuthLoginAction.class);
-		Core.getListenersRegistry().addListener(loginActionListener);
-		
-
-		
+		Core.getListenersRegistry().addListener(loginActionListener);	
 		return true;
 		// END USER CODE
 	}

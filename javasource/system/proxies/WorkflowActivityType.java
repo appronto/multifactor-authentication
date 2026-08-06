@@ -6,34 +6,44 @@ package system.proxies;
 
 public enum WorkflowActivityType
 {
-	Start(new java.lang.String[][] { new java.lang.String[] { "en_US", "Start" } }),
-	End(new java.lang.String[][] { new java.lang.String[] { "en_US", "End" } }),
-	ExclusiveSplit(new java.lang.String[][] { new java.lang.String[] { "en_US", "Decision" } }),
-	ParallelSplit(new java.lang.String[][] { new java.lang.String[] { "en_US", "Parallel Split" } }),
-	ParallelSplitBranchStopper(new java.lang.String[][] { new java.lang.String[] { "en_US", "End of Parallel Split Branch" } }),
-	ParallelSplitMerge(new java.lang.String[][] { new java.lang.String[] { "en_US", "Merge of Parallel Split" } }),
-	UserTask(new java.lang.String[][] { new java.lang.String[] { "en_US", "User task" } }),
-	CallMicroflow(new java.lang.String[][] { new java.lang.String[] { "en_US", "Call Microflow" } }),
-	CallWorkflow(new java.lang.String[][] { new java.lang.String[] { "en_US", "Call Workflow" } }),
-	JumpTo(new java.lang.String[][] { new java.lang.String[] { "en_US", "Jump" } });
+	Start("1ea95f53-f648-4c03-8eee-aa6b8994043f"),
+	End("3238fc49-b283-44fb-afd0-b31621880c59"),
+	ExclusiveSplit("03b0e149-8149-4c61-8848-01782737b024"),
+	ParallelSplit("60c665ae-d0e5-4e94-8d20-c5313e48e84e"),
+	ParallelSplitBranchStopper("aefceb60-0bf4-4178-b4bc-c26c871dd5f7"),
+	ParallelSplitMerge("dc4e3808-aa08-4a83-8d30-b0fe3cd7871f"),
+	UserTask("bc87ade0-cef3-4663-9ac6-4e43dc61c1cb"),
+	CallMicroflow("3d957bd9-d5a0-4183-968b-725b0e4fded1"),
+	CallWorkflow("479e21d4-8fca-4579-a174-db047d050f63"),
+	JumpTo("71ea426d-bc32-4fef-b815-6cc23d1c34a5"),
+	MultiInputUserTask("bc7c50d2-85d5-452a-9aca-d47eeff6bc4c"),
+	Notification("14d8418d-474e-45d0-b59b-97339bfb74be"),
+	WaitForNotification("abb0f497-cced-4365-a206-0de3668a2e05"),
+	WaitForTimer("8e0b84c7-1b56-4d53-92ac-784990877ba7"),
+	EndOfBoundaryEventPath("363dfddc-69cb-41cd-af71-a8b0d0b324e8"),
+	NonInterruptingTimerEvent("a40a215e-3540-4a3c-8633-8de4e88999bf"),
+	InterruptingTimerEvent("28780d21-22b2-4880-b559-35348cdee5af"),
+	NonInterruptingNotificationEventSubProcessStart("6c366462-10ce-4ec7-b308-8ce9827ed755"),
+	AIAgentTask("2fa288dd-aaf1-4657-ac4f-4aab201333b8"),
+	InterruptingNotificationEventSubProcessStart("54486bf1-eac4-471c-8227-6c28006dfffa"),
+	NonInterruptingNotificationEvent("0942261d-746b-49f1-bcfe-89370411f3b7"),
+	InterruptingNotificationEvent("8115b043-b231-4070-bcad-05ffbe759046");
 
-	private final java.util.Map<java.lang.String, java.lang.String> captions;
-
-	private WorkflowActivityType(java.lang.String[][] captionStrings)
+	private final java.lang.String i18nCaptionKey;
+	
+	private WorkflowActivityType(java.lang.String i18nCaptionKey)
 	{
-		this.captions = new java.util.HashMap<>();
-		for (java.lang.String[] captionString : captionStrings) {
-			captions.put(captionString[0], captionString[1]);
-		}
+		this.i18nCaptionKey = i18nCaptionKey;
 	}
 
 	public java.lang.String getCaption(java.lang.String languageCode)
 	{
-		return captions.getOrDefault(languageCode, "en_US");
+		String caption = com.mendix.core.Core.getInternationalizedString(languageCode, i18nCaptionKey);
+		return caption.isEmpty() ? getCaption() : caption;
 	}
 
 	public java.lang.String getCaption()
 	{
-		return captions.get("en_US");
+		return com.mendix.core.Core.getInternationalizedString("en_US", i18nCaptionKey);
 	}
 }

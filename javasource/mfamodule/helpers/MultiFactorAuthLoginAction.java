@@ -5,11 +5,9 @@ import java.util.UUID;
 
 import com.mendix.core.Core;
 import com.mendix.core.action.user.LoginAction;
-import com.mendix.core.conf.Configuration;
 import com.mendix.logging.ILogNode;
 import com.mendix.m2ee.api.IMxRuntimeRequest;
 import com.mendix.systemwideinterfaces.core.AuthenticationRuntimeException;
-import com.mendix.systemwideinterfaces.core.UserBlockedException;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.ISession;
 import com.mendix.systemwideinterfaces.core.IUser;
@@ -20,7 +18,6 @@ import mfamodule.proxies.DatadogLog;
 import mfamodule.proxies.DatadogOutcome_Enum;
 import mfamodule.proxies.MFA;
 import mfamodule.proxies.UserHelper;
-import mfamodule.proxies.microflows.Microflows;
 
 
 public class MultiFactorAuthLoginAction extends LoginAction{
@@ -71,9 +68,9 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 			oldSession = Core.getSessionById(UUID.fromString(currentSessionId));
 			if(oldSession != null) {
 				//check if there is mfa for the user from the first call
-				userMfaObj = mfamodule.proxies.microflows.Microflows.dS_MFA_GET(oldSession.createContext());
+				userMfaObj = mfamodule.proxies.microflows.Microflows.sUB_MFA_GetOrCreateFromSession(oldSession.createContext());
 				userMfaObj.setIPaddress(sysContext, realIP);
-				if(userMfaObj != null && userMfaObj.getMendixObject().getMember(oldSession.createContext(),"Username").hasReadAccess(oldSession.createContext()) && userMfaObj.getUsername() != null ) {
+				if(userMfaObj != null && userMfaObj.getMendixObject().getMember("Username").hasReadAccess(oldSession.createContext()) && userMfaObj.getUsername() != null ) {
 					
 					if ( mfamodule.proxies.microflows.Microflows.sUB_MFA_Validate(oldSession.createContext(), userMfaObj, userMfaObj.getUsername()) ) {
 						IUser user = Core.getUser(sysContext, userMfaObj.getUsername());
@@ -90,35 +87,35 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 		IUser user = Core.getUser(sysContext, this.userName);
 		if (user == null) {
 			mfamodule.proxies.microflows.Microflows.sUB_DatadogLog_Default(sysContext, "unknown user", DatadogOutcome_Enum.failure, userName, null, "authentication",ddlog,realIP); 
-			//_logNode.debug( "Custom Login FAILED: unknown user '" + this.userName + "'." );
+			_logNode.debug( "Custom Login FAILED: unknown user '" + this.userName + "'." );
 			throw new AuthenticationRuntimeException( "Custom Login FAILED for user '" + this.userName + "'." );
 		}
 		else if (user.isWebserviceUser()) {
 			mfamodule.proxies.microflows.Microflows.sUB_DatadogLog_Default(sysContext, "client login attempt for web service user", DatadogOutcome_Enum.failure, userName, null, "authentication",ddlog,realIP); 
-			//_logNode.debug( "Custom Login FAILED: client login attempt for web service user '" + this.userName + "'." );
+			_logNode.debug( "Custom Login FAILED: client login attempt for web service user '" + this.userName + "'." );
 			throw new AuthenticationRuntimeException(" Custom Login FAILED for user '" + this.userName + "'.");
 		}
 		else if (user.isAnonymous()) {
 			mfamodule.proxies.microflows.Microflows.sUB_DatadogLog_Default(sysContext, "client login attempt for Anonymous user", DatadogOutcome_Enum.failure, userName, null, "authentication",ddlog,realIP); 
-			//_logNode.debug( "Custom Login FAILED: client login attempt for Anonymous user '" + this.userName + "'." );
+			_logNode.debug( "Custom Login FAILED: client login attempt for Anonymous user '" + this.userName + "'." );
 			throw new AuthenticationRuntimeException(" Custom Login FAILED for user '" + this.userName + "'.");
 		}
 		else if (user.isActive() == false) {
 			mfamodule.proxies.microflows.Microflows.sUB_DatadogLog_Default(sysContext, "user is not active", DatadogOutcome_Enum.failure, userName, null, "authentication",ddlog,realIP); 
 
-			//_logNode.debug( "Custom Login FAILED: user '" + this.userName + "' is not active." );
+			_logNode.debug( "Custom Login FAILED: user '" + this.userName + "' is not active." );
 			throw new AuthenticationRuntimeException(" Custom Login FAILED for user '" + this.userName + "'.");
 		}
 		else if (user.isBlocked() == true) {
 			mfamodule.proxies.microflows.Microflows.sUB_DatadogLog_Default(sysContext, "user blocked", DatadogOutcome_Enum.failure, userName, null, "authentication",ddlog,realIP); 
 
-			//_logNode.debug( "Custom Login FAILED: user '" + this.userName + "' is blocked." );
-			throw new UserBlockedException("Custom Login FAILED for user '" + this.userName + "'.");
+			_logNode.debug( "Custom Login FAILED: user '" + this.userName + "' is blocked." );
+			throw new AuthenticationRuntimeException("Custom Login FAILED for user '" + this.userName + "'.");
 		}
 		else if (user.getUserRoleNames().isEmpty()) {
 			mfamodule.proxies.microflows.Microflows.sUB_DatadogLog_Default(sysContext, "user does not have any user roles", DatadogOutcome_Enum.failure, userName, null, "authentication",ddlog,realIP); 
 
-			//_logNode.debug( "Custom Login FAILED: user '" + this.userName + "' does not have any user roles." );
+			_logNode.debug( "Custom Login FAILED: user '" + this.userName + "' does not have any user roles." );
 			throw new AuthenticationRuntimeException(" Custom Login FAILED for user '" + this.userName + "'.");
 		}
 		else if( !Core.authenticate(sysContext, user, this.password)) {	
@@ -128,16 +125,15 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 				user.getMendixObject().setValue(sysContext,"FailedLogins",obj);
 				if ( (Integer)user.getMendixObject().getValue(sysContext,"FailedLogins") >= mfamodule.proxies.constants.Constants.getMaxLoginAttempts()) {
 					user.getMendixObject().setValue(sysContext,"Blocked",true);			
-					if(!Configuration.RUNTIME_VERSION.toString().startsWith("8")) {
+					if(!Core.getRuntimeVersion().toString().startsWith("8")) {
 						user.getMendixObject().setValue(sysContext,"BlockedSince", LocalDateTime.now(ZoneOffset.UTC));
 					}
 					Core.commit(sysContext, user.getMendixObject());
 					mfamodule.proxies.microflows.Microflows.sUB_DatadogLog_Default(sysContext, "user blocked", DatadogOutcome_Enum.failure, userName, null, "authentication",ddlog,realIP); 
 
-					//_logNode.debug( "Custom Login FAILED:  user '" + this.userName + "' blocked" );
-					//Core.getLogger("Core").info( "Custom Login FAILED:  user '" + this.userName + "' blocked" );
+					_logNode.debug( "Custom Login FAILED:  user '" + this.userName + "' blocked" );
 					if (oldSession != null) { Core.logout(oldSession); }
-					throw new UserBlockedException("Custom Login FAILED:  user '" + this.userName + "' blocked");
+					throw new AuthenticationRuntimeException("Custom Login FAILED:  user '" + this.userName + "' blocked");
 				}
 				user.getMendixObject().setValue(sysContext,"BlockedSince", new java.util.Date());
 				Core.commit(sysContext, user.getMendixObject());
@@ -149,9 +145,8 @@ public class MultiFactorAuthLoginAction extends LoginAction{
 				if( !mfamodule.proxies.microflows.Microflows.sUB_CheckMaxLogin(getContext(), userHelper)) {
 					mfamodule.proxies.microflows.Microflows.sUB_DatadogLog_Default(sysContext, "user blocked", DatadogOutcome_Enum.failure, userName, null, "authentication",ddlog,realIP); 
 
-					//_logNode.debug( "Custom Login FAILED:  user '" + this.userName + "' blocked" );
-					//Core.getLogger("Core").info( "Custom Login FAILED:  user '" + this.userName + "' blocked" );
-					throw new UserBlockedException("Custom Login FAILED:  user '" + this.userName + "' blocked");
+					_logNode.debug( "Custom Login FAILED:  user '" + this.userName + "' blocked" );
+					throw new AuthenticationRuntimeException("Custom Login FAILED:  user '" + this.userName + "' blocked");
 				}
 			}
 			mfamodule.proxies.microflows.Microflows.sUB_DatadogLog_Default(sysContext, "invalid password", DatadogOutcome_Enum.failure, userName, null, "authentication",ddlog,realIP); 

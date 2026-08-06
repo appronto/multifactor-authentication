@@ -6,17 +6,26 @@ package unittesting.proxies.constants;
 
 import com.mendix.core.Core;
 
-public class Constants
+public final class Constants
 {
 	/**
-	 * @deprecated
-	 * The default constructor of the Constants class should not be used.
-	 * Use the static get methods instead.
+	 * Private constructor to prevent instantiation of this class. 
 	 */
-	@java.lang.Deprecated(since = "9.12", forRemoval = true)
-	public Constants() {}
+	private Constants() {}
 
 	// These are the constants for the UnitTesting module
+
+	/**
+	* Set this constant to true to enable the Unit Testing module in a deployed environment, for example when running in the Mendix Cloud. We recommend to keep this constant set to false for production environments.
+	* 
+	* Default value: false.
+	* 
+	* Note: When running locally from Studio Pro, the Unit Testing is enabled automatically, even when the 'Enabled' constant is set to false. 
+	*/
+	public static boolean getEnabled()
+	{
+		return (java.lang.Boolean)Core.getConfiguration().getConstantValue("UnitTesting.Enabled");
+	}
 
 	/**
 	* Set this value to 'True' when you would like to include your available JUnit tests to be found and listed. Leave 'False' otherwise
@@ -26,11 +35,27 @@ public class Constants
 		return (java.lang.Boolean)Core.getConfiguration().getConstantValue("UnitTesting.FindJUnitTests");
 	}
 
+	/**
+	* Set this constant to true to enable the remote API for running unit tests.
+	* 
+	* Note: You also need to configure a value for the 'RemoteApiPassword' constant to enable the remote API.
+	* 
+	* Default value: false.
+	* 
+	* See the module documentation for more information: https://docs.mendix.com/appstore/modules/unit-testing/#using-the-remote-api
+	*/
 	public static boolean getRemoteApiEnabled()
 	{
 		return (java.lang.Boolean)Core.getConfiguration().getConstantValue("UnitTesting.RemoteApiEnabled");
 	}
 
+	/**
+	* The password that is used to protect the remote API. To ensure the security of the API, it is required to configure a password. If the value remains unset, the remote API will NOT be enabled, even if the 'RemoteApiEnabled' constant is set to true.
+	* 
+	* Default value: empty
+	* 
+	* See the module documentation for more information: https://docs.mendix.com/appstore/modules/unit-testing/#using-the-remote-api
+	*/
 	public static java.lang.String getRemoteApiPassword()
 	{
 		return (java.lang.String)Core.getConfiguration().getConstantValue("UnitTesting.RemoteApiPassword");

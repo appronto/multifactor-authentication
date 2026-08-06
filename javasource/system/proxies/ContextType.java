@@ -12,28 +12,26 @@ package system.proxies;
  */
 public enum ContextType
 {
-	System(new java.lang.String[][] { new java.lang.String[] { "en_US", "System" } }),
-	User(new java.lang.String[][] { new java.lang.String[] { "en_US", "User" } }),
-	Anonymous(new java.lang.String[][] { new java.lang.String[] { "en_US", "Anonymous" } }),
-	ScheduledEvent(new java.lang.String[][] { new java.lang.String[] { "en_US", "ScheduledEvent" } });
+	System("1fad9521-9811-4570-b157-c5c27b2d96a7"),
+	User("14c36ea9-d4b4-4883-ad23-19b00f2a1a02"),
+	Anonymous("8e104de4-b77b-4ed4-9e46-69420c85e6a1"),
+	ScheduledEvent("986416af-8e93-4321-b95a-a09ea0504bb4");
 
-	private final java.util.Map<java.lang.String, java.lang.String> captions;
-
-	private ContextType(java.lang.String[][] captionStrings)
+	private final java.lang.String i18nCaptionKey;
+	
+	private ContextType(java.lang.String i18nCaptionKey)
 	{
-		this.captions = new java.util.HashMap<>();
-		for (java.lang.String[] captionString : captionStrings) {
-			captions.put(captionString[0], captionString[1]);
-		}
+		this.i18nCaptionKey = i18nCaptionKey;
 	}
 
 	public java.lang.String getCaption(java.lang.String languageCode)
 	{
-		return captions.getOrDefault(languageCode, "en_US");
+		String caption = com.mendix.core.Core.getInternationalizedString(languageCode, i18nCaptionKey);
+		return caption.isEmpty() ? getCaption() : caption;
 	}
 
 	public java.lang.String getCaption()
 	{
-		return captions.get("en_US");
+		return com.mendix.core.Core.getInternationalizedString("en_US", i18nCaptionKey);
 	}
 }

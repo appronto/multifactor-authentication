@@ -4,7 +4,7 @@
 
 package system.proxies;
 
-public class WorkflowCurrentActivity
+public class WorkflowCurrentActivity implements com.mendix.systemwideinterfaces.core.IEntityProxy
 {
 	private final com.mendix.systemwideinterfaces.core.IMendixObject workflowCurrentActivityMendixObject;
 
@@ -23,7 +23,8 @@ public class WorkflowCurrentActivity
 		Action("Action"),
 		WorkflowCurrentActivity_ActivityDetails("System.WorkflowCurrentActivity_ActivityDetails"),
 		WorkflowCurrentActivity_ApplicableTargets("System.WorkflowCurrentActivity_ApplicableTargets"),
-		WorkflowCurrentActivity_JumpToTarget("System.WorkflowCurrentActivity_JumpToTarget");
+		WorkflowCurrentActivity_JumpToTarget("System.WorkflowCurrentActivity_JumpToTarget"),
+		WorkflowCurrentActivity_WorkflowSubProcess("System.WorkflowCurrentActivity_WorkflowSubProcess");
 
 		private final java.lang.String metaName;
 
@@ -49,21 +50,12 @@ public class WorkflowCurrentActivity
 		if (workflowCurrentActivityMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
 		}
-		if (!com.mendix.core.Core.isSubClassOf(entityName, workflowCurrentActivityMendixObject.getType())) {
+		if (!workflowCurrentActivityMendixObject.isInstanceOf(entityName)) {
 			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
 		}	
 
 		this.workflowCurrentActivityMendixObject = workflowCurrentActivityMendixObject;
 		this.context = context;
-	}
-
-	/**
-	 * @deprecated Use 'WorkflowCurrentActivity.load(IContext, IMendixIdentifier)' instead.
-	 */
-	@java.lang.Deprecated
-	public static system.proxies.WorkflowCurrentActivity initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixIdentifier mendixIdentifier) throws com.mendix.core.CoreException
-	{
-		return system.proxies.WorkflowCurrentActivity.load(context, mendixIdentifier);
 	}
 
 	/**
@@ -85,40 +77,7 @@ public class WorkflowCurrentActivity
 	}
 
 	/**
-	 * Commit the changes made on this proxy object.
-	 * @throws com.mendix.core.CoreException
-	 */
-	public final void commit() throws com.mendix.core.CoreException
-	{
-		com.mendix.core.Core.commit(context, getMendixObject());
-	}
-
-	/**
-	 * Commit the changes made on this proxy object using the specified context.
-	 * @throws com.mendix.core.CoreException
-	 */
-	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
-	{
-		com.mendix.core.Core.commit(context, getMendixObject());
-	}
-
-	/**
-	 * Delete the object.
-	 */
-	public final void delete()
-	{
-		com.mendix.core.Core.delete(context, getMendixObject());
-	}
-
-	/**
-	 * Delete the object using the specified context.
-	 */
-	public final void delete(com.mendix.systemwideinterfaces.core.IContext context)
-	{
-		com.mendix.core.Core.delete(context, getMendixObject());
-	}
-	/**
-	 * Set value of Action
+	 * Get value of Action
 	 * @param action
 	 */
 	public final system.proxies.WorkflowCurrentActivityAction getAction()
@@ -309,16 +268,59 @@ public class WorkflowCurrentActivity
 	}
 
 	/**
-	 * @return the IMendixObject instance of this proxy for use in the Core interface.
+	 * @throws com.mendix.core.CoreException
+	 * @return value of WorkflowCurrentActivity_WorkflowSubProcess
 	 */
+	public final system.proxies.WorkflowSubProcess getWorkflowCurrentActivity_WorkflowSubProcess() throws com.mendix.core.CoreException
+	{
+		return getWorkflowCurrentActivity_WorkflowSubProcess(getContext());
+	}
+
+	/**
+	 * @param context
+	 * @return value of WorkflowCurrentActivity_WorkflowSubProcess
+	 * @throws com.mendix.core.CoreException
+	 */
+	public final system.proxies.WorkflowSubProcess getWorkflowCurrentActivity_WorkflowSubProcess(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
+	{
+		system.proxies.WorkflowSubProcess result = null;
+		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.WorkflowCurrentActivity_WorkflowSubProcess.toString());
+		if (identifier != null) {
+			result = system.proxies.WorkflowSubProcess.load(context, identifier);
+		}
+		return result;
+	}
+
+	/**
+	 * Set value of WorkflowCurrentActivity_WorkflowSubProcess
+	 * @param workflowcurrentactivity_workflowsubprocess
+	 */
+	public final void setWorkflowCurrentActivity_WorkflowSubProcess(system.proxies.WorkflowSubProcess workflowcurrentactivity_workflowsubprocess)
+	{
+		setWorkflowCurrentActivity_WorkflowSubProcess(getContext(), workflowcurrentactivity_workflowsubprocess);
+	}
+
+	/**
+	 * Set value of WorkflowCurrentActivity_WorkflowSubProcess
+	 * @param context
+	 * @param workflowcurrentactivity_workflowsubprocess
+	 */
+	public final void setWorkflowCurrentActivity_WorkflowSubProcess(com.mendix.systemwideinterfaces.core.IContext context, system.proxies.WorkflowSubProcess workflowcurrentactivity_workflowsubprocess)
+	{
+		if (workflowcurrentactivity_workflowsubprocess == null) {
+			getMendixObject().setValue(context, MemberNames.WorkflowCurrentActivity_WorkflowSubProcess.toString(), null);
+		} else {
+			getMendixObject().setValue(context, MemberNames.WorkflowCurrentActivity_WorkflowSubProcess.toString(), workflowcurrentactivity_workflowsubprocess.getMendixObject().getId());
+		}
+	}
+
+	@java.lang.Override
 	public final com.mendix.systemwideinterfaces.core.IMendixObject getMendixObject()
 	{
 		return workflowCurrentActivityMendixObject;
 	}
 
-	/**
-	 * @return the IContext instance of this proxy, or null if no IContext instance was specified at initialization.
-	 */
+	@java.lang.Override
 	public final com.mendix.systemwideinterfaces.core.IContext getContext()
 	{
 		return context;
@@ -344,21 +346,13 @@ public class WorkflowCurrentActivity
 		return getMendixObject().hashCode();
 	}
 
-	/**
-	 * @return String name of this class
-	 */
+  /**
+   * Gives full name ("Module.Entity" name) of the type of the entity.
+   *
+   * @return the name
+   */
 	public static java.lang.String getType()
 	{
 		return entityName;
-	}
-
-	/**
-	 * @return String GUID from this object, format: ID_0000000000
-	 * @deprecated Use getMendixObject().getId().toLong() to get a unique identifier for this object.
-	 */
-	@java.lang.Deprecated
-	public java.lang.String getGUID()
-	{
-		return "ID_" + getMendixObject().getId().toLong();
 	}
 }

@@ -1,0 +1,5 @@
+{
+  "nativeDependencies": {
+    "@kode-frontend/react-native-biometry-tools": "^0.1.15"
+  }
+}

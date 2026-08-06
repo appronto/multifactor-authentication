@@ -16,31 +16,29 @@ package system.proxies;
  */
 public enum QueueTaskStatus
 {
-	Idle(new java.lang.String[][] { new java.lang.String[] { "en_US", "Idle" } }),
-	Running(new java.lang.String[][] { new java.lang.String[] { "en_US", "Running" } }),
-	Completed(new java.lang.String[][] { new java.lang.String[] { "en_US", "Completed" } }),
-	Failed(new java.lang.String[][] { new java.lang.String[] { "en_US", "Failed" } }),
-	Retrying(new java.lang.String[][] { new java.lang.String[] { "en_US", "Retrying" } }),
-	Aborted(new java.lang.String[][] { new java.lang.String[] { "en_US", "Aborted" } }),
-	Incompatible(new java.lang.String[][] { new java.lang.String[] { "en_US", "Incompatible" } });
+	Idle("714b3e7e-4166-4571-96d9-72389a7417d9"),
+	Running("0864591f-f30c-42f1-9a53-e4429c628eb2"),
+	Completed("3e473985-8836-497b-b81e-3d4db09fb499"),
+	Failed("c96239e7-b150-4a70-a5ea-e80896548b6d"),
+	Retrying("2f958d5d-4789-42ad-a9d9-07da5d996e1c"),
+	Aborted("2f366a55-ea11-476d-b42a-1e995bdcd01b"),
+	Incompatible("e0974409-54c5-4731-893d-3d726d891adc");
 
-	private final java.util.Map<java.lang.String, java.lang.String> captions;
-
-	private QueueTaskStatus(java.lang.String[][] captionStrings)
+	private final java.lang.String i18nCaptionKey;
+	
+	private QueueTaskStatus(java.lang.String i18nCaptionKey)
 	{
-		this.captions = new java.util.HashMap<>();
-		for (java.lang.String[] captionString : captionStrings) {
-			captions.put(captionString[0], captionString[1]);
-		}
+		this.i18nCaptionKey = i18nCaptionKey;
 	}
 
 	public java.lang.String getCaption(java.lang.String languageCode)
 	{
-		return captions.getOrDefault(languageCode, "en_US");
+		String caption = com.mendix.core.Core.getInternationalizedString(languageCode, i18nCaptionKey);
+		return caption.isEmpty() ? getCaption() : caption;
 	}
 
 	public java.lang.String getCaption()
 	{
-		return captions.get("en_US");
+		return com.mendix.core.Core.getInternationalizedString("en_US", i18nCaptionKey);
 	}
 }

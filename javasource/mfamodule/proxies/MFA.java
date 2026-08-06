@@ -4,7 +4,7 @@
 
 package mfamodule.proxies;
 
-public class MFA
+public class MFA implements com.mendix.systemwideinterfaces.core.IEntityProxy
 {
 	private final com.mendix.systemwideinterfaces.core.IMendixObject mFAMendixObject;
 
@@ -28,6 +28,8 @@ public class MFA
 		MessageType("MessageType"),
 		IsNativeLogin("IsNativeLogin"),
 		IPaddress("IPaddress"),
+		ErrorType("ErrorType"),
+		AuthenticationRequest_MFA("MFAmodule.AuthenticationRequest_MFA"),
 		MFA_Session("MFAmodule.MFA_Session");
 
 		private final java.lang.String metaName;
@@ -54,21 +56,12 @@ public class MFA
 		if (mFAMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
 		}
-		if (!com.mendix.core.Core.isSubClassOf(entityName, mFAMendixObject.getType())) {
+		if (!mFAMendixObject.isInstanceOf(entityName)) {
 			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
 		}	
 
 		this.mFAMendixObject = mFAMendixObject;
 		this.context = context;
-	}
-
-	/**
-	 * @deprecated Use 'MFA.load(IContext, IMendixIdentifier)' instead.
-	 */
-	@java.lang.Deprecated
-	public static mfamodule.proxies.MFA initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixIdentifier mendixIdentifier) throws com.mendix.core.CoreException
-	{
-		return mfamodule.proxies.MFA.load(context, mendixIdentifier);
 	}
 
 	/**
@@ -98,39 +91,6 @@ public class MFA
 			.collect(java.util.stream.Collectors.toList());
 	}
 
-	/**
-	 * Commit the changes made on this proxy object.
-	 * @throws com.mendix.core.CoreException
-	 */
-	public final void commit() throws com.mendix.core.CoreException
-	{
-		com.mendix.core.Core.commit(context, getMendixObject());
-	}
-
-	/**
-	 * Commit the changes made on this proxy object using the specified context.
-	 * @throws com.mendix.core.CoreException
-	 */
-	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
-	{
-		com.mendix.core.Core.commit(context, getMendixObject());
-	}
-
-	/**
-	 * Delete the object.
-	 */
-	public final void delete()
-	{
-		com.mendix.core.Core.delete(context, getMendixObject());
-	}
-
-	/**
-	 * Delete the object using the specified context.
-	 */
-	public final void delete(com.mendix.systemwideinterfaces.core.IContext context)
-	{
-		com.mendix.core.Core.delete(context, getMendixObject());
-	}
 	/**
 	 * @return value of Code
 	 */
@@ -312,7 +272,7 @@ public class MFA
 	}
 
 	/**
-	 * Set value of MessageType
+	 * Get value of MessageType
 	 * @param messagetype
 	 */
 	public final mfamodule.proxies.Enum_MessageType getMessageType()
@@ -429,6 +389,98 @@ public class MFA
 	}
 
 	/**
+	 * Get value of ErrorType
+	 * @param errortype
+	 */
+	public final mfamodule.proxies.Enum_DefaultMessages getErrorType()
+	{
+		return getErrorType(getContext());
+	}
+
+	/**
+	 * @param context
+	 * @return value of ErrorType
+	 */
+	public final mfamodule.proxies.Enum_DefaultMessages getErrorType(com.mendix.systemwideinterfaces.core.IContext context)
+	{
+		Object obj = getMendixObject().getValue(context, MemberNames.ErrorType.toString());
+		if (obj == null) {
+			return null;
+		}
+		return mfamodule.proxies.Enum_DefaultMessages.valueOf((java.lang.String) obj);
+	}
+
+	/**
+	 * Set value of ErrorType
+	 * @param errortype
+	 */
+	public final void setErrorType(mfamodule.proxies.Enum_DefaultMessages errortype)
+	{
+		setErrorType(getContext(), errortype);
+	}
+
+	/**
+	 * Set value of ErrorType
+	 * @param context
+	 * @param errortype
+	 */
+	public final void setErrorType(com.mendix.systemwideinterfaces.core.IContext context, mfamodule.proxies.Enum_DefaultMessages errortype)
+	{
+		if (errortype != null) {
+			getMendixObject().setValue(context, MemberNames.ErrorType.toString(), errortype.toString());
+		} else {
+			getMendixObject().setValue(context, MemberNames.ErrorType.toString(), null);
+		}
+	}
+
+	/**
+	 * @throws com.mendix.core.CoreException
+	 * @return value of AuthenticationRequest_MFA
+	 */
+	public final mfamodule.proxies.AuthenticationRequest getAuthenticationRequest_MFA() throws com.mendix.core.CoreException
+	{
+		return getAuthenticationRequest_MFA(getContext());
+	}
+
+	/**
+	 * @param context
+	 * @return value of AuthenticationRequest_MFA
+	 * @throws com.mendix.core.CoreException
+	 */
+	public final mfamodule.proxies.AuthenticationRequest getAuthenticationRequest_MFA(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
+	{
+		mfamodule.proxies.AuthenticationRequest result = null;
+		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.AuthenticationRequest_MFA.toString());
+		if (identifier != null) {
+			result = mfamodule.proxies.AuthenticationRequest.load(context, identifier);
+		}
+		return result;
+	}
+
+	/**
+	 * Set value of AuthenticationRequest_MFA
+	 * @param authenticationrequest_mfa
+	 */
+	public final void setAuthenticationRequest_MFA(mfamodule.proxies.AuthenticationRequest authenticationrequest_mfa)
+	{
+		setAuthenticationRequest_MFA(getContext(), authenticationrequest_mfa);
+	}
+
+	/**
+	 * Set value of AuthenticationRequest_MFA
+	 * @param context
+	 * @param authenticationrequest_mfa
+	 */
+	public final void setAuthenticationRequest_MFA(com.mendix.systemwideinterfaces.core.IContext context, mfamodule.proxies.AuthenticationRequest authenticationrequest_mfa)
+	{
+		if (authenticationrequest_mfa == null) {
+			getMendixObject().setValue(context, MemberNames.AuthenticationRequest_MFA.toString(), null);
+		} else {
+			getMendixObject().setValue(context, MemberNames.AuthenticationRequest_MFA.toString(), authenticationrequest_mfa.getMendixObject().getId());
+		}
+	}
+
+	/**
 	 * @throws com.mendix.core.CoreException
 	 * @return value of MFA_Session
 	 */
@@ -475,17 +527,13 @@ public class MFA
 		}
 	}
 
-	/**
-	 * @return the IMendixObject instance of this proxy for use in the Core interface.
-	 */
+	@java.lang.Override
 	public final com.mendix.systemwideinterfaces.core.IMendixObject getMendixObject()
 	{
 		return mFAMendixObject;
 	}
 
-	/**
-	 * @return the IContext instance of this proxy, or null if no IContext instance was specified at initialization.
-	 */
+	@java.lang.Override
 	public final com.mendix.systemwideinterfaces.core.IContext getContext()
 	{
 		return context;
@@ -511,21 +559,13 @@ public class MFA
 		return getMendixObject().hashCode();
 	}
 
-	/**
-	 * @return String name of this class
-	 */
+  /**
+   * Gives full name ("Module.Entity" name) of the type of the entity.
+   *
+   * @return the name
+   */
 	public static java.lang.String getType()
 	{
 		return entityName;
-	}
-
-	/**
-	 * @return String GUID from this object, format: ID_0000000000
-	 * @deprecated Use getMendixObject().getId().toLong() to get a unique identifier for this object.
-	 */
-	@java.lang.Deprecated
-	public java.lang.String getGUID()
-	{
-		return "ID_" + getMendixObject().getId().toLong();
 	}
 }

@@ -11,22 +11,25 @@ package objecthandling.actions;
 
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
-import com.mendix.webui.CustomJavaAction;
 import objecthandling.ORM;
+import com.mendix.systemwideinterfaces.core.UserAction;
 
 /**
  * Returns the user that last changed this object as System.User 
  * 
  * (or empty if not applicable).
  */
-public class getLastChangedByUser extends CustomJavaAction<IMendixObject>
+public class getLastChangedByUser extends UserAction<IMendixObject>
 {
-	private IMendixObject thing;
+	private final IMendixObject thing;
 
-	public getLastChangedByUser(IContext context, IMendixObject thing)
+	public getLastChangedByUser(
+		IContext context,
+		IMendixObject _thing
+	)
 	{
 		super(context);
-		this.thing = thing;
+		this.thing = _thing;
 	}
 
 	@java.lang.Override

@@ -4,7 +4,7 @@
 
 package mfamodule.proxies;
 
-public class DatadogLog
+public class DatadogLog implements com.mendix.systemwideinterfaces.core.IEntityProxy
 {
 	private final com.mendix.systemwideinterfaces.core.IMendixObject datadogLogMendixObject;
 
@@ -30,8 +30,7 @@ public class DatadogLog
 		http_method("http_method"),
 		http_useragent("http_useragent"),
 		http_url("http_url"),
-		http_status__code("http_status__code"),
-		DatadogLog_MFA("MFAmodule.DatadogLog_MFA");
+		http_status__code("http_status__code");
 
 		private final java.lang.String metaName;
 
@@ -57,21 +56,12 @@ public class DatadogLog
 		if (datadogLogMendixObject == null) {
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
 		}
-		if (!com.mendix.core.Core.isSubClassOf(entityName, datadogLogMendixObject.getType())) {
+		if (!datadogLogMendixObject.isInstanceOf(entityName)) {
 			throw new java.lang.IllegalArgumentException(String.format("The given object is not a %s", entityName));
 		}	
 
 		this.datadogLogMendixObject = datadogLogMendixObject;
 		this.context = context;
-	}
-
-	/**
-	 * @deprecated Use 'DatadogLog.load(IContext, IMendixIdentifier)' instead.
-	 */
-	@java.lang.Deprecated
-	public static mfamodule.proxies.DatadogLog initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixIdentifier mendixIdentifier) throws com.mendix.core.CoreException
-	{
-		return mfamodule.proxies.DatadogLog.load(context, mendixIdentifier);
 	}
 
 	/**
@@ -92,39 +82,6 @@ public class DatadogLog
 		return mfamodule.proxies.DatadogLog.initialize(context, mendixObject);
 	}
 
-	/**
-	 * Commit the changes made on this proxy object.
-	 * @throws com.mendix.core.CoreException
-	 */
-	public final void commit() throws com.mendix.core.CoreException
-	{
-		com.mendix.core.Core.commit(context, getMendixObject());
-	}
-
-	/**
-	 * Commit the changes made on this proxy object using the specified context.
-	 * @throws com.mendix.core.CoreException
-	 */
-	public final void commit(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
-	{
-		com.mendix.core.Core.commit(context, getMendixObject());
-	}
-
-	/**
-	 * Delete the object.
-	 */
-	public final void delete()
-	{
-		com.mendix.core.Core.delete(context, getMendixObject());
-	}
-
-	/**
-	 * Delete the object using the specified context.
-	 */
-	public final void delete(com.mendix.systemwideinterfaces.core.IContext context)
-	{
-		com.mendix.core.Core.delete(context, getMendixObject());
-	}
 	/**
 	 * @return value of evt_category
 	 */
@@ -198,7 +155,7 @@ public class DatadogLog
 	}
 
 	/**
-	 * Set value of evt_outcome
+	 * Get value of evt_outcome
 	 * @param evt_outcome
 	 */
 	public final mfamodule.proxies.DatadogOutcome_Enum getevt_outcome()
@@ -530,64 +487,13 @@ public class DatadogLog
 		getMendixObject().setValue(context, MemberNames.http_status__code.toString(), http_status__code);
 	}
 
-	/**
-	 * @throws com.mendix.core.CoreException
-	 * @return value of DatadogLog_MFA
-	 */
-	public final mfamodule.proxies.MFA getDatadogLog_MFA() throws com.mendix.core.CoreException
-	{
-		return getDatadogLog_MFA(getContext());
-	}
-
-	/**
-	 * @param context
-	 * @return value of DatadogLog_MFA
-	 * @throws com.mendix.core.CoreException
-	 */
-	public final mfamodule.proxies.MFA getDatadogLog_MFA(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
-	{
-		mfamodule.proxies.MFA result = null;
-		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.DatadogLog_MFA.toString());
-		if (identifier != null) {
-			result = mfamodule.proxies.MFA.load(context, identifier);
-		}
-		return result;
-	}
-
-	/**
-	 * Set value of DatadogLog_MFA
-	 * @param datadoglog_mfa
-	 */
-	public final void setDatadogLog_MFA(mfamodule.proxies.MFA datadoglog_mfa)
-	{
-		setDatadogLog_MFA(getContext(), datadoglog_mfa);
-	}
-
-	/**
-	 * Set value of DatadogLog_MFA
-	 * @param context
-	 * @param datadoglog_mfa
-	 */
-	public final void setDatadogLog_MFA(com.mendix.systemwideinterfaces.core.IContext context, mfamodule.proxies.MFA datadoglog_mfa)
-	{
-		if (datadoglog_mfa == null) {
-			getMendixObject().setValue(context, MemberNames.DatadogLog_MFA.toString(), null);
-		} else {
-			getMendixObject().setValue(context, MemberNames.DatadogLog_MFA.toString(), datadoglog_mfa.getMendixObject().getId());
-		}
-	}
-
-	/**
-	 * @return the IMendixObject instance of this proxy for use in the Core interface.
-	 */
+	@java.lang.Override
 	public final com.mendix.systemwideinterfaces.core.IMendixObject getMendixObject()
 	{
 		return datadogLogMendixObject;
 	}
 
-	/**
-	 * @return the IContext instance of this proxy, or null if no IContext instance was specified at initialization.
-	 */
+	@java.lang.Override
 	public final com.mendix.systemwideinterfaces.core.IContext getContext()
 	{
 		return context;
@@ -613,21 +519,13 @@ public class DatadogLog
 		return getMendixObject().hashCode();
 	}
 
-	/**
-	 * @return String name of this class
-	 */
+  /**
+   * Gives full name ("Module.Entity" name) of the type of the entity.
+   *
+   * @return the name
+   */
 	public static java.lang.String getType()
 	{
 		return entityName;
-	}
-
-	/**
-	 * @return String GUID from this object, format: ID_0000000000
-	 * @deprecated Use getMendixObject().getId().toLong() to get a unique identifier for this object.
-	 */
-	@java.lang.Deprecated
-	public java.lang.String getGUID()
-	{
-		return "ID_" + getMendixObject().getId().toLong();
 	}
 }

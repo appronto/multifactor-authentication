@@ -1,0 +1,45 @@
+{
+  "name": "react-native-sound",
+  "version": "0.13.0",
+  "description": "React Native module for playing sound clips on iOS, Android, and Windows",
+  "main": "src/index.ts",
+  "typings": "src/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zmxv/react-native-sound.git"
+  },
+  "homepage": "https://github.com/zmxv/react-native-sound",
+  "keywords": [
+    "react-native",
+    "sound",
+    "audio",
+    "ios",
+    "android",
+    "windows"
+  ],
+  "author": "Zhen Wang <z@zmxv.com> (http://blog.zmxv.com)",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "files": [
+    "src",
+    "android",
+    "ios",
+    "windows",
+    "RNSound.podspec"
+  ],
+  "codegenConfig": {
+    "name": "RNSoundSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "outputDir": {
+      "ios": "ios/generated",
+      "android": "android/generated"
+    },
+    "android": {
+      "javaPackageName": "com.zmxv.RNSound"
+    }
+  }
+}

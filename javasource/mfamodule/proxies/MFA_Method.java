@@ -6,28 +6,26 @@ package mfamodule.proxies;
 
 public enum MFA_Method
 {
-	Email(new java.lang.String[][] { new java.lang.String[] { "en_US", "Email" } }),
-	SMS(new java.lang.String[][] { new java.lang.String[] { "en_US", "SMS" } }),
-	Log(new java.lang.String[][] { new java.lang.String[] { "en_US", "Log" } }),
-	Authenticator(new java.lang.String[][] { new java.lang.String[] { "en_US", "Authenticator" } });
+	Email("3fd9b61b-354c-4f82-b360-5ba8a07ec99a"),
+	SMS("9d302be5-158c-4712-919c-7f7579588ca3"),
+	Log("31789be5-3446-40e2-8857-6905b4c2cb13"),
+	Authenticator("39790df5-6b86-4708-b137-6f1cf6c118db");
 
-	private final java.util.Map<java.lang.String, java.lang.String> captions;
-
-	private MFA_Method(java.lang.String[][] captionStrings)
+	private final java.lang.String i18nCaptionKey;
+	
+	private MFA_Method(java.lang.String i18nCaptionKey)
 	{
-		this.captions = new java.util.HashMap<>();
-		for (java.lang.String[] captionString : captionStrings) {
-			captions.put(captionString[0], captionString[1]);
-		}
+		this.i18nCaptionKey = i18nCaptionKey;
 	}
 
 	public java.lang.String getCaption(java.lang.String languageCode)
 	{
-		return captions.getOrDefault(languageCode, "en_US");
+		String caption = com.mendix.core.Core.getInternationalizedString(languageCode, i18nCaptionKey);
+		return caption.isEmpty() ? getCaption() : caption;
 	}
 
 	public java.lang.String getCaption()
 	{
-		return captions.get("en_US");
+		return com.mendix.core.Core.getInternationalizedString("en_US", i18nCaptionKey);
 	}
 }

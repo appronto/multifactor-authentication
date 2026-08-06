@@ -11,12 +11,12 @@ package mfamodule.actions;
 
 import com.mendix.core.Core;
 import com.mendix.systemwideinterfaces.core.IContext;
-import com.mendix.webui.CustomJavaAction;
+import com.mendix.systemwideinterfaces.core.UserAction;
 
 /**
  * Will return the UserName of the Administrator.
  */
-public class JA_GetAdminUserName extends CustomJavaAction<java.lang.String>
+public class JA_GetAdminUserName extends UserAction<java.lang.String>
 {
 	public JA_GetAdminUserName(IContext context)
 	{

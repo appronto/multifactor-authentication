@@ -13,13 +13,13 @@ import com.mendix.core.Core;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.meta.IMetaObject;
 import com.mendix.systemwideinterfaces.core.meta.IMetaPrimitive;
-import com.mendix.webui.CustomJavaAction;
 import system.proxies.User;
+import com.mendix.systemwideinterfaces.core.UserAction;
 
 /**
  * Will evaluate the string value of the MFATestModule constant  "AttibuteNameMFA" and return true or false.
  */
-public class HasMFAatribute extends CustomJavaAction<java.lang.Boolean>
+public class HasMFAatribute extends UserAction<java.lang.Boolean>
 {
 	public HasMFAatribute(IContext context)
 	{

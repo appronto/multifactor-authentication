@@ -16,28 +16,34 @@
 
     body {
         min-height: 100%;
-        color: $font-color-default;
-        background-color: $bg-color;
-        font-family: $font-family-base;
-        font-size: $font-size-default;
-        font-weight: $font-weight-normal;
-        line-height: $line-height-base;
+        color: var(--font-color-default);
+        background-color: var(--bg-color);
+        font-family: var(--font-family-base);
+        font-size: var(--font-size-default);
+        font-weight: var(--font-weight-normal);
+        line-height: var(--line-height-base);
     }
 
     a {
         transition: 0.25s;
-        color: $link-color;
+        color: var(--link-color);
+        text-decoration: none;
         -webkit-backface-visibility: hidden;
     }
 
     a:hover {
         text-decoration: underline;
-        color: $link-hover-color;
+        color: var(--link-hover-color);
     }
 
     // Address `outline` inconsistency between Chrome and other browsers.
     a:focus {
-        outline: thin dotted;
+        outline: 0;
+    }
+
+    // Improve accessibility when navigating using the keyboard
+    a:focus-visible {
+        @extend .focus-ring !optional;
     }
 
     // Improve readability when focused and also mouse hovered in all browsers
@@ -64,6 +70,33 @@
         cursor: not-allowed;
         opacity: 0.65;
         box-shadow: none;
+    }
+
+    // Accessibility helpers:
+    // .sr-only visually hides elements but keeps them accessible to screen readers.   
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        border: 0;
+    }
+     // .sr-only-focusable makes hidden elements visible when focused (keyboard navigation).
+    .sr-only-focusable:active,
+    .sr-only-focusable:focus {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        clip-path: none;
+    }
+    // .has-feedback label.sr-only ~ .form-control-feedback positions feedback for screen reader-only labels.
+    .has-feedback label.sr-only ~ .form-control-feedback {
+        top: 0;
     }
 
     .mx-underlay {

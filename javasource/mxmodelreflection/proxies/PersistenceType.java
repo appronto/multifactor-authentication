@@ -6,26 +6,24 @@ package mxmodelreflection.proxies;
 
 public enum PersistenceType
 {
-	Persistable(new java.lang.String[][] { new java.lang.String[] { "en_US", "Persistable" }, new java.lang.String[] { "nl_NL", "Persistent" }, new java.lang.String[] { "en_GB", "Persistable" }, new java.lang.String[] { "en_ZA", "Persistable" } }),
-	Non_persistent(new java.lang.String[][] { new java.lang.String[] { "en_US", "Non-persistent" }, new java.lang.String[] { "nl_NL", "Niet peristent" }, new java.lang.String[] { "en_GB", "Non-persistent" }, new java.lang.String[] { "en_ZA", "Non-persistent" } });
+	Persistable("bddf0891-c13f-4a2c-be6a-c61305bf5d71"),
+	Non_persistent("399986a3-92ae-4083-8de9-ea8124aeae1c");
 
-	private final java.util.Map<java.lang.String, java.lang.String> captions;
-
-	private PersistenceType(java.lang.String[][] captionStrings)
+	private final java.lang.String i18nCaptionKey;
+	
+	private PersistenceType(java.lang.String i18nCaptionKey)
 	{
-		this.captions = new java.util.HashMap<>();
-		for (java.lang.String[] captionString : captionStrings) {
-			captions.put(captionString[0], captionString[1]);
-		}
+		this.i18nCaptionKey = i18nCaptionKey;
 	}
 
 	public java.lang.String getCaption(java.lang.String languageCode)
 	{
-		return captions.getOrDefault(languageCode, "en_US");
+		String caption = com.mendix.core.Core.getInternationalizedString(languageCode, i18nCaptionKey);
+		return caption.isEmpty() ? getCaption() : caption;
 	}
 
 	public java.lang.String getCaption()
 	{
-		return captions.get("en_US");
+		return com.mendix.core.Core.getInternationalizedString("en_US", i18nCaptionKey);
 	}
 }

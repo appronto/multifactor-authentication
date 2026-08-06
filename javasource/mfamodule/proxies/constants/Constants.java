@@ -6,15 +6,12 @@ package mfamodule.proxies.constants;
 
 import com.mendix.core.Core;
 
-public class Constants
+public final class Constants
 {
 	/**
-	 * @deprecated
-	 * The default constructor of the Constants class should not be used.
-	 * Use the static get methods instead.
+	 * Private constructor to prevent instantiation of this class. 
 	 */
-	@java.lang.Deprecated(since = "9.12", forRemoval = true)
-	public Constants() {}
+	private Constants() {}
 
 	// These are the constants for the MFAmodule module
 
@@ -66,5 +63,54 @@ public class Constants
 	public static java.lang.Long getUnblockMFAMinutes()
 	{
 		return (java.lang.Long)Core.getConfiguration().getConstantValue("MFAmodule.UnblockMFAMinutes");
+	}
+
+	/**
+	* Whether different port numbers on the origin are allowed (e.g. https://login.example.com:8080 would be accepted if true).
+	*/
+	public static boolean getWebAuthn_AllowOriginPort()
+	{
+		return (java.lang.Boolean)Core.getConfiguration().getConstantValue("MFAmodule.WebAuthn_AllowOriginPort");
+	}
+
+	/**
+	* Whether subdomains of the origin are considered valid (e.g. if true, sub.login.example.com would also be accepted).
+	* Set to false for localhost
+	*/
+	public static boolean getWebAuthn_AllowOriginSubdomain()
+	{
+		return (java.lang.Boolean)Core.getConfiguration().getConstantValue("MFAmodule.WebAuthn_AllowOriginSubdomain");
+	}
+
+	/**
+	* This constant needs to be set to True in order to enable WebAuthn (and use passkeys)
+	*/
+	public static boolean getWebAuthn_Enabled()
+	{
+		return (java.lang.Boolean)Core.getConfiguration().getConstantValue("MFAmodule.WebAuthn_Enabled");
+	}
+
+	/**
+	* The full origin (scheme + domain + optional port) expected from the browser (e.g. https://login.example.com). This must match the origin from which authentication requests are initiated.
+	*/
+	public static java.lang.String getWebAuthn_Origin()
+	{
+		return (java.lang.String)Core.getConfiguration().getConstantValue("MFAmodule.WebAuthn_Origin");
+	}
+
+	/**
+	* Unique identifier for the Relying Party, if example for app.example.com you could use example.com. It should match the origin domain. Passkeys are bound to this ID. If you change it later, previously created credentials will stop working.
+	*/
+	public static java.lang.String getWebAuthn_RelyingPartyId()
+	{
+		return (java.lang.String)Core.getConfiguration().getConstantValue("MFAmodule.WebAuthn_RelyingPartyId");
+	}
+
+	/**
+	* To show the user which website/service is asking for authentication.
+	*/
+	public static java.lang.String getWebAuthn_RelyingPartyName()
+	{
+		return (java.lang.String)Core.getConfiguration().getConstantValue("MFAmodule.WebAuthn_RelyingPartyName");
 	}
 }

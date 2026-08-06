@@ -6,30 +6,28 @@ package communitycommons.proxies;
 
 public enum StandardEncodings
 {
-	US_ASCII(new java.lang.String[][] { new java.lang.String[] { "en_US", "US-ASCII" } }),
-	ISO_8859_1(new java.lang.String[][] { new java.lang.String[] { "en_US", "ISO-8859-1" } }),
-	UTF_8(new java.lang.String[][] { new java.lang.String[] { "en_US", "UTF-8" } }),
-	UTF_16BE(new java.lang.String[][] { new java.lang.String[] { "en_US", "UTF-16BE" } }),
-	UTF_16LE(new java.lang.String[][] { new java.lang.String[] { "en_US", "UTF-16LE" } }),
-	UTF_16(new java.lang.String[][] { new java.lang.String[] { "en_US", "UTF-16" } });
+	US_ASCII("0510aae2-db28-4f55-a208-320d08bad73a"),
+	ISO_8859_1("371c9690-0154-4fe1-ac73-26216ac6fb0c"),
+	UTF_8("a3e88d0d-908b-41c1-9834-a4d902f55dea"),
+	UTF_16BE("12311bdb-d86f-445a-a6d5-425c38b2236f"),
+	UTF_16LE("a72007ef-ce22-4dd5-86de-8bec3eb12d09"),
+	UTF_16("24f3d36c-9e37-4bbf-8b58-3b4f6fe15612");
 
-	private final java.util.Map<java.lang.String, java.lang.String> captions;
-
-	private StandardEncodings(java.lang.String[][] captionStrings)
+	private final java.lang.String i18nCaptionKey;
+	
+	private StandardEncodings(java.lang.String i18nCaptionKey)
 	{
-		this.captions = new java.util.HashMap<>();
-		for (java.lang.String[] captionString : captionStrings) {
-			captions.put(captionString[0], captionString[1]);
-		}
+		this.i18nCaptionKey = i18nCaptionKey;
 	}
 
 	public java.lang.String getCaption(java.lang.String languageCode)
 	{
-		return captions.getOrDefault(languageCode, "en_US");
+		String caption = com.mendix.core.Core.getInternationalizedString(languageCode, i18nCaptionKey);
+		return caption.isEmpty() ? getCaption() : caption;
 	}
 
 	public java.lang.String getCaption()
 	{
-		return captions.get("en_US");
+		return com.mendix.core.Core.getInternationalizedString("en_US", i18nCaptionKey);
 	}
 }

@@ -6,26 +6,24 @@ package mfamodule.proxies;
 
 public enum Enum_MessageType
 {
-	Info(new java.lang.String[][] { new java.lang.String[] { "en_US", "Info" }, new java.lang.String[] { "nl_NL", "Info" } }),
-	Error(new java.lang.String[][] { new java.lang.String[] { "en_US", "Error" }, new java.lang.String[] { "nl_NL", "Error" } });
+	Info("0fe1ac1e-5acb-4389-baaf-f37bc6de0730"),
+	Error("5a74346b-1a0c-4fb9-868a-0a717170d20a");
 
-	private final java.util.Map<java.lang.String, java.lang.String> captions;
-
-	private Enum_MessageType(java.lang.String[][] captionStrings)
+	private final java.lang.String i18nCaptionKey;
+	
+	private Enum_MessageType(java.lang.String i18nCaptionKey)
 	{
-		this.captions = new java.util.HashMap<>();
-		for (java.lang.String[] captionString : captionStrings) {
-			captions.put(captionString[0], captionString[1]);
-		}
+		this.i18nCaptionKey = i18nCaptionKey;
 	}
 
 	public java.lang.String getCaption(java.lang.String languageCode)
 	{
-		return captions.getOrDefault(languageCode, "en_US");
+		String caption = com.mendix.core.Core.getInternationalizedString(languageCode, i18nCaptionKey);
+		return caption.isEmpty() ? getCaption() : caption;
 	}
 
 	public java.lang.String getCaption()
 	{
-		return captions.get("en_US");
+		return com.mendix.core.Core.getInternationalizedString("en_US", i18nCaptionKey);
 	}
 }

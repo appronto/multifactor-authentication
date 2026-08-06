@@ -11,18 +11,22 @@ package objecthandling.actions;
 
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
-import com.mendix.webui.CustomJavaAction;
+import com.mendix.systemwideinterfaces.core.UserAction;
 
-public class getMemberValueByMemberName extends CustomJavaAction<java.lang.String>
+public class getMemberValueByMemberName extends UserAction<java.lang.String>
 {
-	private IMendixObject MxObject;
-	private java.lang.String AttributeName;
+	private final IMendixObject MxObject;
+	private final java.lang.String AttributeName;
 
-	public getMemberValueByMemberName(IContext context, IMendixObject MxObject, java.lang.String AttributeName)
+	public getMemberValueByMemberName(
+		IContext context,
+		IMendixObject _mxObject,
+		java.lang.String _attributeName
+	)
 	{
 		super(context);
-		this.MxObject = MxObject;
-		this.AttributeName = AttributeName;
+		this.MxObject = _mxObject;
+		this.AttributeName = _attributeName;
 	}
 
 	@java.lang.Override

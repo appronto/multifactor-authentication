@@ -6,29 +6,40 @@ package mfamodule.proxies;
 
 public enum Enum_DefaultMessages
 {
-	Login_Maximum_attempts_exceeded(new java.lang.String[][] { new java.lang.String[] { "en_US", "Maximum attempts exceeded" } }),
-	MFA_Maximum_attempts_exceeded(new java.lang.String[][] { new java.lang.String[] { "en_US", "Maximum attempts exceeded" } }),
-	MFA_Code_is_incorrect(new java.lang.String[][] { new java.lang.String[] { "en_US", "Code is incorrect" } }),
-	MFA_CodeSent(new java.lang.String[][] { new java.lang.String[] { "en_US", "We have sent you the code" } }),
-	MFA_Could_not_create_code(new java.lang.String[][] { new java.lang.String[] { "en_US", "Could not send a code to you, please contact us!" } });
+	Login_Maximum_attempts_exceeded("b64d8f64-6d02-4295-8a84-877bd470c29c"),
+	MFA_Maximum_attempts_exceeded("4de6f3b3-e8ee-49e6-883a-b54924226a6b"),
+	MFA_Code_is_incorrect("b4bd27fa-c7b7-43cb-a73a-1e09fdb67719"),
+	MFA_CodeSent("180f9a87-aa16-456e-9e0e-e10e0ddd48ca"),
+	MFA_Could_not_create_code("28288ff1-2b11-4031-bbf1-404e061ebfbb"),
+	NotAllowedError("86e7d5f9-dd95-46f0-adf0-13929fd3c580"),
+	SecurityError("d9dbecae-41c7-439e-af3e-42d2f1409e35"),
+	InvalidStateError("d2cd162b-3433-4a49-8eaa-bcca0c5d30e0"),
+	ConstraintError("68ebbcbb-737d-444b-a07c-7e299171c283"),
+	NotSupportedError("06eadb43-03cd-4bdb-87da-c4a0acefd71c"),
+	UnknownError("b5b63e7a-c0ae-4c86-b20e-53bcba999143"),
+	AbortError("1a98d781-67ff-4bb3-8ae1-fc84fbc3a376"),
+	TypeError("6b4f6ef7-01ce-4d7a-8451-e37015d9145b"),
+	No_connection("e62a5354-d0a3-47dd-8430-7234797dd195"),
+	The_username_or_password_you_entered_is_incorrect_or_user_is_blocked("58ce0f8d-9a33-460f-b345-6092802162fe"),
+	Unknown_error("1fb24e56-02c0-4dbf-8d12-5de17d3134b2"),
+	Username_required("00d66aef-3fd4-467e-96ad-879f068116b5"),
+	Password_required("6f8edbc7-27ee-4c2e-8bce-cca079f7b15b");
 
-	private final java.util.Map<java.lang.String, java.lang.String> captions;
-
-	private Enum_DefaultMessages(java.lang.String[][] captionStrings)
+	private final java.lang.String i18nCaptionKey;
+	
+	private Enum_DefaultMessages(java.lang.String i18nCaptionKey)
 	{
-		this.captions = new java.util.HashMap<>();
-		for (java.lang.String[] captionString : captionStrings) {
-			captions.put(captionString[0], captionString[1]);
-		}
+		this.i18nCaptionKey = i18nCaptionKey;
 	}
 
 	public java.lang.String getCaption(java.lang.String languageCode)
 	{
-		return captions.getOrDefault(languageCode, "en_US");
+		String caption = com.mendix.core.Core.getInternationalizedString(languageCode, i18nCaptionKey);
+		return caption.isEmpty() ? getCaption() : caption;
 	}
 
 	public java.lang.String getCaption()
 	{
-		return captions.get("en_US");
+		return com.mendix.core.Core.getInternationalizedString("en_US", i18nCaptionKey);
 	}
 }

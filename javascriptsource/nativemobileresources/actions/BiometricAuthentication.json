@@ -1,0 +1,5 @@
+{
+  "nativeDependencies": {
+    "@sbaiahmed1/react-native-biometrics": "0.15.0"
+  }
+}

@@ -9,17 +9,16 @@
 
 package mfamodule.actions;
 
-import com.mendix.core.Core;
 import com.mendix.m2ee.api.IMxRuntimeRequest;
 import com.mendix.systemwideinterfaces.core.IContext;
-import com.mendix.webui.CustomJavaAction;
 import mfamodule.proxies.DatadogLog;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
+import com.mendix.systemwideinterfaces.core.UserAction;
 
 /**
  * Creates a default datadog log object with the values for IP, useragent etc
  */
-public class CreateDatadogLog extends CustomJavaAction<IMendixObject>
+public class CreateDatadogLog extends UserAction<IMendixObject>
 {
 	public CreateDatadogLog(IContext context)
 	{
@@ -30,7 +29,8 @@ public class CreateDatadogLog extends CustomJavaAction<IMendixObject>
 	public IMendixObject executeAction() throws Exception
 	{
 		// BEGIN USER CODE
-		 DatadogLog ddlog = new DatadogLog(getContext());
+		 DatadogLog ddlog = new DatadogLog(getContext());		
+		 
 		if (getContext().getRuntimeRequest().isPresent()) 
 		{
 			IMxRuntimeRequest request = getContext().getRuntimeRequest().get();

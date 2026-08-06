@@ -51,7 +51,7 @@
                                     <span class="glyphicon glyphicon-eye-close" onClick="togglePassword()"></span>
                                 </div>
                             </div>
-							<div class="form-group">
+                            <div class="form-group">
                                 <label class="control-label" id="mfaLabel" for="mfaInput">Code</label>
                                 <div class="inputwrapper">
                                     <input
@@ -65,7 +65,7 @@
                                     />
                                     <span class="glyphicon glyphicon-phone"></span>
                                 </div>
-                            </div>
+                            </div>        
                             <button id="loginButton" type="submit" class="btn btn-success btn-lg">Sign in</button>
                         </div>
                     </form>
@@ -124,19 +124,19 @@
             </div>
         </div>
 
-        <script src="js/login_i18n.js?{{cachebust}}"></script>
-        <script src="js/login-mfa.js?{{cachebust}}"></script>
-        <script>
-            function togglePassword() {
-                const icon = document.querySelector('[class*=glyphicon-eye]');
-                if (icon.classList.contains('glyphicon-eye-close'))
-                    icon.classList.replace('glyphicon-eye-close', 'glyphicon-eye-open');
-                else icon.classList.replace('glyphicon-eye-open', 'glyphicon-eye-close');
+<script src="js/login_i18n.js?{{cachebust}}"></script>
+<script src="js/login-mfa.js?{{cachebust}}"></script>
+<script>
+    function togglePassword() {
+        const icon = document.querySelector('[class*=glyphicon-eye]');
+        if (icon.classList.contains('glyphicon-eye-close'))
+            icon.classList.replace('glyphicon-eye-close', 'glyphicon-eye-open');
+        else icon.classList.replace('glyphicon-eye-open', 'glyphicon-eye-close');
 
-                const input = document.querySelector('#passwordInput');
-                if (input.type === 'password') input.type = 'text';
-                else input.type = 'password';
-            }
-        </script>
+        const input = document.querySelector('#passwordInput');
+        if (input.type === 'password') input.type = 'text';
+        else input.type = 'password';
+    }
+</script>
     </body>
 </html>

@@ -11,22 +11,26 @@ package objecthandling.actions;
 
 import com.mendix.core.Core;
 import com.mendix.systemwideinterfaces.core.IContext;
-import com.mendix.webui.CustomJavaAction;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
+import com.mendix.systemwideinterfaces.core.UserAction;
 
 /**
  * Deletes the given objects from the database and server cache (synchronously) without events. Thre  current context is used to execute this action.
  */
-public class deleteWithoutEvents extends CustomJavaAction<java.lang.Boolean>
+public class deleteWithoutEvents extends UserAction<java.lang.Boolean>
 {
-	private java.util.List<IMendixObject> objectList;
-	private java.lang.Boolean useDeleteBehavior;
+	private final java.util.List<IMendixObject> objectList;
+	private final java.lang.Boolean useDeleteBehavior;
 
-	public deleteWithoutEvents(IContext context, java.util.List<IMendixObject> objectList, java.lang.Boolean useDeleteBehavior)
+	public deleteWithoutEvents(
+		IContext context,
+		java.util.List<IMendixObject> _objectList,
+		java.lang.Boolean _useDeleteBehavior
+	)
 	{
 		super(context);
-		this.objectList = objectList;
-		this.useDeleteBehavior = useDeleteBehavior;
+		this.objectList = _objectList;
+		this.useDeleteBehavior = _useDeleteBehavior;
 	}
 
 	@java.lang.Override

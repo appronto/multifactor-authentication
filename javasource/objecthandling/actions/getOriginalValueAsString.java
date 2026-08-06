@@ -11,8 +11,8 @@ package objecthandling.actions;
 
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
-import com.mendix.webui.CustomJavaAction;
 import objecthandling.ORM;
+import com.mendix.systemwideinterfaces.core.UserAction;
 
 /**
  * Returns the original value of an object member, that is, the last committed value.
@@ -23,16 +23,20 @@ import objecthandling.ORM;
  * 
  * The function is applicable for non-String members as well, but always returns a String representation of the committed value.
  */
-public class getOriginalValueAsString extends CustomJavaAction<java.lang.String>
+public class getOriginalValueAsString extends UserAction<java.lang.String>
 {
-	private IMendixObject item;
-	private java.lang.String member;
+	private final IMendixObject item;
+	private final java.lang.String member;
 
-	public getOriginalValueAsString(IContext context, IMendixObject item, java.lang.String member)
+	public getOriginalValueAsString(
+		IContext context,
+		IMendixObject _item,
+		java.lang.String _member
+	)
 	{
 		super(context);
-		this.item = item;
-		this.member = member;
+		this.item = _item;
+		this.member = _member;
 	}
 
 	@java.lang.Override

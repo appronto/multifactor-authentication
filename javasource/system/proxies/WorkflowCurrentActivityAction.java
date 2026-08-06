@@ -6,26 +6,24 @@ package system.proxies;
 
 public enum WorkflowCurrentActivityAction
 {
-	DoNothing(new java.lang.String[][] { new java.lang.String[] { "en_US", "Do Nothing" } }),
-	JumpTo(new java.lang.String[][] { new java.lang.String[] { "en_US", "Jump To" } });
+	DoNothing("0be952b8-d392-40ea-a7e0-ea51c96fef06"),
+	JumpTo("f6554dd4-1328-4f13-bfd7-a27278a10f5b");
 
-	private final java.util.Map<java.lang.String, java.lang.String> captions;
-
-	private WorkflowCurrentActivityAction(java.lang.String[][] captionStrings)
+	private final java.lang.String i18nCaptionKey;
+	
+	private WorkflowCurrentActivityAction(java.lang.String i18nCaptionKey)
 	{
-		this.captions = new java.util.HashMap<>();
-		for (java.lang.String[] captionString : captionStrings) {
-			captions.put(captionString[0], captionString[1]);
-		}
+		this.i18nCaptionKey = i18nCaptionKey;
 	}
 
 	public java.lang.String getCaption(java.lang.String languageCode)
 	{
-		return captions.getOrDefault(languageCode, "en_US");
+		String caption = com.mendix.core.Core.getInternationalizedString(languageCode, i18nCaptionKey);
+		return caption.isEmpty() ? getCaption() : caption;
 	}
 
 	public java.lang.String getCaption()
 	{
-		return captions.get("en_US");
+		return com.mendix.core.Core.getInternationalizedString("en_US", i18nCaptionKey);
 	}
 }

@@ -6,26 +6,24 @@ package mxmodelreflection.proxies;
 
 public enum Status
 {
-	Valid(new java.lang.String[][] { new java.lang.String[] { "en_US", "Valid" }, new java.lang.String[] { "nl_NL", "Geldig" }, new java.lang.String[] { "en_GB", "Valid" }, new java.lang.String[] { "en_ZA", "Valid" } }),
-	Invalid(new java.lang.String[][] { new java.lang.String[] { "en_US", "Invalid" }, new java.lang.String[] { "nl_NL", "Ongeldig" }, new java.lang.String[] { "en_GB", "Invalid" }, new java.lang.String[] { "en_ZA", "Invalid" } });
+	Valid("f5a254d2-a76d-4f54-a7bc-a005d370018e"),
+	Invalid("1dc1affb-3c2d-46d5-b42c-4d453f09f5aa");
 
-	private final java.util.Map<java.lang.String, java.lang.String> captions;
-
-	private Status(java.lang.String[][] captionStrings)
+	private final java.lang.String i18nCaptionKey;
+	
+	private Status(java.lang.String i18nCaptionKey)
 	{
-		this.captions = new java.util.HashMap<>();
-		for (java.lang.String[] captionString : captionStrings) {
-			captions.put(captionString[0], captionString[1]);
-		}
+		this.i18nCaptionKey = i18nCaptionKey;
 	}
 
 	public java.lang.String getCaption(java.lang.String languageCode)
 	{
-		return captions.getOrDefault(languageCode, "en_US");
+		String caption = com.mendix.core.Core.getInternationalizedString(languageCode, i18nCaptionKey);
+		return caption.isEmpty() ? getCaption() : caption;
 	}
 
 	public java.lang.String getCaption()
 	{
-		return captions.get("en_US");
+		return com.mendix.core.Core.getInternationalizedString("en_US", i18nCaptionKey);
 	}
 }

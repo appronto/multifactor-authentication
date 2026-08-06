@@ -1,0 +1,5 @@
+{
+  "nativeDependencies": {
+    "@swan-io/react-native-browser": "1.0.1"
+  }
+}

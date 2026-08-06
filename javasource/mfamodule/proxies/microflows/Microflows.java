@@ -4,127 +4,709 @@
 
 package mfamodule.proxies.microflows;
 
-import java.util.HashMap;
-import java.util.Map;
 import com.mendix.core.Core;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
 
-public class Microflows
+public final class Microflows
 {
 	/**
-	 * @deprecated
-	 * The default constructor of the Microflows class should not be used.
-	 * Use the static microflow invocation methods instead.
+	 * Private constructor to prevent instantiation of this class. 
 	 */
-	@java.lang.Deprecated(since = "9.12", forRemoval = true)
-	public Microflows() {}
+	private Microflows() {}
 
 	// These are the microflows for the MFAmodule module
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder aSU_MFABuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.ASU_MFA");
+		return builder;
+	}
+
 	public static boolean aSU_MFA(IContext context)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.ASU_MFA").withParams(params).execute(context);
+		Object result = aSU_MFABuilder().execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder aSU_MFA_v2Builder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.ASU_MFA_v2");
+		return builder;
+	}
+
+	public static boolean aSU_MFA_v2(IContext context)
+	{
+		Object result = aSU_MFA_v2Builder().execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder aSU_WebAuthnBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.ASU_WebAuthn");
+		return builder;
+	}
+
+	public static boolean aSU_WebAuthn(IContext context)
+	{
+		Object result = aSU_WebAuthnBuilder().execute(context);
+		return (boolean) result;
 	}
 	/**
 	 * Called from JAVA Action
 	 */
-	public static mfamodule.proxies.MFA dS_MFA_GET(IContext context)
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder dS_MFA_GetOrCreateFromSessionBuilder()
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		IMendixObject result = (IMendixObject)Core.microflowCall("MFAmodule.DS_MFA_GET").withParams(params).execute(context);
-		return result == null ? null : mfamodule.proxies.MFA.initialize(context, result);
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.DS_MFA_GetOrCreateFromSession");
+		return builder;
 	}
-	public static boolean sUB_CheckMaxLogin(IContext context, mfamodule.proxies.UserHelper _userHelper)
+
+	/**
+	 * Called from JAVA Action
+	 */
+	public static mfamodule.proxies.MFA dS_MFA_GetOrCreateFromSession(IContext context)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("UserHelper", _userHelper == null ? null : _userHelper.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_CheckMaxLogin").withParams(params).execute(context);
+		Object result = dS_MFA_GetOrCreateFromSessionBuilder().execute(context);
+		return result == null ? null : mfamodule.proxies.MFA.initialize(context, (IMendixObject) result);
 	}
-	public static boolean sUB_CheckMaxMFA(IContext context, mfamodule.proxies.UserHelper _userHelper)
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_AuthenticationRequest_CreateAndStoreBuilder(
+		java.lang.String _challenge,
+		java.lang.String _requestJSON,
+		mfamodule.proxies.MFA _mFA
+	)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("UserHelper", _userHelper == null ? null : _userHelper.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_CheckMaxMFA").withParams(params).execute(context);
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_AuthenticationRequest_CreateAndStore");
+		builder = builder.withParam("Challenge", _challenge);
+		builder = builder.withParam("RequestJSON", _requestJSON);
+		builder = builder.withParam("MFA", _mFA);
+		return builder;
 	}
+
+	public static mfamodule.proxies.AuthenticationRequest sUB_AuthenticationRequest_CreateAndStore(
+		IContext context,
+		java.lang.String _challenge,
+		java.lang.String _requestJSON,
+		mfamodule.proxies.MFA _mFA
+	)
+	{
+		Object result = sUB_AuthenticationRequest_CreateAndStoreBuilder(
+				_challenge,
+				_requestJSON,
+				_mFA
+			)
+			.execute(context);
+		return result == null ? null : mfamodule.proxies.AuthenticationRequest.initialize(context, (IMendixObject) result);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_AuthenticationRequest_FinishBuilder(
+		mfamodule.proxies.AuthenticationRequest _authenticationRequest,
+		mfamodule.proxies.MFA _mFA,
+		boolean _updateSignatureCounter
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_AuthenticationRequest_Finish");
+		builder = builder.withParam("AuthenticationRequest", _authenticationRequest);
+		builder = builder.withParam("MFA", _mFA);
+		builder = builder.withParam("UpdateSignatureCounter", _updateSignatureCounter);
+		return builder;
+	}
+
+	public static java.lang.String sUB_AuthenticationRequest_Finish(
+		IContext context,
+		mfamodule.proxies.AuthenticationRequest _authenticationRequest,
+		mfamodule.proxies.MFA _mFA,
+		boolean _updateSignatureCounter
+	)
+	{
+		Object result = sUB_AuthenticationRequest_FinishBuilder(
+				_authenticationRequest,
+				_mFA,
+				_updateSignatureCounter
+			)
+			.execute(context);
+		return (java.lang.String) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_CheckMaxLoginBuilder(
+		mfamodule.proxies.UserHelper _userHelper
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_CheckMaxLogin");
+		builder = builder.withParam("UserHelper", _userHelper);
+		return builder;
+	}
+
+	public static boolean sUB_CheckMaxLogin(
+		IContext context,
+		mfamodule.proxies.UserHelper _userHelper
+	)
+	{
+		Object result = sUB_CheckMaxLoginBuilder(
+				_userHelper
+			)
+			.execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_DatadogLog_CreateBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_DatadogLog_Create");
+		return builder;
+	}
+
 	public static mfamodule.proxies.DatadogLog sUB_DatadogLog_Create(IContext context)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		IMendixObject result = (IMendixObject)Core.microflowCall("MFAmodule.SUB_DatadogLog_Create").withParams(params).execute(context);
-		return result == null ? null : mfamodule.proxies.DatadogLog.initialize(context, result);
+		Object result = sUB_DatadogLog_CreateBuilder().execute(context);
+		return result == null ? null : mfamodule.proxies.DatadogLog.initialize(context, (IMendixObject) result);
 	}
-	public static void sUB_DatadogLog_Default(IContext context, java.lang.String _eventName, mfamodule.proxies.DatadogOutcome_Enum _eventOutcome, java.lang.String _username, java.lang.String _userId, java.lang.String _eventCatagory, mfamodule.proxies.DatadogLog _datadogLog, java.lang.String _iP)
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_DatadogLog_DefaultBuilder(
+		java.lang.String _eventName,
+		mfamodule.proxies.DatadogOutcome_Enum _eventOutcome,
+		java.lang.String _username,
+		java.lang.String _userId,
+		java.lang.String _eventCatagory,
+		mfamodule.proxies.DatadogLog _datadogLog,
+		java.lang.String _iP
+	)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("EventName", _eventName);
-		params.put("EventOutcome", _eventOutcome == null ? null : _eventOutcome.name());
-		params.put("Username", _username);
-		params.put("UserId", _userId);
-		params.put("EventCatagory", _eventCatagory);
-		params.put("DatadogLog", _datadogLog == null ? null : _datadogLog.getMendixObject());
-		params.put("IP", _iP);
-		Core.microflowCall("MFAmodule.SUB_DatadogLog_Default").withParams(params).execute(context);
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_DatadogLog_Default");
+		builder = builder.withParam("EventName", _eventName);
+		builder = builder.withParam("EventOutcome", _eventOutcome == null ? null : _eventOutcome.name());
+		builder = builder.withParam("Username", _username);
+		builder = builder.withParam("UserId", _userId);
+		builder = builder.withParam("EventCatagory", _eventCatagory);
+		builder = builder.withParam("DatadogLog", _datadogLog);
+		builder = builder.withParam("IP", _iP);
+		return builder;
 	}
-	public static void sUB_DatadogLog_Default_API(IContext context, java.lang.String _eventName, mfamodule.proxies.DatadogOutcome_Enum _eventOutcome, java.lang.String _username, java.lang.String _userId, java.lang.String _uRL, java.lang.String _method, java.lang.String _statusCode)
+
+	public static void sUB_DatadogLog_Default(
+		IContext context,
+		java.lang.String _eventName,
+		mfamodule.proxies.DatadogOutcome_Enum _eventOutcome,
+		java.lang.String _username,
+		java.lang.String _userId,
+		java.lang.String _eventCatagory,
+		mfamodule.proxies.DatadogLog _datadogLog,
+		java.lang.String _iP
+	)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("EventName", _eventName);
-		params.put("EventOutcome", _eventOutcome == null ? null : _eventOutcome.name());
-		params.put("Username", _username);
-		params.put("UserId", _userId);
-		params.put("URL", _uRL);
-		params.put("Method", _method);
-		params.put("StatusCode", _statusCode);
-		Core.microflowCall("MFAmodule.SUB_DatadogLog_Default_API").withParams(params).execute(context);
+		sUB_DatadogLog_DefaultBuilder(
+				_eventName,
+				_eventOutcome,
+				_username,
+				_userId,
+				_eventCatagory,
+				_datadogLog,
+				_iP
+			)
+			.execute(context);
 	}
-	public static void sUB_DatadogLog_WriteLog(IContext context, mfamodule.proxies.DatadogLog _datadogLog)
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_DatadogLog_Default_APIBuilder(
+		java.lang.String _eventName,
+		mfamodule.proxies.DatadogOutcome_Enum _eventOutcome,
+		java.lang.String _username,
+		java.lang.String _userId,
+		java.lang.String _uRL,
+		java.lang.String _method,
+		java.lang.String _statusCode
+	)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("DatadogLog", _datadogLog == null ? null : _datadogLog.getMendixObject());
-		Core.microflowCall("MFAmodule.SUB_DatadogLog_WriteLog").withParams(params).execute(context);
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_DatadogLog_Default_API");
+		builder = builder.withParam("EventName", _eventName);
+		builder = builder.withParam("EventOutcome", _eventOutcome == null ? null : _eventOutcome.name());
+		builder = builder.withParam("Username", _username);
+		builder = builder.withParam("UserId", _userId);
+		builder = builder.withParam("URL", _uRL);
+		builder = builder.withParam("Method", _method);
+		builder = builder.withParam("StatusCode", _statusCode);
+		return builder;
 	}
+
+	public static void sUB_DatadogLog_Default_API(
+		IContext context,
+		java.lang.String _eventName,
+		mfamodule.proxies.DatadogOutcome_Enum _eventOutcome,
+		java.lang.String _username,
+		java.lang.String _userId,
+		java.lang.String _uRL,
+		java.lang.String _method,
+		java.lang.String _statusCode
+	)
+	{
+		sUB_DatadogLog_Default_APIBuilder(
+				_eventName,
+				_eventOutcome,
+				_username,
+				_userId,
+				_uRL,
+				_method,
+				_statusCode
+			)
+			.execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_DatadogLog_WriteLogBuilder(
+		mfamodule.proxies.DatadogLog _datadogLog
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_DatadogLog_WriteLog");
+		builder = builder.withParam("DatadogLog", _datadogLog);
+		return builder;
+	}
+
+	public static void sUB_DatadogLog_WriteLog(
+		IContext context,
+		mfamodule.proxies.DatadogLog _datadogLog
+	)
+	{
+		sUB_DatadogLog_WriteLogBuilder(
+				_datadogLog
+			)
+			.execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_Error_LogBuilder(
+		java.lang.String _errorMessage
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_Error_Log");
+		builder = builder.withParam("ErrorMessage", _errorMessage);
+		return builder;
+	}
+
+	public static void sUB_Error_Log(
+		IContext context,
+		java.lang.String _errorMessage
+	)
+	{
+		sUB_Error_LogBuilder(
+				_errorMessage
+			)
+			.execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_MFA_Create_NativeBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_MFA_Create_Native");
+		return builder;
+	}
+
 	public static void sUB_MFA_Create_Native(IContext context)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		Core.microflowCall("MFAmodule.SUB_MFA_Create_Native").withParams(params).execute(context);
+		sUB_MFA_Create_NativeBuilder().execute(context);
 	}
-	public static boolean sUB_MFA_CreateCode(IContext context, mfamodule.proxies.MFA _mFA)
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_MFA_CreateCodeBuilder(
+		mfamodule.proxies.MFA _mFA
+	)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_CreateCode").withParams(params).execute(context);
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_MFA_CreateCode");
+		builder = builder.withParam("MFA", _mFA);
+		return builder;
 	}
-	public static mfamodule.proxies.UserHelper sUB_MFA_GetUserHelper(IContext context, mfamodule.proxies.MFA _mFA, java.lang.String _mFAUsername)
+
+	public static boolean sUB_MFA_CreateCode(
+		IContext context,
+		mfamodule.proxies.MFA _mFA
+	)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		params.put("MFAUsername", _mFAUsername);
-		IMendixObject result = (IMendixObject)Core.microflowCall("MFAmodule.SUB_MFA_GetUserHelper").withParams(params).execute(context);
-		return result == null ? null : mfamodule.proxies.UserHelper.initialize(context, result);
-	}
-	/**
-	 * Called from JAVA Action
-	 */
-	public static boolean sUB_MFA_UserDisabledCheck(IContext context, java.lang.String _username)
-	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("Username", _username);
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_UserDisabledCheck").withParams(params).execute(context);
+		Object result = sUB_MFA_CreateCodeBuilder(
+				_mFA
+			)
+			.execute(context);
+		return (boolean) result;
 	}
 	/**
 	 * Called from JAVA Action
 	 */
-	public static boolean sUB_MFA_Validate(IContext context, mfamodule.proxies.MFA _mFA, java.lang.String _mFAUsername)
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_MFA_GetOrCreateFromSessionBuilder()
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		params.put("MFAUsername", _mFAUsername);
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_Validate").withParams(params).execute(context);
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_MFA_GetOrCreateFromSession");
+		return builder;
 	}
-	public static boolean sUB_MFA_ValidateCode(IContext context, mfamodule.proxies.MFA _mFA)
+
+	/**
+	 * Called from JAVA Action
+	 */
+	public static mfamodule.proxies.MFA sUB_MFA_GetOrCreateFromSession(IContext context)
 	{
-		Map<java.lang.String, Object> params = new HashMap<>();
-		params.put("MFA", _mFA == null ? null : _mFA.getMendixObject());
-		return (java.lang.Boolean) Core.microflowCall("MFAmodule.SUB_MFA_ValidateCode").withParams(params).execute(context);
+		Object result = sUB_MFA_GetOrCreateFromSessionBuilder().execute(context);
+		return result == null ? null : mfamodule.proxies.MFA.initialize(context, (IMendixObject) result);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_MFA_GetUserHelperBuilder(
+		mfamodule.proxies.MFA _mFA,
+		java.lang.String _mFAUsername
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_MFA_GetUserHelper");
+		builder = builder.withParam("MFA", _mFA);
+		builder = builder.withParam("MFAUsername", _mFAUsername);
+		return builder;
+	}
+
+	public static mfamodule.proxies.UserHelper sUB_MFA_GetUserHelper(
+		IContext context,
+		mfamodule.proxies.MFA _mFA,
+		java.lang.String _mFAUsername
+	)
+	{
+		Object result = sUB_MFA_GetUserHelperBuilder(
+				_mFA,
+				_mFAUsername
+			)
+			.execute(context);
+		return result == null ? null : mfamodule.proxies.UserHelper.initialize(context, (IMendixObject) result);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_MFA_StartAuthenticationBuilder(
+		mfamodule.proxies.MFA _mFA
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_MFA_StartAuthentication");
+		builder = builder.withParam("MFA", _mFA);
+		return builder;
+	}
+
+	public static mfamodule.proxies.AuthenticationRequest sUB_MFA_StartAuthentication(
+		IContext context,
+		mfamodule.proxies.MFA _mFA
+	)
+	{
+		Object result = sUB_MFA_StartAuthenticationBuilder(
+				_mFA
+			)
+			.execute(context);
+		return result == null ? null : mfamodule.proxies.AuthenticationRequest.initialize(context, (IMendixObject) result);
+	}
+	/**
+	 * Called from JAVA Action
+	 */
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_MFA_UserDisabledCheckBuilder(
+		java.lang.String _username
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_MFA_UserDisabledCheck");
+		builder = builder.withParam("Username", _username);
+		return builder;
+	}
+
+	/**
+	 * Called from JAVA Action
+	 */
+	public static boolean sUB_MFA_UserDisabledCheck(
+		IContext context,
+		java.lang.String _username
+	)
+	{
+		Object result = sUB_MFA_UserDisabledCheckBuilder(
+				_username
+			)
+			.execute(context);
+		return (boolean) result;
+	}
+	/**
+	 * Called from JAVA Action
+	 */
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_MFA_ValidateBuilder(
+		mfamodule.proxies.MFA _mFA,
+		java.lang.String _mFAUsername
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_MFA_Validate");
+		builder = builder.withParam("MFA", _mFA);
+		builder = builder.withParam("MFAUsername", _mFAUsername);
+		return builder;
+	}
+
+	/**
+	 * Called from JAVA Action
+	 */
+	public static boolean sUB_MFA_Validate(
+		IContext context,
+		mfamodule.proxies.MFA _mFA,
+		java.lang.String _mFAUsername
+	)
+	{
+		Object result = sUB_MFA_ValidateBuilder(
+				_mFA,
+				_mFAUsername
+			)
+			.execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_MFA_ValidateCodeBuilder(
+		mfamodule.proxies.MFA _mFA
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_MFA_ValidateCode");
+		builder = builder.withParam("MFA", _mFA);
+		return builder;
+	}
+
+	public static boolean sUB_MFA_ValidateCode(
+		IContext context,
+		mfamodule.proxies.MFA _mFA
+	)
+	{
+		Object result = sUB_MFA_ValidateCodeBuilder(
+				_mFA
+			)
+			.execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_RegistrationRequest_CompleteBuilder(
+		mfamodule.proxies.RegistrationRequest _registrationRequest,
+		java.lang.String _responseJSON
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_RegistrationRequest_Complete");
+		builder = builder.withParam("RegistrationRequest", _registrationRequest);
+		builder = builder.withParam("ResponseJSON", _responseJSON);
+		return builder;
+	}
+
+	public static void sUB_RegistrationRequest_Complete(
+		IContext context,
+		mfamodule.proxies.RegistrationRequest _registrationRequest,
+		java.lang.String _responseJSON
+	)
+	{
+		sUB_RegistrationRequest_CompleteBuilder(
+				_registrationRequest,
+				_responseJSON
+			)
+			.execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_RegistrationRequest_CreateUserCredentialBuilder(
+		mfamodule.proxies.RegistrationRequest _registrationRequest,
+		java.lang.String _credentialId,
+		java.lang.String _publicKey,
+		java.lang.Long _signatureCount,
+		java.lang.String _aaGuid
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_RegistrationRequest_CreateUserCredential");
+		builder = builder.withParam("RegistrationRequest", _registrationRequest);
+		builder = builder.withParam("CredentialId", _credentialId);
+		builder = builder.withParam("PublicKey", _publicKey);
+		builder = builder.withParam("SignatureCount", _signatureCount);
+		builder = builder.withParam("aaGuid", _aaGuid);
+		return builder;
+	}
+
+	public static void sUB_RegistrationRequest_CreateUserCredential(
+		IContext context,
+		mfamodule.proxies.RegistrationRequest _registrationRequest,
+		java.lang.String _credentialId,
+		java.lang.String _publicKey,
+		java.lang.Long _signatureCount,
+		java.lang.String _aaGuid
+	)
+	{
+		sUB_RegistrationRequest_CreateUserCredentialBuilder(
+				_registrationRequest,
+				_credentialId,
+				_publicKey,
+				_signatureCount,
+				_aaGuid
+			)
+			.execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_StartRegistration_CreateRegistrationRequestBuilder(
+		java.lang.String _requestJSON,
+		java.lang.String _challenge,
+		java.lang.String _username,
+		java.lang.String _userhandle,
+		java.lang.String _displayName
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_StartRegistration_CreateRegistrationRequest");
+		builder = builder.withParam("RequestJSON", _requestJSON);
+		builder = builder.withParam("Challenge", _challenge);
+		builder = builder.withParam("Username", _username);
+		builder = builder.withParam("Userhandle", _userhandle);
+		builder = builder.withParam("DisplayName", _displayName);
+		return builder;
+	}
+
+	public static mfamodule.proxies.RegistrationRequest sUB_StartRegistration_CreateRegistrationRequest(
+		IContext context,
+		java.lang.String _requestJSON,
+		java.lang.String _challenge,
+		java.lang.String _username,
+		java.lang.String _userhandle,
+		java.lang.String _displayName
+	)
+	{
+		Object result = sUB_StartRegistration_CreateRegistrationRequestBuilder(
+				_requestJSON,
+				_challenge,
+				_username,
+				_userhandle,
+				_displayName
+			)
+			.execute(context);
+		return result == null ? null : mfamodule.proxies.RegistrationRequest.initialize(context, (IMendixObject) result);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_StartWebAuthnRegistrationBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_StartWebAuthnRegistration");
+		return builder;
+	}
+
+	public static mfamodule.proxies.RegistrationRequest sUB_StartWebAuthnRegistration(IContext context)
+	{
+		Object result = sUB_StartWebAuthnRegistrationBuilder().execute(context);
+		return result == null ? null : mfamodule.proxies.RegistrationRequest.initialize(context, (IMendixObject) result);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_UserCredential_GetUserNameBuilder(
+		mfamodule.proxies.UserCredential _userCredential
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_UserCredential_GetUserName");
+		builder = builder.withParam("UserCredential", _userCredential);
+		return builder;
+	}
+
+	public static java.lang.String sUB_UserCredential_GetUserName(
+		IContext context,
+		mfamodule.proxies.UserCredential _userCredential
+	)
+	{
+		Object result = sUB_UserCredential_GetUserNameBuilder(
+				_userCredential
+			)
+			.execute(context);
+		return (java.lang.String) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_UserCredential_RetrieveByCredentialIdBuilder(
+		java.lang.String _credentialId
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_UserCredential_RetrieveByCredentialId");
+		builder = builder.withParam("CredentialId", _credentialId);
+		return builder;
+	}
+
+	public static mfamodule.proxies.UserCredential sUB_UserCredential_RetrieveByCredentialId(
+		IContext context,
+		java.lang.String _credentialId
+	)
+	{
+		Object result = sUB_UserCredential_RetrieveByCredentialIdBuilder(
+				_credentialId
+			)
+			.execute(context);
+		return result == null ? null : mfamodule.proxies.UserCredential.initialize(context, (IMendixObject) result);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_UserCredential_RetrieveByUserHandleBuilder(
+		java.lang.String _userHandle
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_UserCredential_RetrieveByUserHandle");
+		builder = builder.withParam("UserHandle", _userHandle);
+		return builder;
+	}
+
+	public static mfamodule.proxies.UserCredential sUB_UserCredential_RetrieveByUserHandle(
+		IContext context,
+		java.lang.String _userHandle
+	)
+	{
+		Object result = sUB_UserCredential_RetrieveByUserHandleBuilder(
+				_userHandle
+			)
+			.execute(context);
+		return result == null ? null : mfamodule.proxies.UserCredential.initialize(context, (IMendixObject) result);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_UserCredentials_RetrieveAllByCredentialIdBuilder(
+		java.lang.String _credentialId
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_UserCredentials_RetrieveAllByCredentialId");
+		builder = builder.withParam("CredentialId", _credentialId);
+		return builder;
+	}
+
+	public static java.util.List<mfamodule.proxies.UserCredential> sUB_UserCredentials_RetrieveAllByCredentialId(
+		IContext context,
+		java.lang.String _credentialId
+	)
+	{
+		Object result = sUB_UserCredentials_RetrieveAllByCredentialIdBuilder(
+				_credentialId
+			)
+			.execute(context);
+		return result == null ? null : com.mendix.utils.ListUtils.map((java.util.List<IMendixObject>) result, obj -> mfamodule.proxies.UserCredential.initialize(context, obj));
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_UserHandle_GetUserNameBuilder(
+		java.lang.String _userHandle
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_UserHandle_GetUserName");
+		builder = builder.withParam("UserHandle", _userHandle);
+		return builder;
+	}
+
+	public static java.lang.String sUB_UserHandle_GetUserName(
+		IContext context,
+		java.lang.String _userHandle
+	)
+	{
+		Object result = sUB_UserHandle_GetUserNameBuilder(
+				_userHandle
+			)
+			.execute(context);
+		return (java.lang.String) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_Userhelper_CheckMaxMFAattemptsBuilder(
+		mfamodule.proxies.UserHelper _userHelper
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_Userhelper_CheckMaxMFAattempts");
+		builder = builder.withParam("UserHelper", _userHelper);
+		return builder;
+	}
+
+	public static boolean sUB_Userhelper_CheckMaxMFAattempts(
+		IContext context,
+		mfamodule.proxies.UserHelper _userHelper
+	)
+	{
+		Object result = sUB_Userhelper_CheckMaxMFAattemptsBuilder(
+				_userHelper
+			)
+			.execute(context);
+		return (boolean) result;
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_Username_GetUserCredentialsBuilder(
+		java.lang.String _username
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_Username_GetUserCredentials");
+		builder = builder.withParam("Username", _username);
+		return builder;
+	}
+
+	public static java.util.List<mfamodule.proxies.UserCredential> sUB_Username_GetUserCredentials(
+		IContext context,
+		java.lang.String _username
+	)
+	{
+		Object result = sUB_Username_GetUserCredentialsBuilder(
+				_username
+			)
+			.execute(context);
+		return result == null ? null : com.mendix.utils.ListUtils.map((java.util.List<IMendixObject>) result, obj -> mfamodule.proxies.UserCredential.initialize(context, obj));
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_Username_GetUserHandleBuilder(
+		java.lang.String _username
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("MFAmodule.SUB_Username_GetUserHandle");
+		builder = builder.withParam("Username", _username);
+		return builder;
+	}
+
+	public static java.lang.String sUB_Username_GetUserHandle(
+		IContext context,
+		java.lang.String _username
+	)
+	{
+		Object result = sUB_Username_GetUserHandleBuilder(
+				_username
+			)
+			.execute(context);
+		return (java.lang.String) result;
 	}
 }

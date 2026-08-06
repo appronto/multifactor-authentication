@@ -11,12 +11,12 @@ package mfatestmodule.actions;
 
 import com.mendix.core.Core;
 import com.mendix.systemwideinterfaces.core.IContext;
-import com.mendix.webui.CustomJavaAction;
+import com.mendix.systemwideinterfaces.core.UserAction;
 
 /**
  * Will retrieve the runtime version and return it as a string value.
  */
-public class GetRuntimeVersion extends CustomJavaAction<java.lang.String>
+public class GetRuntimeVersion extends UserAction<java.lang.String>
 {
 	public GetRuntimeVersion(IContext context)
 	{
@@ -27,7 +27,7 @@ public class GetRuntimeVersion extends CustomJavaAction<java.lang.String>
 	public java.lang.String executeAction() throws Exception
 	{
 		// BEGIN USER CODE
-		return Core.getConfiguration().RUNTIME_VERSION.toString();
+		return Core.getRuntimeVersion().toString();
 		// END USER CODE
 	}
 

@@ -1,0 +1,5 @@
+
+#
+# The following was added while migrating this app from SVN to Git
+#
+.gitignore merge=union

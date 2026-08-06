@@ -1,0 +1,6 @@
+{
+  "nativeDependencies": {
+    "react-native-sound": "0.13.0",
+    "react-native-blob-util": "0.24.7"
+  }
+}
